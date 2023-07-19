@@ -1,2 +1,0 @@
-const stripeKey ='pk_test_51NVP7zAoBgBC2O0X9TQGV0juOvmT86DawMv6tWNtNWocCkPVZMC4lPootFwa9QQsJ1HzEYiBZ86a672wJ8eTNkdz00OxtrxuGY';
-const apiKey = "sk_test_51NVP7zAoBgBC2O0XVxjl8a6CsF1mmD8fKdPiMN88SI3yTxT8pkawtG04toAvSOvRWjbMRxIF4C3ipBgBzgjq3B9500inlMT6zk";

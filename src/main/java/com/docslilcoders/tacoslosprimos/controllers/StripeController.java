@@ -17,7 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 @Controller
 public class StripeController {
 
-    @Value("stripe.secret.key")
+    @Value("${stripe.secret.key}")
     private String stripeKey;
 
     @GetMapping("/stripe-test")
