@@ -26,6 +26,12 @@ public class MenuItem {
     @Column(nullable = true)
     private String description;
 
+    @Column(nullable = true)
+    private String photo;
+
+    @Column(nullable = true)
+    private String nutritionWords;
+
     @Column(nullable = false)
     private double price;
 
