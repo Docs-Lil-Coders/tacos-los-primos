@@ -47,8 +47,11 @@ public class User {
     @Column(nullable = false)
     private String primary_address;
 
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "creator")
-//    private
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Address> usersAddresses;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Order> userOrders;
 
 //  public User(User copy) {
 //      id = copy.id; // This line is SUPER important! Many things won't work if it's absent
