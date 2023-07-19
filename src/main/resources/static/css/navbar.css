@@ -2,3 +2,54 @@
     margin: 0;
     padding: 0;
 }
+
+.socials-bar {
+    margin-bottom: -16px;
+    padding: 0;
+    background-color: white;
+    background-image: url("img/ricepaper.png");
+    list-style-type: none;
+    display: flex;
+    justify-content: end;
+}
+
+.socials-list {
+    list-style-type: none;
+    display: flex;
+}
+
+.navbar-custom {
+    background-color: #BF2D1A;
+}
+
+.navbar-custom .navbar-text {
+    color: #FFFFFF;
+}
+
+.nav-icon-bag {
+    height: 20px;
+    fill: #FFFFFF;
+    padding-bottom: 5px;
+}
+
+.nav-social-icons {
+    height: 20px;
+    fill: #FFBF2C;
+}
+
+@media screen and (min-width: 992px) {
+    .nav-logo {
+        height: 125px;
+        margin-top: -62px;
+        margin-bottom: -62px;
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .nav-logo {
+        height: 100px;
+        margin-top: -40px;
+        margin-bottom: -40px;
+    }
+}
+
