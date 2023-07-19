@@ -22,7 +22,7 @@
     background-color: #BF2D1A;
 }
 
-.navbar-custom .navbar-text {
+.nav-custom-text {
     color: #FFFFFF;
 }
 
@@ -43,6 +43,10 @@
         margin-top: -62px;
         margin-bottom: -62px;
     }
+
+    .div-flex {
+        display: flex;
+    }
 }
 
 @media screen and (max-width: 991px) {
@@ -51,5 +55,16 @@
         margin-top: -40px;
         margin-bottom: -40px;
     }
+
+    .nav-custom-text {
+        display: flex;
+        justify-content: center;
+    }
+
+    .collapse-custom {
+        display: flex;
+        flex-direction: column;
+    }
+
 }
 
