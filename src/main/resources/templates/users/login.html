@@ -1,12 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>login</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="eng">
+<head th:insert="partials/header :: head"/>
+<link rel="stylesheet" th:href="@{/css/login_register.css}">
 <body>
-<header>
-    <h1> Where you would login to your profile </h1>
-</header>
+<div th:replace="partials/navbar :: navbar"/>
+
+<div class=" container-fluid login-form">
+    <h4>LOGIN</h4>
+    <div class="mb-3 row form-custom">
+        <label for="userEmail" class="form-label">Email</label>
+        <div class="">
+            <input type="text" class="form-control" id="userEmail" placeholder="email@example.com">
+        </div>
+    </div>
+    <div class="mb-3 row form-custom">
+        <label for="userPassword" class="form-label">Password</label>
+        <div>
+            <input type="password" class="form-control" id="userPassword">
+        </div>
+    </div>
+    <div class="buttons-div">
+        <button type="button" class="button">Submit</button>
+        <button type="button" class="button">Register</button>
+    </div>
+    <div class="mb-3">
+        <input type="checkbox" id="rememberMe">
+        <label class="form-check-label remember-me" for="rememberMe">Remember me</label>
+    </div>
+    <div class="mb-3">
+        <p><a class="forgot-password-link" href="/forgot-password">Forgot Password</a></p>
+    </div>
+</div>
+
 </body>
 </html>
