@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       lang="eng">
-<head th:replace="partials/header :: head"/>
+<head th:insert="partials/header :: head"/>
+<link rel="stylesheet" th:href="@{/css/index.css}">
 <body>
 <div th:replace="partials/navbar :: navbar"/>
 
