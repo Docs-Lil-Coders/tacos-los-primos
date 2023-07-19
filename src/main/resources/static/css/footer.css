@@ -1,0 +1,10 @@
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer-list a {
+    text-decoration: none;
+    font-weight: bold;
+}
