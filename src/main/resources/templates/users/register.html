@@ -1,12 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Register profile</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="eng">
+<head th:insert="partials/header :: head"/>
+<link rel="stylesheet" th:href="@{/css/login_register.css}">
 <body>
-<header>
-    <h1> Where to register your profile </h1>
-</header>
+<div th:replace="partials/navbar :: navbar"/>
+
+<div class=" container-fluid register-form">
+    <h4>REGISTER</h4>
+    <div class="row">
+        <div class="col-4 upload-pic-col">
+            <div class="upload-picture">
+                <div>
+                    <img class="user-image" src="img/placeholder.png">
+                </div>
+                <div class="">
+                    <button class="button" type="file" id="formFile">Upload Picture</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="mb-3 form-custom">
+                <label for="userFirstName" class="form-label">First Name*</label>
+                <div class="">
+                    <input type="text" class="form-control" id="userFirstName">
+                </div>
+            </div>
+            <div class="mb-3 form-custom">
+                <label for="userEmail" class="form-label">Email*</label>
+                <div class="">
+                    <input type="text" class="form-control" id="userEmail">
+                </div>
+            </div>
+            <div class="mb-3 form-custom">
+                <label for="userPassword" class="form-label">Password*</label>
+                <div>
+                    <input type="password" class="form-control" id="userPassword">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="userAddress" class="form-label">Primary Address</label>
+                <textarea class="form-control" id="userAddress" rows="3"></textarea>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="mb-3 form-custom">
+                <label for="userLastName" class="form-label">Last Name*</label>
+                <div class="">
+                    <input type="text" class="form-control" id="userLastName">
+                </div>
+            </div>
+            <div class="mb-3 form-custom">
+                <label for="userPhone" class="form-label">Phone</label>
+                <div class="">
+                    <input type="text" class="form-control" id="userPhone">
+                </div>
+            </div>
+            <div class="mb-3 form-custom">
+                <label for="confirmUserPassword" class="form-label">Confirm Password*</label>
+                <div>
+                    <input type="password" class="form-control" id="confirmUserPassword">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="buttons-div">
+        <button type="submit" class="button">Create Account</button>
+    </div>
+</div>
+
 </body>
 </html>

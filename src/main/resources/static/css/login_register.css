@@ -9,6 +9,7 @@ body {
 
 h4 {
     text-align: center;
+    color: #BF2D1A;
 }
 
 .login-form {
@@ -57,4 +58,37 @@ h4 {
 .forgot-password-link {
     color: #5FBB46;
     text-decoration: none;
+}
+
+.register-form {
+    margin-top: 146px;
+    padding: 30px 50px 30px;
+    background-color: #FFFFFF;
+    border-radius: 50px;
+    width: 950px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.upload-pic-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.upload-picture {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(191, 45, 26, 8%);
+    border-radius: 50px;
+    padding: 20px;
+}
+
+.user-image {
+    border-radius: 50%;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border: solid #BF2D1A 5px;
+    height: 130px;
+    width: 130px;
 }
