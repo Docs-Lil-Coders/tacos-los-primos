@@ -36,15 +36,18 @@ public class User {
     private String email;
 
     @Column(nullable = false)
+    private String username;
+
+    @Column(nullable = false)
     private String password;
 
     @Column(nullable = false)
     private String photo_url;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int accumulated_points;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int redeemed_points;
 
     @Column(nullable = false)
@@ -56,18 +59,32 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Order> userOrders;
 
-//  public User(User copy) {
-//      id = copy.id; // This line is SUPER important! Many things won't work if it's absent
-//      first_name = copy.first_name;
-//      last_name = copy.last_name;
-//      phone = copy.phone;
-//      email = copy.email;
-//      password = copy.password;
-//      photo_url = copy.photo_url;
-//      accumulated_points = copy.accumulated_points;
-//      redeemed_points = copy.redeemed_points;
-//      primary_address = copy.primary_address;
-//  }
+  public User(User copy) {
+      id = copy.id; // This line is SUPER important! Many things won't work if it's absent
+      first_name = copy.first_name;
+      last_name = copy.last_name;
+      phone = copy.phone;
+      email = copy.email;
+      username = copy.username;
+      password = copy.password;
+      photo_url = copy.photo_url;
+      accumulated_points = copy.accumulated_points;
+      redeemed_points = copy.redeemed_points;
+      primary_address = copy.primary_address;
+  }
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "first_name='" + first_name + '\'' +
+                ", last_name='" + last_name + '\'' +
+                ", phone=" + phone +
+                ", email='" + email + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 
 
 }
