@@ -1,5 +1,6 @@
 package com.docslilcoders.tacoslosprimos.models;
 
+import com.docslilcoders.tacoslosprimos.repositories.UserRepository;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,6 +17,8 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 public class User {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
