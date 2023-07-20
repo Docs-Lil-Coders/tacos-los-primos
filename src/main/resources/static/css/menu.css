@@ -1,0 +1,17 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-image: url("../img/ricepaper.png");
+}
+
+h4 {
+    text-align: center;
+    color: #BF2D1A;
+}
+
+.menu-header {
+    margin-top: 146px;
+}

@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Catering page</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
+      lang="eng">
+<head th:insert="partials/header :: head"/>
 <body>
-<header>
+<div th:replace="partials/navbar :: navbar"/>
+
+
     <h1> Catering page </h1>
-</header>
+
+
+<div th:insert="partials/footer :: footer"/>
 </body>
 </html>

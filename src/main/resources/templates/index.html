@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
       lang="eng">
 <head th:insert="partials/header :: head"/>
 <link rel="stylesheet" th:href="@{/css/index.css}">
@@ -20,11 +20,13 @@
                 <img src="/img/placeholder.png" class="d-block w-100 carousel-img" alt="...">
             </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade"
+                data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade"
+                data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
         </button>
@@ -64,7 +66,8 @@
             <input type="email" class="form-control" id="contactUsEmail" placeholder="Email*">
         </div>
         <div class="mb-3">
-            <textarea class="form-control" id="contactUsText" rows="3" placeholder="How can we serve you?"></textarea>
+                <textarea class="form-control" id="contactUsText" rows="3"
+                          placeholder="How can we serve you?"></textarea>
         </div>
         <span type="button" class="button">Submit</span>
     </div>
@@ -83,8 +86,7 @@
             <br>Saturday: 9am - 10pm
             <br>Sunday: 9am - 9pm</p>
     </div>
-
 </div>
-
+<div th:insert="partials/footer :: footer"/>
 </body>
 </html>
