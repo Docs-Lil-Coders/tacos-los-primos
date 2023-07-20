@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
+      lang="eng">
+<head th:insert="partials/header :: head"/>
 <body>
+<div th:replace="partials/navbar :: navbar"/>
+
+
 <h1>view more about the menu item </h1>
+
+
+<div th:insert="partials/footer :: footer"/>
 </body>
 </html>

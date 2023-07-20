@@ -13,7 +13,7 @@ h4 {
 }
 
 .login-form {
-    margin-top: 146px;
+    margin-bottom: 60px;
     padding: 30px 120px 30px;
     background-color: #FFFFFF;
     border-radius: 50px;
@@ -61,8 +61,8 @@ h4 {
 }
 
 .register-form {
-    margin-top: 146px;
     padding: 30px 50px 30px;
+    margin-bottom: 60px;
     background-color: #FFFFFF;
     border-radius: 50px;
     width: 950px;
