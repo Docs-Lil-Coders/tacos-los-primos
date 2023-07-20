@@ -44,4 +44,10 @@ public class TestController {
         model.addAttribute("menuItems", menuItemDao.findAll());
         return "test/menuItemTest";
     }
+
+    @GetMapping("/testMenuItemsModal")
+    public String getMenuItemModal(Model model) {
+        model.addAttribute("menuItems", menuItemDao.findAll());
+        return "test/optionModalTest";
+    }
 }
