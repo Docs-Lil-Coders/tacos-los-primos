@@ -7,11 +7,92 @@ body {
     background-image: url("../img/ricepaper.png");
 }
 
+
 h4 {
     text-align: center;
     color: #BF2D1A;
 }
 
-.menu-header {
-    margin-top: 146px;
+p {
+    margin: 0;
 }
+
+.menu-categories {
+    display: flex;
+    justify-content: space-evenly;
+    color: #BF2D1A;
+    font-weight: bold;
+}
+
+.menu {
+    display: grid;
+    flex-wrap: wrap;
+    grid-template-columns: 50% 50%;
+}
+
+.menu-item {
+    flex-basis: 100%;
+    display: flex;
+    margin: 20px;
+    padding: 20px;
+    border-style: solid;
+    border-width: thick;
+    border-radius: 30px;
+    border-color: #BF2D1A;
+    background-color: #FFFFFF;
+}
+
+.menu-item-buttons {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.menu-item-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.menu-item-title {
+    font-weight: bold;
+    padding-bottom: 5px;
+}
+
+.menu-item-image {
+    height: 125px;
+    border-radius: 30px;
+}
+
+.menu-ad-img {
+    width: 600px;
+    height: 500px;
+    margin: 20px;
+    border-radius: 30px;
+}
+
+.menu-item-description {
+    padding-bottom: 5px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.menu-item-view-more {
+    color: #5FBB46;
+}
+
+.menu-item-add-to-bag {
+    color: #FFFFFF;
+    background-color: #BF2D1A;
+    border-radius: 30px;
+    padding: 5px;
+    display: block;
+    width: 125px;
+    text-align: center;
+}
+
+img {
+    float: right;
+}
+
