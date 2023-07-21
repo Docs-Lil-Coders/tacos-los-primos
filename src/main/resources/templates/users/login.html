@@ -8,6 +8,7 @@
 
 <div class=" container-fluid login-form">
     <h4>LOGIN</h4>
+    <form>
     <div class="mb-3 row form-custom">
         <label for="userEmail" class="form-label">Email</label>
         <div class="">
@@ -21,8 +22,8 @@
         </div>
     </div>
     <div class="buttons-div">
-        <button type="button" class="button">Submit</button>
-        <button type="button" class="button">Register</button>
+        <button type="submit" class="button">Submit</button>
+        <a class="button" href="/register">Register</a>
     </div>
     <div class="mb-3">
         <input type="checkbox" id="rememberMe">
@@ -31,6 +32,7 @@
     <div class="mb-3">
         <p><a class="forgot-password-link" href="/forgot-password">Forgot Password</a></p>
     </div>
+    </form>
 </div>
 
 <div th:insert="partials/footer :: footer"/>

@@ -2,12 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
       lang="eng">
 <head th:insert="partials/header :: head"/>
+<link rel="stylesheet" th:href="@{/css/view_bag.css}">
 <body>
 <div th:replace="partials/navbar :: navbar"/>
 
+<div class="container">
 
-    <h1>Where to view your bag duh</h1>
+    <h4>Where to view your bag duh</h4>
 
+    <div class="checkout-button">
+        <a class="button" href="/checkout">Proceed to Checkout</a>
+    </div>
+</div>
 
 <div th:insert="partials/footer :: footer"/>
 </body>

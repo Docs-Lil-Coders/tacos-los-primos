@@ -2,12 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
       lang="eng">
 <head th:insert="partials/header :: head"/>
+<link rel="stylesheet" th:href="@{/css/checkout.css}">
 <body>
 <div th:replace="partials/navbar :: navbar"/>
 
+<div class="container">
 
-<h1> checkout your order </h1>
 
+    <h1> checkout your order </h1>
+
+    <div class="place-order-buttons">
+        <a class="button" href="/view-bag">Return to Bag</a>
+        <a class="button" href="/order-status">Place Order</a>
+    </div>
+</div>
 
 <div th:insert="partials/footer :: footer"/>
 </body>

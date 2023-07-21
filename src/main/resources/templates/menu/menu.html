@@ -7,18 +7,39 @@
 <div th:replace="partials/navbar :: navbar"/>
 
 <div class="container-fluid menu-header">
-    <h4>OUR MENU</h4>
+    <h1>OUR MENU</h1>
 </div>
 
+<div class="menu-categories">
+    <p><a class="menu-category-title" href="#">APPETIZERS</a></p>
+    <p><a class="menu-category-title" href="#">ENTREES</a></p>
+    <p><a class="menu-category-title" href="#">SIDES</a></p>
+    <p><a class="menu-category-title" href="#">SALSAS</a></p>
+    <p><a class="menu-category-title" href="#">BEVERAGES</a></p>
+</div>
 
-<div class="card" style="width: 18rem;">
-    <img src="..." class="card-img-top" alt="...">
-    <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+<div class="container-fluid">
+    <div class="menu">
+<!---------------------for each menu item--------------------------->
+        <div class="menu-item">
+            <div class="menu-item-info">
+                <p class="menu-item-title">Lorem Ipsum is simply - $10.50</p>
+                <p class="menu-item-description">Lorem Ipsum is simply dummy text of the printing and
+                    typesetting industry. Lorem Ipsum has been the industry's</p>
+                <div class="menu-item-buttons">
+                    <p class="menu-item-view-more"><a class="view-more-link" href="/view-more/1">View More</a></p>
+                    <p><a class="menu-item-add-to-bag" href="/view-bag">Add to Bag</a></p>
+                </div>
+            </div>
+            <div>
+                <img class="menu-item-image" src="/img/placeholder.png">
+            </div>
+        </div>
+<!------------------------------------------------------------------>
+
     </div>
 </div>
+
 
 
 <div th:insert="partials/footer :: footer"/>
