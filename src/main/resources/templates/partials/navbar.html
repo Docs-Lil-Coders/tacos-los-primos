@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xlms:th="http://www.thymeleaf.org" xmlns:xlms="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.w3.org/1999/xhtml">
+      xmlns:th="http://www.w3.org/1999/xhtml"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>navbar</title>
@@ -92,14 +92,24 @@
                                 <!--------------------------/register----------------------->
                                 <a class="nav-link nav-custom-text active" href="/register">REGISTER</a>
                             </li>
+
                             <li class="nav-item">
                                 <!--------------------------/login----------------------->
+                                <div th:if="${#authentication.principal == 'anonymousUser'}">
                                 <a class="nav-link nav-custom-text active" href="/login">LOGIN</a>
+                                </div>
+                                <div th:if="${#authentication.principal != 'anonymousUser'}">
+                                    <div th:if="${#authentication.principal.id == 0}">
+                                        <a class="nav-link nav-custom-text active" href="/login">LOGIN</a>
+                                    </div>
+                                </div>
                             </li>
                             <li>
-                                <form th:action="@{/logout}" th:method="post">
-                                    <button class="btn-link btn" style="margin-top: 8px">Logout</button>
-                                </form>
+                                <div th:if="${#authentication.principal != 'anonymousUser'}">
+                                    <div th:if="${#authentication.principal.id != 0}">
+                                         <a id="logout-link" class="nav-link nav-custom-text active" href="#">LOGOUT</a>
+                                    </div>
+                                </div>
                             </li>
 
                         </ul>
@@ -110,5 +120,8 @@
     </div>
     <div class="nav-margin"></div>
 </div>
+
+
+
 </body>
 </html>
