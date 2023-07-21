@@ -1,0 +1,57 @@
+.info-title {
+    color: #BF2D1A;
+    margin-bottom: 5px;
+    font-size: 20px;
+}
+
+.info-sub-title {
+    color: black;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    margin-bottom: 5px;
+    padding-top: 5px;
+}
+
+.info-par {
+    color: black;
+    font-family: 'Poppins', sans-serif;
+    font-weight: normal;
+    margin-bottom: 5px;
+}
+
+.item-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.info-picture {
+    width: 400px;
+    border-radius: 30px;
+}
+
+.add-button {
+    display: flex;
+    justify-content: center;
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5px;
+    color: #FFFFFF;
+    background-color: #BF2D1A;
+    border: #BF2D1A;
+    border-radius: 50px;
+    height: 36px;
+    width: 180px;
+    margin: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+a.button:hover {
+    color: #FFFFFF;
+}
