@@ -73,10 +73,11 @@
     </div>
 
     <!-- ENTREES -->
-    <p class="mainCategory" id="entrees">Entrees</p>
     <div class="menu">
+    <p class="mainCategory" id="entrees">Entrees</p>
         <div th:each="item : ${menuItems}">
             <div th:if="${item.mainCategory.name() == 'ENTREES'}">
+
                 <div class="menu-item">
                     <div class="menu-item-info">
                         <p class="menu-item-title"><span th:text="${item.item_name}"></span> - $<span
@@ -93,9 +94,11 @@
                         <img class="menu-item-image" src="/img/placeholder.png">
                     </div>
                 </div>
+
             </div> <!-- end if statement -->
         </div> <!-- end for each -->
     </div>
+
 
     <!-- SIDES -->
     <p class="mainCategory" id="sides">Sides</p>
@@ -224,8 +227,8 @@
     </div>
 
     <!--  BEVERAGES -> OTHER -->
-    <p class="subCategory">Other</p>
     <div class="menu">
+    <p class="subCategory">Other</p>
         <div th:each="item : ${menuItems}">
             <div th:if="${item.mainCategory.name() =='BEVERAGES' && item.subCategory.name() == 'OTHER'}">
                 <div class="menu-item">
