@@ -34,15 +34,27 @@ a.menu-category-title:hover {
     transform-origin: left;
 }
 
-.menu {
-    display: grid;
-    flex-wrap: wrap;
-    grid-template-columns: 50% 50%;
+@media screen and (max-width: 574px) {
+    .menu {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media screen and (min-width: 576px) {
+    .menu {
+        display: grid;
+        flex-wrap: wrap;
+        grid-template-columns: 50% 50%;
+    }
 }
 
 .menu-item {
-    flex-basis: 100%;
-    display: flex;
+
+    max-width: 550px;
+    min-width: 511px;
+    display: grid;
+    grid-template-columns: 75% 25%;
     margin: 20px;
     padding: 20px;
     border-style: solid;
