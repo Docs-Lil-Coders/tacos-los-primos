@@ -90,7 +90,22 @@
                             </li>
                             <li class="nav-item">
                                 <!--------------------------/register----------------------->
-                                <a class="nav-link nav-custom-text active" href="/register">REGISTER</a>
+                                <div th:if="${#authentication.principal == 'anonymousUser'}">
+                                    <a class="nav-link nav-custom-text active" href="/register">REGISTER</a>
+                                </div>
+                                <div th:if="${#authentication.principal != 'anonymousUser'}">
+                                    <div th:if="${#authentication.principal.id == 0}">
+                                        <a class="nav-link nav-custom-text active" href="/register">REGISTER</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <!--------------------------/profile----------------------->
+                                <div th:if="${#authentication.principal != 'anonymousUser'}">
+                                    <div th:if="${#authentication.principal.id != 0}">
+                                        <a class="nav-link nav-custom-text active" href="/profile">PROFILE</a>
+                                    </div>
+                                </div>
                             </li>
 
                             <li class="nav-item">
@@ -104,7 +119,8 @@
                                     </div>
                                 </div>
                             </li>
-                            <li>
+                            <li class="nav-item">
+                                <!--------------------------/login----------------------->
                                 <div th:if="${#authentication.principal != 'anonymousUser'}">
                                     <div th:if="${#authentication.principal.id != 0}">
                                          <a id="logout-link" class="nav-link nav-custom-text active" href="#">LOGOUT</a>

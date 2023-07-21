@@ -2,6 +2,7 @@ package com.docslilcoders.tacoslosprimos.controllers;
 
 import com.docslilcoders.tacoslosprimos.models.User;
 import com.docslilcoders.tacoslosprimos.repositories.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,8 +41,14 @@ public class UserController {
         return "users/forgot_password";
     }
 
-    @GetMapping("/profile/{id}")
-    public String getProfilePage(@PathVariable String id) {
+    @GetMapping("/profile")
+    public String getProfilePage(Model model) {
+
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (user.getId() == 0) {
+            return "redirect:/login";
+        }
+        model.addAttribute("user", user);
         return "users/profile";
     }
 
