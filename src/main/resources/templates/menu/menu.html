@@ -6,20 +6,18 @@
 <body>
 <div th:replace="partials/navbar :: navbar"/>
 
-<div class="container-fluid menu-header">
+<div class="menu-header">
     <h1>OUR MENU</h1>
+    <div class="menu-categories">
+        <p><a class="menu-category-title" href="#appetizers">APPETIZERS</a></p>
+        <p><a class="menu-category-title" href="#entrees">ENTREES</a></p>
+        <p><a class="menu-category-title" href="#sides">SIDES</a></p>
+        <p><a class="menu-category-title" href="#salsas">SALSAS</a></p>
+        <p><a class="menu-category-title" href="#beverages">BEVERAGES</a></p>
+    </div>
 </div>
 
 <div class="container-xxl">
-<div class="menu-categories">
-    <p><a class="menu-category-title" href="#appetizers">APPETIZERS</a></p>
-    <p><a class="menu-category-title" href="#entrees">ENTREES</a></p>
-    <p><a class="menu-category-title" href="#sides">SIDES</a></p>
-    <p><a class="menu-category-title" href="#salsas">SALSAS</a></p>
-    <p><a class="menu-category-title" href="#beverages">BEVERAGES</a></p>
-</div>
-
-
     <!--    <div class="menu">-->
     <!---------------------for each menu item--------------------------->
     <!-- APPETIZERS -> CHIPS -->
@@ -75,7 +73,7 @@
 
     <!-- ENTREES -->
     <div class="menu">
-    <p class="mainCategory" id="entrees">Entrees</p>
+        <p class="mainCategory" id="entrees">Entrees</p>
         <div th:each="item : ${menuItems}">
             <div th:if="${item.mainCategory.name() == 'ENTREES'}">
 
@@ -229,7 +227,7 @@
 
     <!--  BEVERAGES -> OTHER -->
     <div class="menu">
-    <p class="subCategory">Other</p>
+        <p class="subCategory">Other</p>
         <div th:each="item : ${menuItems}">
             <div th:if="${item.mainCategory.name() =='BEVERAGES' && item.subCategory.name() == 'OTHER'}">
                 <div class="menu-item">
