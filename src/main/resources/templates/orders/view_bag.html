@@ -6,9 +6,45 @@
 <body>
 <div th:replace="partials/navbar :: navbar"/>
 
-<div class="container">
+<div class="cart-container">
 
-    <h4>Where to view your bag duh</h4>
+    <h4>VIEWING YOUR BAG</h4>
+
+    <ul class="col-titles">
+        <li class="bag-title"></li>
+        <li class="bag-title-name">Name</li>
+        <li class="bag-title">Unit Price</li>
+        <li class="bag-title">Quantity</li>
+        <li class="bag-title">Total</li>
+        <li class="bag-title"></li>
+
+    <!-------------------    for each item added to bag------------------------>
+
+<!--        item image-->
+        <li class="bag-item"><img class="bag-item-image" src="/img/placeholder.png"></li>
+<!--        item name-->
+        <li class="bag-item-name">Belgium Waffles with strawberries</li>
+<!--        item price per unit-->
+        <li class="bag-item">$10.50</li>
+<!--        quantity-->
+        <li class="bag-item-qty">
+            <a class="plus-minus" href="#">+</a>
+            <p>2</p>
+            <a class="plus-minus" href="#">-</a>
+        </li>
+<!--        total price-->
+        <li class="bag-item">$21.00</li>
+<!--        remove link-->
+        <li class="bag-item-delete"><a href="#">x</a></li>
+
+
+<!----------------------------------------------------------------------------->
+    </ul>
+
+    <div class="bag-total-div">
+        <p class="total-title">Bag Total</p>
+        <p class="total-price">$121.50</p>
+    </div>
 
     <div class="checkout-button">
         <a class="button" href="/checkout">Proceed to Checkout</a>
