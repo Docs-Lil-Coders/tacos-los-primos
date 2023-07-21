@@ -1,14 +1,32 @@
-.menu-categories {
-    display: flex;
-    justify-content: space-evenly;
-    color: #BF2D1A;
-    font-weight: bold;
+.menu-header {
+    margin: 0 auto;
+    max-width: 960px;
+}
+
+@media screen and (min-width: 575px) {
+    .menu-categories {
+        display: flex;
+        justify-content: space-evenly;
+        color: #BF2D1A;
+        font-weight: bold;
+        max-width: 960px;
+    }
+}
+@media screen and (max-width: 574px) {
+    .menu-categories {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        color: #BF2D1A;
+        font-weight: bold;
+    }
 }
 
 .menu-category-title {
     color: #BF2D1A;
     font-size: 20px;
     position: relative;
+    margin: 0 20px;
 }
 
 a.menu-category-title:hover {
@@ -34,16 +52,29 @@ a.menu-category-title:hover {
     transform-origin: left;
 }
 
-.menu {
-    display: grid;
-    flex-wrap: wrap;
-    grid-template-columns: 50% 50%;
+@media screen and (max-width: 960px) {
+    .menu {
+        display: flex;
+        flex-direction: column;
+        justify-items: center;
+    }
+}
+
+@media screen and (min-width: 961px) {
+    .menu {
+        display: grid;
+        flex-wrap: wrap;
+        grid-template-columns: 50% 50%;
+        justify-items: center;
+    }
 }
 
 .menu-item {
-    flex-basis: 100%;
-    display: flex;
-    margin: 20px;
+    width: 450px;
+    display: grid;
+    grid-template-columns: 75% 25%;
+    justify-self: center;
+    margin: 20px auto 20px;
     padding: 20px;
     border-style: solid;
     border-width: thick;
@@ -58,15 +89,22 @@ a.menu-category-title:hover {
 }
 
 .menu-item-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    display: grid;
+    grid-template-rows: 20% 60% 20%;
     font-size: 14px;
+    margin-right: 25px;
 }
 
 .menu-item-title {
     font-weight: bold;
     padding-bottom: 5px;
+}
+
+.img-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
 }
 
 .menu-item-image {
@@ -114,3 +152,19 @@ a.menu-item-add-to-bag:hover {
     color: #FFFFFF;
 }
 
+.mainCategory {
+    text-align: start;
+    color: #BF2D1A;
+    font-weight: bold;
+    font-size: 20px;
+    padding-top: 30px;
+    padding-left: 100px;
+}
+
+.subCategory {
+    text-align: start;
+    color: #FFBF2C;
+    font-weight: bold;
+    font-size: 18px;
+    padding-left: 100px;
+}
