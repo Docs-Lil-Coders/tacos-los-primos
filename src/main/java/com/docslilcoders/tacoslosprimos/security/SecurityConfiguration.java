@@ -41,7 +41,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/ads/create", "/ads/*/edit").authenticated()
                         /* Pages that do not require authentication
                          * anyone can visit the home page, register, login, and view ads */
-                        .requestMatchers("/", "/ads", "/ads/*", "/register", "/login").permitAll()
+                        .requestMatchers("/", "/menu", "/menu/*", "/register", "/login", "/info", "/info/*").permitAll()
                         // allow loading of static resources
                         .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
                 )
