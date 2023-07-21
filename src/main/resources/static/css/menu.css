@@ -1,8 +1,15 @@
+.menu-header {
+    text-align: center;
+}
+
 .menu-categories {
     display: flex;
     justify-content: space-evenly;
     color: #BF2D1A;
     font-weight: bold;
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .menu-category-title {
@@ -34,28 +41,29 @@ a.menu-category-title:hover {
     transform-origin: left;
 }
 
-@media screen and (max-width: 574px) {
+@media screen and (max-width: 1145px) {
     .menu {
         display: flex;
         flex-direction: column;
+        justify-items: center;
     }
 }
 
-@media screen and (min-width: 576px) {
+@media screen and (min-width: 1146px) {
     .menu {
         display: grid;
         flex-wrap: wrap;
         grid-template-columns: 50% 50%;
+        justify-items: center;
     }
 }
 
 .menu-item {
-
-    max-width: 550px;
-    min-width: 511px;
+    width: 550px;
     display: grid;
     grid-template-columns: 75% 25%;
-    margin: 20px;
+    justify-self: center;
+    margin: 20px auto 20px;
     padding: 20px;
     border-style: solid;
     border-width: thick;
@@ -70,15 +78,21 @@ a.menu-category-title:hover {
 }
 
 .menu-item-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    display: grid;
+    grid-template-rows: 20% 60% 20%;
     font-size: 14px;
 }
 
 .menu-item-title {
     font-weight: bold;
     padding-bottom: 5px;
+}
+
+.img-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
 }
 
 .menu-item-image {
@@ -126,3 +140,19 @@ a.menu-item-add-to-bag:hover {
     color: #FFFFFF;
 }
 
+.mainCategory {
+    text-align: start;
+    color: #BF2D1A;
+    font-weight: bold;
+    font-size: 20px;
+    padding-top: 30px;
+    padding-left: 30px;
+}
+
+.subCategory {
+    text-align: start;
+    color: #FFBF2C;
+    font-weight: bold;
+    font-size: 18px;
+    padding-left: 30px;
+}
