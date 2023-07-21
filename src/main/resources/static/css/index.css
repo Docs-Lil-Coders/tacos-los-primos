@@ -1,17 +1,3 @@
-* {
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    background-image: url("../img/ricepaper.png");
-}
-
-h1 {
-    text-align: center;
-    color: #BF2D1A;
-}
-
 .carousel-custom {
     margin: 30px;
 }
@@ -30,14 +16,37 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: 8px;
     color: #FFFFFF;
     background-color: #BF2D1A;
     border: #BF2D1A;
     border-radius: 50px;
-    height: 46px;
-    width: 200px;
+    height: 50px;
+    width: 250px;
     margin: 20px;
     font-size: 20px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+a.button:hover {
+    color: #FFFFFF;
+}
+
+.contact-us-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5px;
+    color: #FFFFFF;
+    background-color: #BF2D1A;
+    border: #BF2D1A;
+    border-radius: 50px;
+    height: 36px;
+    width: 180px;
+    margin: 20px;
+    font-size: 16px;
+    font-weight: bold;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
@@ -61,12 +70,12 @@ h1 {
 
 .contact-us {
     width: 50%;
-    padding: 0px 30px 30px;
+    padding: 0 30px 30px;
 }
 
 .special-requests {
     width: 50%;
-    padding: 0px 30px 30px;
+    padding: 0 30px 30px;
 }
 
 .google-link {
@@ -76,4 +85,9 @@ h1 {
 
 .sub-title-text {
     color: #BF2D1A;
+    margin-top: 10px;
+}
+
+.info-text {
+    font-weight: normal;
 }

@@ -35,8 +35,8 @@
 
 <!--buttons-->
 <div class="buttons-div">
-    <span type="button" class="button">Order Now</span>
-    <span type="button" class="button">Track Your Order</span>
+    <a href="/menu" class="button">Order Now</a>
+    <a href="/order-status" class="button">Track Your Order</a>
 </div>
 
 <!--popular dishes-->
@@ -54,8 +54,10 @@
 <!--visit us-->
 <h1>Visit Us</h1>
 <div class="visit-us">
+
     <div class="contact-us">
         <p class="sub-title-text">CONTACT US</p>
+        <form>
         <div class="mb-3">
             <input type="text" class="form-control" id="contactUsName" placeholder="Name">
         </div>
@@ -69,19 +71,21 @@
                 <textarea class="form-control" id="contactUsText" rows="3"
                           placeholder="How can we serve you?"></textarea>
         </div>
-        <span type="button" class="button">Submit</span>
+        <button type="submit" class="contact-us-button">Submit</button>
+        </form>
     </div>
+
 
     <div class="special-requests">
         <p class="sub-title-text">SPECIAL REQUESTS?</p>
-        <p>Do you have dietary concerns? Questions about an upcoming event?
+        <p class="info-text">Do you have dietary concerns? Questions about an upcoming event?
             <br>Give us a call or shoot an email, we'll get back to you soon!</p>
         <p class="sub-title-text">TACOS LOS PRIMOS</p>
-        <p>6011 W. Thomas Rd, <br>Phoenix AZ 85033
+        <p class="info-text">6011 W. Thomas Rd, <br>Phoenix AZ 85033
             <br>(480)586-7556
             <br><a class="google-link" href="http://google.com">Click to View Google Map</a></p>
         <p class="sub-title-text">HOURS</p>
-        <p>Monday - Wednesday: 8am - 9pm
+        <p class="info-text">Monday - Wednesday: 8am - 9pm
             <br>Thursday - Friday: 8am - 10pm
             <br>Saturday: 9am - 10pm
             <br>Sunday: 9am - 9pm</p>
