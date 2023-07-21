@@ -104,25 +104,12 @@
                                     </div>
                                 </div>
                             </li>
-
-                            <li>
-                                <a class="nav-link nav-custom-text active" th:text="${#authentication.principal}" ></a>
-                            </li>
-
                             <li>
                                 <div th:if="${#authentication.principal != 'anonymousUser'}">
                                     <div th:if="${#authentication.principal.id != 0}">
-                                        <form th:action="@{/logout}" th:method="post" id="logoutForm">
-                                         <a class="nav-link nav-custom-text active" href="" onclick="handleLinkClick()">LOGOUT</a>
-                                        </form>
+                                         <a id="logout-link" class="nav-link nav-custom-text active" href="#">LOGOUT</a>
                                     </div>
                                 </div>
-<!--                                &lt;!&ndash;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;/logout-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
-<!--                                <div th:if="${#authentication.principal.id > 0}">-->
-<!--                                <form th:action="@{/logout}" th:method="post" id="logoutForm">-->
-<!--                                    <a class="nav-link nav-custom-text active" href="#">LOGOUT</a>-->
-<!--                                </form>-->
-<!--                                </div>-->
                             </li>
 
                         </ul>
@@ -132,15 +119,6 @@
         </nav>
     </div>
     <div class="nav-margin"></div>
-
-    <script>
-        console.log("?")
-        let logoutForm = document.getElementById("logoutForm");
-        function handleLinkClick() {
-            logoutForm.submit();
-            console.log("submitted?")
-        }
-    </script>
 </div>
 
 

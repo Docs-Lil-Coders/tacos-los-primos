@@ -55,6 +55,19 @@
         </p>
     </div>
 </footer>
+
+
+
+    <form th:action="@{/logout}" th:method="post" id="logoutForm">
+    </form>
+    <script>
+        const link = document.querySelector("#logout-link");
+        if(link !== null) {
+            link.addEventListener("click", function (event) {
+                document.getElementById("logoutForm").submit();
+            });
+        }
+    </script>
 </div>
 
 </body>
