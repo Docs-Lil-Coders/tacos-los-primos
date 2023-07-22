@@ -2,10 +2,34 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
       lang="eng">
 <head th:insert="partials/header :: head"/>
+<link rel="stylesheet" th:href="@{/css/order_status.css}">
 <body>
 <div th:replace="partials/navbar :: navbar"/>
 
-    <h1> Where to view your order status </h1>
+<h1>ORDER STATUS</h1>
+
+<div class="container-sm row">
+    <form>
+    <div class="mb-3 form-custom">
+        <label for="orderNumber" class="form-label">Order Number</label>
+        <div class="">
+            <input type="text" class="form-control" id="orderNumber">
+        </div>
+    </div>
+
+    <div class="place-order-buttons">
+        <button type="submit" class="button" href="#">Order Status</button>
+    </div>
+    </form>
+</div>
+
+<div class="order-status-info">
+    <p>Your Order had been Confirmed</p>
+    <p>Your Order is being prepared</p>
+    <p>Estimated delivery time</p>
+    <p>5:00 PM</p>
+</div>
+
 
 
 <div th:insert="partials/footer :: footer"/>
