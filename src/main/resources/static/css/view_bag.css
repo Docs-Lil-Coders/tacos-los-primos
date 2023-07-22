@@ -51,16 +51,9 @@ a {
     justify-content: space-evenly;
 }
 
-.plus-minus {
-}
-
-
 .bag-item-image {
     width: 50px;
     border-radius: 10px;
-}
-
-.bag-item-delete {
 }
 
 .bag-total-div {
