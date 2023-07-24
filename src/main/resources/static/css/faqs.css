@@ -14,3 +14,12 @@ body {
     height: 800px;
     font-size: 14px;
 }
+
+.answers {
+    font-weight: normal;
+    margin-bottom: 1em;
+}
+
+h6 {
+    font-weight: bold;
+}
