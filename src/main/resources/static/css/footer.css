@@ -7,3 +7,21 @@ footer {
     text-decoration: none;
     font-weight: bold;
 }
+.background-image-wrapper {
+    min-height: 100vh;
+    background-image: url('../img/ricepaper.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+@media (max-width: 768px) {
+    body {
+        background-size: contain;
+    }
+}

@@ -8,66 +8,61 @@
 <body>
 <div th:fragment="footer">
 
+        <footer class="bg-light text-center text-lg-start footer">
+            <div class="text-center p-3" style="background-color: #FFBF2C;">
+                <!-- Grid container -->
+                <div class="container p-4">
+                    <!--Grid row-->
+                    <div class="row justify-content-center">
 
-<footer class="bg-light text-center text-lg-start footer">
-    <div class="text-center p-3" style="background-color: #FFBF2C;">
-        <!-- Grid container -->
-        <div class="container p-4">
-            <!--Grid row-->
-            <div class="row justify-content-center">
-
-                <!--Grid column-->
-                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                    <ul class="list-unstyled">
-                        <li class="footer-list">
-                            <a href="/reviews" class="text-white">REVIEWS</a>
-                        </li>
-                        <li class="footer-list">
-                            <a href="/catering" class="text-white">CATERING</a>
-                        </li>
-                        <li class="footer-list">
-                            <a href="/faqs" class="text-white">FAQs</a>
-                        </li>
-                    </ul>
+                        <!--Grid column-->
+                        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                            <ul class="list-unstyled">
+                                <li class="footer-list">
+                                    <a href="/reviews" class="text-white">REVIEWS</a>
+                                </li>
+                                <li class="footer-list">
+                                    <a href="/catering" class="text-white">CATERING</a>
+                                </li>
+                                <li class="footer-list">
+                                    <a href="/faqs" class="text-white">FAQs</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--Grid column-->
+                        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                            <ul class="list-unstyled mb-0">
+                                <li class="footer-list">
+                                    <a href="/careers" class="text-white">CAREERS</a>
+                                </li>
+                                <li class="footer-list">
+                                    <a href="/about-us" class="text-white">ABOUT US</a>
+                                </li>
+                                <li class="footer-list">
+                                    <a href="/developers" class="text-white">DEVELOPERS</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <!--Grid column-->
 
-                <!--Grid column-->
-                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                    <ul class="list-unstyled mb-0">
-                        <li class="footer-list">
-                            <a href="/careers" class="text-white">CAREERS</a>
-                        </li>
-                        <li class="footer-list">
-                            <a href="/about-us" class="text-white">ABOUT US</a>
-                        </li>
-                        <li class="footer-list">
-                            <a href="/developers" class="text-white">DEVELOPERS</a>
-                        </li>
-                    </ul>
-                </div>
+                <!-- Copyright -->
+                <p style="color: white;">
+                    Copyright © 2023 Doc's Lil Coders - All Rights Reserved.
+                </p>
             </div>
-        </div>
+        </footer>
 
-        <!-- Copyright -->
-        <p style="color: white;">
-            Copyright © 2023 Doc's Lil Coders - All Rights Reserved.
-        </p>
-    </div>
-</footer>
-
-
-
-    <form th:action="@{/logout}" th:method="post" id="logoutForm">
-    </form>
-    <script>
-        const link = document.querySelector("#logout-link");
-        if(link !== null) {
-            link.addEventListener("click", function (event) {
-                document.getElementById("logoutForm").submit();
-            });
-        }
-    </script>
+<form th:action="@{/logout}" th:method="post" id="logoutForm">
+</form>
+<script>
+    const link = document.querySelector("#logout-link");
+    if(link !== null) {
+        link.addEventListener("click", function (event) {
+            document.getElementById("logoutForm").submit();
+        });
+    }
+</script>
 </div>
 
 </body>
