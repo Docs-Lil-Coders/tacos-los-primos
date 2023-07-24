@@ -6,15 +6,193 @@
 <body>
 <div th:replace="partials/navbar :: navbar"/>
 
-<div class="container">
+<div class="cart-container">
+    <form>
 
+        <h4>CONFIRM YOUR ORDER</h4>
 
-    <h1> checkout your order </h1>
+        <ul class="col-titles">
+            <li class="bag-title"></li>
+            <li class="bag-title-name">Name</li>
+            <li class="bag-title">Quantity</li>
+            <li class="bag-title">Total</li>
 
-    <div class="place-order-buttons">
-        <a class="button" href="/view-bag">Return to Bag</a>
-        <a class="button" href="/order-status">Place Order</a>
-    </div>
+            <!-------------------for each item added to bag - start------------------------>
+
+            <!--        item image-->
+            <li class="bag-item"><img class="bag-item-image" src="/img/placeholder.png"></li>
+            <!--        item name-->
+            <li class="bag-item-name">Belgium Waffles with strawberries</li>
+            <!--        quantity-->
+            <li class="bag-item">
+                <p>2</p>
+            </li>
+            <!--        total price-->
+            <li class="bag-item">$21.00</li>
+
+            <!----------------------------------for each item added to bag - end------------------------------------------->
+        </ul>
+
+        <div class="bag-total-div">
+            <p class="total-title">Bag Sub-total</p>
+            <p class="total-price">$121.50</p>
+        </div>
+
+        <!-------------------------user order payment tabs - start------------------------------------>
+
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="contact-info-tab" data-bs-toggle="tab" data-bs-target="#contact-info"
+                   type="button" role="tab" aria-controls="contact-info" aria-selected="true" href="#contact-info">Contact
+                    Information</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="confirm-total-tab" data-bs-toggle="tab" data-bs-target="#confirm-total"
+                   type="button" role="tab" aria-controls="confirm-total" aria-selected="false" href="#confirm-total">Bag
+                    Total</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="payment-info-tab" data-bs-toggle="tab" data-bs-target="#payment-info"
+                   type="button" role="tab" aria-controls="payment-info" aria-selected="false" href="#payment-info">Payment
+                    Information</a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <!----------contact info tab - start----------->
+            <div class="tab-pane active" id="contact-info" role="tabpanel" aria-labelledby="contact-info-tab">
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="mb-3 form-custom">
+                            <label for="userFirstName" class="form-label">First Name*</label>
+                            <div class="">
+                                <input type="text" class="form-control" id="userFirstName">
+                            </div>
+                        </div>
+                        <div class="mb-3 form-custom">
+                            <label for="userEmail" class="form-label">Email*</label>
+                            <div class="">
+                                <input type="text" class="form-control" id="userEmail">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="mb-3 form-custom">
+                            <label for="userLastName" class="form-label">Last Name*</label>
+                            <div class="">
+                                <input type="text" class="form-control" id="userLastName">
+                            </div>
+                        </div>
+                        <div class="mb-3 form-custom">
+                            <label for="userPhone" class="form-label">Phone</label>
+                            <div class="">
+                                <input type="text" class="form-control" id="userPhone">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="userAddress" class="form-label">Primary Address</label>
+                    <textarea class="form-control" id="userAddress" rows="3"></textarea>
+                </div>
+
+                <div class="place-order-buttons">
+                    <a class="button" href="/register">Create an Account</a>
+                    <a class="button" href="#payment-info">Proceed as Guest</a>
+                </div>
+            </div>
+            <!----------contact info tab - end----------->
+
+            <!----------confirm order total - start----------->
+            <div class="tab-pane" id="confirm-total" role="tabpanel" aria-labelledby="confirm-total-tab">
+
+                <div class="row">
+                    <div class="col-6 rewards">
+                        <p class="bag-title">REDEEM REWARDS</p>
+                        <div class="mb-3 form-custom">
+                            <label for="userRewards" class="form-label">Rewards Balance</label>
+                            <div class="">
+                                <input type="text" class="form-control" id="userRewards">
+                            </div>
+                            <a class="button" href="#">Apply Rewards</a>
+                        </div>
+                        <div class="mb-3 form-custom">
+                            <label for="userPromo" class="form-label">Promo Code</label>
+                            <div class="">
+                                <input type="text" class="form-control" id="userPromo">
+                            </div>
+                            <a class="button" href="#">Apply Promo</a>
+                        </div>
+                    </div>
+                    <div class="col-6 order-total-price">
+                        <p class="bag-title">ORDER TOTAL</p>
+                        <ul class="order-price">
+                            <li><p>Order Total</p></li>
+                            <li><p class="dollar-amount">$121.00</p></li>
+                            <li><p>Delivery Charge</p></li>
+                            <li><p class="dollar-amount">$21.00</p></li>
+                            <li><p>Taxes</p></li>
+                            <li><p class="dollar-amount">$1.50</p></li>
+                            <li><p>Discount</p></li>
+                            <li><p class="dollar-amount">-$10.00</p></li>
+                            <li><p>Total</p></li>
+                            <li><p class="dollar-amount">$141.00</p></li>
+                        </ul>
+
+                    </div>
+
+                </div>
+
+                <div class="place-order-buttons">
+                    <a class="button" href="/view-bag">Return to Bag</a>
+                    <a class="button" href="#payment-info">Continue</a>
+                </div>
+
+            </div>
+            <!----------confirm order total - end----------->
+
+            <!----------payment info tab - start----------->
+            <div class="tab-pane" id="payment-info" role="tabpanel" aria-labelledby="payment-info-tab">
+
+                <div>
+                    <div class="mb-3 form-custom">
+                        <label for="cardName" class="form-label">Name on Card*</label>
+                        <div class="">
+                            <input type="text" class="form-control" id="cardName">
+                        </div>
+                    </div>
+                    <div class="mb-3 form-custom">
+                        <label for="cardNumber" class="form-label">Card Number*</label>
+                        <div class="">
+                            <input type="text" class="form-control" id="cardNumber">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3 form-custom">
+                            <label for="expirationDate" class="form-label">Expiration Date*</label>
+                            <div class="">
+                                <input type="text" class="form-control" id="expirationDate">
+                            </div>
+                        </div>
+                        <div class="col-6 mb-3 form-custom">
+                            <label for="cvc" class="form-label">CVC*</label>
+                            <div class="">
+                                <input type="text" class="form-control" id="cvc">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="place-order-buttons">
+                    <button class="button" type="submit" href="/order-status">Place Order</button>
+                </div>
+            </div>
+            <!----------payment info tab - end----------->
+        </div>
+        <!-------------------------user order payment tabs - end------------------------------------>
+    </form>
 </div>
 
 <div th:insert="partials/footer :: footer"/>
