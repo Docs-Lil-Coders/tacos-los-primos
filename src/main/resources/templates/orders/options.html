@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Choosing options</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
+      lang="eng">
+<head th:insert="partials/header :: head"/>
+<link rel="stylesheet" th:href="@{/css/index.css}">
 <body>
-<header>
+<div th:replace="partials/navbar :: navbar"/>
+
+
     <h1> Choosing toppings and meats </h1>
-</header>
+
+
+<div th:insert="partials/footer :: footer"/>
 </body>
 </html>

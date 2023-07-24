@@ -1,12 +1,260 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>menu</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
+      lang="eng">
+<head th:insert="partials/header :: head"/>
+<link rel="stylesheet" th:href="@{/css/menu.css}">
 <body>
-<header>
-    <h1> Where the menu will be </h1>
-</header>
+<div th:replace="partials/navbar :: navbar"/>
+
+<div class="menu-header">
+    <h1>OUR MENU</h1>
+    <div class="menu-categories">
+        <p><a class="menu-category-title" href="#appetizers">APPETIZERS</a></p>
+        <p><a class="menu-category-title" href="#entrees">ENTREES</a></p>
+        <p><a class="menu-category-title" href="#sides">SIDES</a></p>
+        <p><a class="menu-category-title" href="#salsas">SALSAS</a></p>
+        <p><a class="menu-category-title" href="#beverages">BEVERAGES</a></p>
+    </div>
+</div>
+
+<div class="container-xxl">
+    <!--    <div class="menu">-->
+    <!---------------------for each menu item--------------------------->
+    <!-- APPETIZERS -> CHIPS -->
+    <p class="mainCategory" id="appetizers">Appetizers</p>
+    <p class="subCategory">Chips</p>
+    <div class="menu">
+        <div th:each="item : ${menuItems}">
+            <div th:if="${item.mainCategory.name() =='APPETIZERS' && item.subCategory.name() == 'CHIPS'}">
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <p class="menu-item-title"><span th:text="${item.item_name}"></span> - $<span
+                                th:text="${item.price}"></span></p>
+                        <p class="menu-item-description" th:text="${item.description}"></p>
+                        <div class="menu-item-buttons">
+                            <p class="menu-item-view-more"><a class="view-more-link"
+                                                              th:attr="href=${'/view-more/' + item.id}">View More</a>
+                            </p>
+                            <p><a class="menu-item-add-to-bag" href="/view-bag">Add to Bag</a></p>
+                        </div>
+                    </div>
+                    <div class="img-div">
+                        <img class="menu-item-image" src="/img/placeholder.png">
+                    </div>
+                </div>
+            </div> <!-- end if statement -->
+        </div> <!-- end for each -->
+    </div>
+
+    <!-- APPETIZERS -> OTHER -->
+    <p class="subCategory">Other</p>
+    <div class="menu">
+        <div th:each="item : ${menuItems}">
+            <div th:if="${item.mainCategory.name() =='APPETIZERS' && item.subCategory.name() == 'OTHER'}">
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <p class="menu-item-title"><span th:text="${item.item_name}"></span> - $<span
+                                th:text="${item.price}"></span></p>
+                        <p class="menu-item-description" th:text="${item.description}"></p>
+                        <div class="menu-item-buttons">
+                            <p class="menu-item-view-more"><a class="view-more-link"
+                                                              th:attr="href=${'/view-more/' + item.id}">View More</a>
+                            </p>
+                            <p><a class="menu-item-add-to-bag" href="/view-bag">Add to Bag</a></p>
+                        </div>
+                    </div>
+                    <div class="img-div">
+                        <img class="menu-item-image" src="/img/placeholder.png">
+                    </div>
+                </div>
+            </div> <!-- end if statement -->
+        </div> <!-- end for each -->
+    </div>
+
+    <!-- ENTREES -->
+    <div class="menu">
+        <p class="mainCategory" id="entrees">Entrees</p>
+        <div th:each="item : ${menuItems}">
+            <div th:if="${item.mainCategory.name() == 'ENTREES'}">
+
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <p class="menu-item-title"><span th:text="${item.item_name}"></span> - $<span
+                                th:text="${item.price}"></span></p>
+                        <p class="menu-item-description" th:text="${item.description}"></p>
+                        <div class="menu-item-buttons">
+                            <p class="menu-item-view-more"><a class="view-more-link"
+                                                              th:attr="href=${'/view-more/' + item.id}">View More</a>
+                            </p>
+                            <p><a class="menu-item-add-to-bag" href="/view-bag">Add to Bag</a></p>
+                        </div>
+                    </div>
+                    <div class="img-div">
+                        <img class="menu-item-image" src="/img/placeholder.png">
+                    </div>
+                </div>
+
+            </div> <!-- end if statement -->
+        </div> <!-- end for each -->
+    </div>
+
+
+    <!-- SIDES -->
+    <p class="mainCategory" id="sides">Sides</p>
+    <div class="menu">
+        <div th:each="item : ${menuItems}">
+            <div th:if="${item.mainCategory.name() =='SIDES'}">
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <p class="menu-item-title"><span th:text="${item.item_name}"></span> - $<span
+                                th:text="${item.price}"></span></p>
+                        <p class="menu-item-description" th:text="${item.description}"></p>
+                        <div class="menu-item-buttons">
+                            <p class="menu-item-view-more"><a class="view-more-link"
+                                                              th:attr="href=${'/view-more/' + item.id}">View More</a>
+                            </p>
+                            <p><a class="menu-item-add-to-bag" href="/view-bag">Add to Bag</a></p>
+                        </div>
+                    </div>
+                    <div class="img-div">
+                        <img class="menu-item-image" src="/img/placeholder.png">
+                    </div>
+                </div>
+            </div> <!-- end if statement -->
+        </div> <!-- end for each -->
+    </div>
+
+    <!-- SALSAS -->
+    <p class="mainCategory" id="salsas">salsas</p>
+    <div class="menu">
+        <div th:each="item : ${menuItems}">
+            <div th:if="${item.mainCategory.name() =='SALSAS'}">
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <p class="menu-item-title"><span th:text="${item.item_name}"></span> - $<span
+                                th:text="${item.price}"></span></p>
+                        <p class="menu-item-description" th:text="${item.description}"></p>
+                        <div class="menu-item-buttons">
+                            <p class="menu-item-view-more"><a class="view-more-link"
+                                                              th:attr="href=${'/view-more/' + item.id}">View More</a>
+                            </p>
+                            <p><a class="menu-item-add-to-bag" href="/view-bag">Add to Bag</a></p>
+                        </div>
+                    </div>
+                    <div class="img-div">
+                        <img class="menu-item-image" src="/img/placeholder.png">
+                    </div>
+                </div>
+            </div> <!-- end if statement -->
+        </div> <!-- end for each -->
+    </div>
+
+    <!-- BEVERAGES -> SODAS -->
+    <p class="mainCategory" id="beverages">Beverages</p>
+    <p class="subCategory">Sodas</p>
+    <div class="menu">
+        <div th:each="item : ${menuItems}">
+            <div th:if="${item.mainCategory.name() =='BEVERAGES' && item.subCategory.name() == 'SODAS'}">
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <p class="menu-item-title"><span th:text="${item.item_name}"></span> - $<span
+                                th:text="${item.price}"></span></p>
+                        <p class="menu-item-description" th:text="${item.description}"></p>
+                        <div class="menu-item-buttons">
+                            <p class="menu-item-view-more"><a class="view-more-link"
+                                                              th:attr="href=${'/view-more/' + item.id}">View More</a>
+                            </p>
+                            <p><a class="menu-item-add-to-bag" href="/view-bag">Add to Bag</a></p>
+                        </div>
+                    </div>
+                    <div class="img-div">
+                        <img class="menu-item-image" src="/img/placeholder.png">
+                    </div>
+                </div>
+            </div> <!-- end if statement -->
+        </div> <!-- end for each -->
+    </div>
+
+    <!--  BEVERAGES -> AGUA FRESCAS -->
+    <p class="subCategory">Agua Frescas</p>
+    <div class="menu">
+        <div th:each="item : ${menuItems}">
+            <div th:if="${item.mainCategory.name() =='BEVERAGES' && item.subCategory.name() == 'AGUAFRESCAS'}">
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <p class="menu-item-title"><span th:text="${item.item_name}"></span> - $<span
+                                th:text="${item.price}"></span></p>
+                        <p class="menu-item-description" th:text="${item.description}"></p>
+                        <div class="menu-item-buttons">
+                            <p class="menu-item-view-more"><a class="view-more-link"
+                                                              th:attr="href=${'/view-more/' + item.id}">View More</a>
+                            </p>
+                            <p><a class="menu-item-add-to-bag" href="/view-bag">Add to Bag</a></p>
+                        </div>
+                    </div>
+                    <div class="img-div">
+                        <img class="menu-item-image" src="/img/placeholder.png">
+                    </div>
+                </div>
+            </div> <!-- end if statement -->
+        </div> <!-- end for each -->
+    </div>
+
+    <!--  BEVERAGES -> COFFEE -->
+    <p class="subCategory">COFFEE</p>
+    <div class="menu">
+        <div th:each="item : ${menuItems}">
+            <div th:if="${item.mainCategory.name() =='BEVERAGES' && item.subCategory.name() == 'COFFEE'}">
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <p class="menu-item-title"><span th:text="${item.item_name}"></span> - $<span
+                                th:text="${item.price}"></span></p>
+                        <p class="menu-item-description" th:text="${item.description}"></p>
+                        <div class="menu-item-buttons">
+                            <p class="menu-item-view-more"><a class="view-more-link"
+                                                              th:attr="href=${'/view-more/' + item.id}">View More</a>
+                            </p>
+                            <p><a class="menu-item-add-to-bag" href="/view-bag">Add to Bag</a></p>
+                        </div>
+                    </div>
+                    <div class="img-div">
+                        <img class="menu-item-image" src="/img/placeholder.png">
+                    </div>
+                </div>
+            </div> <!-- end if statement -->
+        </div> <!-- end for each -->
+    </div>
+
+    <!--  BEVERAGES -> OTHER -->
+    <div class="menu">
+        <p class="subCategory">Other</p>
+        <div th:each="item : ${menuItems}">
+            <div th:if="${item.mainCategory.name() =='BEVERAGES' && item.subCategory.name() == 'OTHER'}">
+                <div class="menu-item">
+                    <div class="menu-item-info">
+                        <p class="menu-item-title"><span th:text="${item.item_name}"></span> - $<span
+                                th:text="${item.price}"></span></p>
+                        <p class="menu-item-description" th:text="${item.description}"></p>
+                        <div class="menu-item-buttons">
+                            <p class="menu-item-view-more"><a class="view-more-link"
+                                                              th:attr="href=${'/view-more/' + item.id}">View More</a>
+                            </p>
+                            <p><a class="menu-item-add-to-bag" href="/view-bag">Add to Bag</a></p>
+                        </div>
+                    </div>
+                    <div class="img-div">
+                        <img class="menu-item-image" src="/img/placeholder.png">
+                    </div>
+                </div>
+            </div> <!-- end if statement -->
+        </div> <!-- end for each -->
+    </div>
+    <!------------------------------------------------------------------>
+
+    <!--    </div>-->
+</div>
+
+
+<div th:insert="partials/footer :: footer"/>
 </body>
 </html>

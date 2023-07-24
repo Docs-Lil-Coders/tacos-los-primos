@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
       lang="eng">
 <head th:insert="partials/header :: head"/>
 <link rel="stylesheet" th:href="@{/css/index.css}">
@@ -20,11 +20,13 @@
                 <img src="/img/placeholder.png" class="d-block w-100 carousel-img" alt="...">
             </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade"
+                data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade"
+                data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
         </button>
@@ -33,8 +35,8 @@
 
 <!--buttons-->
 <div class="buttons-div">
-    <span type="button" class="button">Order Now</span>
-    <span type="button" class="button">Track Your Order</span>
+    <a href="/menu" class="button">Order Now</a>
+    <a href="/order-status" class="button">Track Your Order</a>
 </div>
 
 <!--popular dishes-->
@@ -52,8 +54,10 @@
 <!--visit us-->
 <h1>Visit Us</h1>
 <div class="visit-us">
+
     <div class="contact-us">
         <p class="sub-title-text">CONTACT US</p>
+        <form>
         <div class="mb-3">
             <input type="text" class="form-control" id="contactUsName" placeholder="Name">
         </div>
@@ -64,27 +68,29 @@
             <input type="email" class="form-control" id="contactUsEmail" placeholder="Email*">
         </div>
         <div class="mb-3">
-            <textarea class="form-control" id="contactUsText" rows="3" placeholder="How can we serve you?"></textarea>
+                <textarea class="form-control" id="contactUsText" rows="3"
+                          placeholder="How can we serve you?"></textarea>
         </div>
-        <span type="button" class="button">Submit</span>
+        <button type="submit" class="contact-us-button">Submit</button>
+        </form>
     </div>
+
 
     <div class="special-requests">
         <p class="sub-title-text">SPECIAL REQUESTS?</p>
-        <p>Do you have dietary concerns? Questions about an upcoming event?
+        <p class="info-text">Do you have dietary concerns? Questions about an upcoming event?
             <br>Give us a call or shoot an email, we'll get back to you soon!</p>
         <p class="sub-title-text">TACOS LOS PRIMOS</p>
-        <p>6011 W. Thomas Rd, <br>Phoenix AZ 85033
+        <p class="info-text">6011 W. Thomas Rd, <br>Phoenix AZ 85033
             <br>(480)586-7556
             <br><a class="google-link" href="http://google.com">Click to View Google Map</a></p>
         <p class="sub-title-text">HOURS</p>
-        <p>Monday - Wednesday: 8am - 9pm
+        <p class="info-text">Monday - Wednesday: 8am - 9pm
             <br>Thursday - Friday: 8am - 10pm
             <br>Saturday: 9am - 10pm
             <br>Sunday: 9am - 9pm</p>
     </div>
-
 </div>
-
+<div th:insert="partials/footer :: footer"/>
 </body>
 </html>

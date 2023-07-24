@@ -1,12 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>profile</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
+      lang="eng" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="partials/header :: head"/>
 <body>
-<header>
+<div th:replace="partials/navbar :: navbar"/>
+
+
     <h1> Where to view your profile </h1>
-</header>
+<h1>Welcome, <span th:text="${user.first_name}"></span></h1>
+
+
+
+<div th:insert="partials/footer :: footer"/>
 </body>
 </html>

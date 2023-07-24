@@ -1,6 +1,58 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url('./font/poppins-bold.woff2') format('woff2'),
+    url('./font/poppins-bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('./font/poppins-regular.woff2') format('woff2'),
+    url('./font/poppins-regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 * {
     margin: 0;
     padding: 0;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    font-weight: bold;
+    background-image: url("../img/ricepaper.png");
+}
+
+h1 {
+    text-align: center;
+    color: #BF2D1A;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    margin-top: 40px;
+}
+
+h4 {
+    text-align: center;
+    color: #BF2D1A;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+}
+
+p {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+.nav-margin {
+    margin-top: 124px;
 }
 
 .socials-bar {

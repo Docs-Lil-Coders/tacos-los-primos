@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       lang="eng">
@@ -8,30 +9,39 @@
 
 <div class=" container-fluid login-form">
     <h4>LOGIN</h4>
-    <div class="mb-3 row form-custom">
-        <label for="userEmail" class="form-label">Email</label>
-        <div class="">
-            <input type="text" class="form-control" id="userEmail" placeholder="email@example.com">
+    <form th:action="@{/login}" method="post">
+        <div class="mb-3 row form-custom">
+            <label for="username" class="form-label">Username</label>
+            <div class="">
+                <input type="text" class="form-control" name="username" id="username" >
+            </div>
         </div>
-    </div>
-    <div class="mb-3 row form-custom">
-        <label for="userPassword" class="form-label">Password</label>
-        <div>
-            <input type="password" class="form-control" id="userPassword">
+        <div class="mb-3 row form-custom">
+            <label for="password" class="form-label">Password</label>
+            <div>
+                <input type="password" class="form-control" name="password" id="password">
+            </div>
         </div>
-    </div>
-    <div class="buttons-div">
-        <button type="button" class="button">Submit</button>
-        <button type="button" class="button">Register</button>
-    </div>
-    <div class="mb-3">
-        <input type="checkbox" id="rememberMe">
-        <label class="form-check-label remember-me" for="rememberMe">Remember me</label>
-    </div>
-    <div class="mb-3">
-        <p><a class="forgot-password-link" href="/forgot-password">Forgot Password</a></p>
-    </div>
+        <div th:if="${param.error}">
+            Invalid Username and Password.
+        </div>
+        <div th:if="${param.logout}">
+            You have been logged out.
+        </div>
+        <div class="buttons-div">
+            <button type="submit" class="button" value="Log In">Submit</button>
+            <a class="button" href="/register">Register</a>
+        </div>
+        <div class="mb-3">
+            <input type="checkbox" id="rememberMe">
+            <label class="form-check-label remember-me" for="rememberMe">Remember me</label>
+        </div>
+        <div class="mb-3">
+            <p><a class="forgot-password-link" href="/forgot-password">Forgot Password</a></p>
+        </div>
+    </form>
 </div>
 
+<div th:insert="partials/footer :: footer"/>
 </body>
 </html>
