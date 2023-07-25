@@ -7,19 +7,6 @@ a {
     color: #BF2D1A;
 }
 
-.cart-container {
-    margin: -120px auto 0;
-    padding-top: 124px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 960px;
-    background-color: #FFFFFF;
-
-
-}
-
 .col-titles {
     display: grid;
     grid-template-columns: 1fr 3fr 1fr 1fr;
@@ -40,7 +27,7 @@ a {
     color: #BF2D1A;
 }
 
-.bag-item{
+.bag-item {
     text-align: center;
 }
 
@@ -101,4 +88,105 @@ a.button:hover {
 .tab-pane {
     background-color: rgba(191, 45, 26, 8%);
     padding: 30px;
+}
+
+.nav .active {
+    background-color: #BF2D1A !important;
+    color: #FFFFFF !important;
+}
+
+.nav .nav-link {
+    color: #666666;
+}
+
+
+/* Progressbar */
+.progressbar {
+    position: relative;
+    display: flex;
+    justify-content: space-evenly;
+    counter-reset: step;
+    margin: 2rem 0 4rem;
+}
+
+.progressbar::before,
+.progress {
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 4px;
+    width: 100%;
+    background-color: #BF2D1A;
+    z-index: -1;
+}
+
+.progress {
+    background-color: #BF2D1A;
+    width: 0%;
+    transition: 0.3s;
+}
+
+.progress-step {
+    width: 2.1875rem;
+    height: 2.1875rem;
+    background-color: #dcdcdc;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5px;
+}
+
+.progress-step::before {
+    counter-increment: step;
+    content: counter(step);
+}
+
+.progress-step::after {
+    content: attr(data-title);
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.progress-step-active {
+    background-color: #BF2D1A;
+    color: #FFFFFF;
+}
+
+/* Form */
+.checkout-container {
+    width: clamp(920px, 30%, 430px);
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 0.35rem;
+    padding: 1.5rem;
+    background-color: #FFFFFF;
+}
+
+.form-step {
+    display: none;
+    transform-origin: top;
+    animation: animate 0.5s;
+}
+
+.form-step-active {
+    display: block;
+}
+
+.input-group {
+    margin: 2rem 0;
+}
+
+@keyframes animate {
+    from {
+        transform: scale(1, 0);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1, 1);
+        opacity: 1;
+    }
 }
