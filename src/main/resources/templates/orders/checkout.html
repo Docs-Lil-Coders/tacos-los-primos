@@ -154,27 +154,18 @@
 
             <!----------payment info tab - start----------->
             <div class="tab-pane" id="payment-info" role="tabpanel" aria-labelledby="payment-info-tab">
-
                 <div>
-
                     <form id="payment-form">
                         <div id="payment-element">
-                            <!-- Elements will create form elements here -->
                         </div>
                         <div class="place-order-buttons">
-                        <button class="button" id="submit">Pay now</button>
+                            <button class="button" id="submit">Pay now</button>
                         </div>
 
                         <div id="error-message">
-                            <!-- Display error message to your customers here -->
                         </div>
                     </form>
-
                 </div>
-
-<!--                <div class="place-order-buttons">-->
-<!--                    <button class="button" type="submit" href="/order-status">Place Order</button>-->
-<!--                </div>-->
             </div>
             <!----------payment info tab - end----------->
         </div>
@@ -186,33 +177,6 @@
 
 <script src="/js/apiKeys.js"></script> <!--put in footer later -->
 <script src="https://js.stripe.com/v3/"></script>
-<script>
-
-    document.addEventListener("DOMContentLoaded", async function() {
-
-        let stripe = Stripe(stripeKey, {
-            apiVersion: '2020-08-27',
-        });
-
-        // On page load, we create a PaymentIntent on the server so that we have its clientSecret to
-        // initialize the instance of Elements below. The PaymentIntent settings configure which payment
-        // method types to display in the PaymentElement.
-        const {
-            error: backendError,
-            clientSecret
-        } = await fetch('/stripe-token').then(r => r.json());
-        if (backendError) {
-            console.log(backendError.message);
-        }
-        console.log(`Client secret returned.`);
-
-        // Initialize Stripe Elements with the PaymentIntent's clientSecret,
-        // then mount the payment element.
-        // const clientSecret = "TEST";
-        const elements = stripe.elements({ clientSecret });
-        const paymentElement = elements.create('payment');
-        paymentElement.mount('#payment-element');
-    } );
-</script>
+<script src="/js/checkout.js"></script>
 </body>
 </html>
