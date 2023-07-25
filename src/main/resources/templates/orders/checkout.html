@@ -156,38 +156,25 @@
             <div class="tab-pane" id="payment-info" role="tabpanel" aria-labelledby="payment-info-tab">
 
                 <div>
-                    <div class="mb-3 form-custom">
-                        <label for="cardName" class="form-label">Name on Card*</label>
-                        <div class="">
-                            <input type="text" class="form-control" id="cardName">
+
+                    <form id="payment-form">
+                        <div id="payment-element">
+                            <!-- Elements will create form elements here -->
                         </div>
-                    </div>
-                    <div class="mb-3 form-custom">
-                        <label for="cardNumber" class="form-label">Card Number*</label>
-                        <div class="">
-                            <input type="text" class="form-control" id="cardNumber">
+                        <div class="place-order-buttons">
+                        <button class="button" id="submit">Pay now</button>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6 mb-3 form-custom">
-                            <label for="expirationDate" class="form-label">Expiration Date*</label>
-                            <div class="">
-                                <input type="text" class="form-control" id="expirationDate">
-                            </div>
+
+                        <div id="error-message">
+                            <!-- Display error message to your customers here -->
                         </div>
-                        <div class="col-6 mb-3 form-custom">
-                            <label for="cvc" class="form-label">CVC*</label>
-                            <div class="">
-                                <input type="text" class="form-control" id="cvc">
-                            </div>
-                        </div>
-                    </div>
+                    </form>
 
                 </div>
 
-                <div class="place-order-buttons">
-                    <button class="button" type="submit" href="/order-status">Place Order</button>
-                </div>
+<!--                <div class="place-order-buttons">-->
+<!--                    <button class="button" type="submit" href="/order-status">Place Order</button>-->
+<!--                </div>-->
             </div>
             <!----------payment info tab - end----------->
         </div>
@@ -196,5 +183,36 @@
 </div>
 
 <div th:insert="partials/footer :: footer"/>
+
+<script src="/js/apiKeys.js"></script> <!--put in footer later -->
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+
+    document.addEventListener("DOMContentLoaded", async function() {
+
+        let stripe = Stripe(stripeKey, {
+            apiVersion: '2020-08-27',
+        });
+
+        // On page load, we create a PaymentIntent on the server so that we have its clientSecret to
+        // initialize the instance of Elements below. The PaymentIntent settings configure which payment
+        // method types to display in the PaymentElement.
+        const {
+            error: backendError,
+            clientSecret
+        } = await fetch('/stripe-token').then(r => r.json());
+        if (backendError) {
+            console.log(backendError.message);
+        }
+        console.log(`Client secret returned.`);
+
+        // Initialize Stripe Elements with the PaymentIntent's clientSecret,
+        // then mount the payment element.
+        // const clientSecret = "TEST";
+        const elements = stripe.elements({ clientSecret });
+        const paymentElement = elements.create('payment');
+        paymentElement.mount('#payment-element');
+    } );
+</script>
 </body>
 </html>

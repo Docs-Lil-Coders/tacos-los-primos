@@ -97,3 +97,8 @@ a {
 a.button:hover {
     color: #FFFFFF;
 }
+
+.tab-pane {
+    background-color: rgba(191, 45, 26, 8%);
+    padding: 30px;
+}
