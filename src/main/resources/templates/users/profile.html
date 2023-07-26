@@ -2,20 +2,109 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
       lang="eng" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:insert="partials/header :: head"/>
+<link rel="stylesheet" th:href="@{/css/profile.css}">
 <body>
 <div th:replace="partials/navbar :: navbar"/>
 
-<div sec:authorize="isAuthenticated()">
-    <h1> Where to view your profile </h1>
-<h1>Welcome, <span th:text="${user.first_name}"></span></h1>
-    User ID: <span th:text="${#authentication.principal.id}"/>
-    Username: <span th:text="${#authentication.principal.username}"/>
-    Email: <span th:text="${#authentication.principal.email}"/>
-    Phone number: <span th:text="${#authentication.principal.phone}"/>
-    Primary Address: <span th:text="${#authentication.principal.primary_address}"/>
+<div class="profile" sec:authorize="isAuthenticated()">
+    <h4>USER PROFILE</h4>
+
+    <div class="profile-layout">
+        <div class="side-bar">
+            <div class="user-img-card">
+                <img class="user-image" src="img/placeholder.png">
+                <p th:text="${user.username}"></p>
+
+            </div>
+            <div class="user-nav">
+                <ul class="user-links-list">
+                    <li class="user-link-active"><a>Profile</a></li>
+                    <li class="user-link"><a>Rewards</a></li>
+                    <li class="user-link"><a>Track Current Order</a></li>
+                    <li class="user-link"><a>Previous Orders</a></li>
+                    <li class="user-link"><a>Settings</a></li>
+                    <li class="user-link"><a>Logout</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="user-info">
+            <div class="profile-section">
+                <p class="sub-title">CONTACT INFORMATION</p>
+                <div class="section-content">
+                    <div class="mb-3 form-custom">
+                        <p>First Name</p>
+                        <p th:text="${user.first_name}"></p>
+                    </div>
+                    <div class="mb-3 form-custom">
+                        <p>Last Name</p>
+                        <p th:text="*{user.last_name}"></p>
+                    </div>
+                    <div class="mb-3 form-custom">
+                        <p>Email</p>
+                        <p th:text="${user.email}">
+                    </div>
+                    <div class="mb-3 form-custom">
+                        <p>Phone</p>
+                        <p th:text="${user.phone}">
+                    </div>
+                    <div class="mb-3">
+                        <p>Primary Address</p>
+                        <p th:text="${user.primary_address}"></p>
+                    </div>
+                </div>
+                <div class="profile-section">
+                    <p class="sub-title">REWARDS</p>
+                    <div class="section-content">
+                        <div>
+                            <p>REWARD POINTS</p>
+                            <P>25</P>
+                        </div>
+                        <div>
+                            <p>CURRENT REWARD BALANCE</p>
+                            <P>$10.00</P>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-section">
+                    <p class="sub-title">CURRENT ORDER STATUS</p>
+                    <div class="section-content">
+                        <p>Order Number: 1234567890</p>
+                        <p>Your Order is on its way</p>
+                        <p>Estimated delivery time: 5:00PM</p>
+                    </div>
+                </div>
+                <div class="profile-section">
+                    <p class="sub-title">PREVIOUS ORDERS</p>
+                    <div class="section-content">
+
+                        <!--for each-->
+                        <div th:each="item : ${menuItems}">
+                            <div th:if="${item.mainCategory.name() =='APPETIZERS' && item.subCategory.name()== 'CHIPS'}">
+                                <div class="menu-item">
+                                    <div class="menu-item-info">
+                                        <p class="menu-item-title"><span th:text="${item.item_name}"></span> - $<span th:text="${item.price}"></span></p>
+                                        <p class="menu-item-description" th:text="${item.description}"></p>
+                                        <div class="menu-item-buttons">
+                                            <p><a class="menu-item-add-to-bag" href="/view-bag">Add to Bag</a></p>
+                                        </div>
+                                    </div>
+                                    <div class="img-div">
+                                        <img class="menu-item-image" src="/img/placeholder.png">
+                                    </div>
+                                </div>
+                            </div> <!-- end if statement -->
+                        </div> <!-- end for each -->
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
 </div>
-
-
-<div th:insert="partials/footer :: footer"/>
+    <div th:insert="partials/footer :: footer"/>
 </body>
 </html>
