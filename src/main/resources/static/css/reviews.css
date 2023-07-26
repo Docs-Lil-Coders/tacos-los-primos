@@ -10,14 +10,30 @@ body {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background-color: gray ;
+    background-color: darkgray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -10px;
+    margin-right: 15px;
+    line-height: 60px;
+    font-size: 30px;
+}
+.stars-and-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
 }
 
-.float-end {
-    float: right;
-    margin: 0 0 15px 15px;
+.star-icon {
+    color: gold;
+    font-size: 15px;
 }
-.float-start {
-    float: left;
-    margin: 0 0 15px 15px;
+
+.review-text {
+    text-align: justify;
+}
+.container {
+    margin-bottom: 40px;
 }
