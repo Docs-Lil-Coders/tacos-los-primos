@@ -1,5 +1,7 @@
 package com.docslilcoders.tacoslosprimos.controllers;
 
+import com.docslilcoders.tacoslosprimos.models.CartItem;
+import com.docslilcoders.tacoslosprimos.models.User;
 import com.docslilcoders.tacoslosprimos.repositories.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,6 +50,7 @@ public class TestController {
     @GetMapping("/testMenuItemsModal")
     public String getMenuItemModal(Model model) {
         model.addAttribute("menuItems", menuItemDao.findAll());
+//        model.addAttribute("cartItem", new CartItem());
         return "test/optionModalTest";
     }
 }
