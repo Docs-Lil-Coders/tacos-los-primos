@@ -147,11 +147,11 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <h5 class="modal-title" id="exampleModalLabel" th:text="${item.item_name}"></h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <h5 th:text="${item.item_name}"></h5>
+<!--          <h5 th:text="${item.item_name}"></h5>-->
           <div th:if="${item.meatReq.name() =='YES'}">
             <h6>Chose your meat (1 choice required)</h6>
             <div th:each="option : ${item.menuItemOptions}">
@@ -170,16 +170,120 @@
               </div>
             </div>
           </div>
-          <h6>quantity: x</h6>
+          <div class="d-flex justify-content-center">
+          <!--  !!!   IMPORTANT !!! -->
+          <!--  DO NOT REMOVE, CHANGE, OR ADD THE CLASSES 'minusQuantity', 'currentQuantity', 'addQuantity', 'addToBag' AMONGST ANY ELEMENTS -->
+          <h6>Quantity:</h6>
+            <button class="minusQuantity" th:id="${'minusQuantity' + item.id}">-</button>
+            <p th:id="${'currentQuantity' + item.id}">5</p>
+            <button  class="addQuantity"  th:id="${'addQuantity' + item.id}">+</button>
+          </div>
+          <div th:id="${'feedback' + item.id}"></div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary">Add to bag</button>
+          <button type="button" th:id="${'addToBag' + item.id}" class="btn btn-primary addToBag">Add to bag</button>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+
+<script>
+  function handleMinusClick(event) {
+    const buttonId = event.target.id;
+    let itemId = parseInt(buttonId.toString().substring(13));
+    let quantityDisplay = document.getElementById("currentQuantity" + itemId);
+    let quantity = parseInt(quantityDisplay.innerText);
+    if(quantity > 0) {
+      quantity = quantity - 1;
+      quantityDisplay.innerText = quantity.toString();
+    }
+
+  }
+  function handleAddQuantityClick(event) {
+    const buttonId = event.target.id;
+    let itemId = parseInt(buttonId.toString().substring(11));
+    let quantityDisplay = document.getElementById("currentQuantity" + itemId);
+    let quantity = parseInt(quantityDisplay.innerText);
+      quantity = quantity + 1;
+      quantityDisplay.innerText = quantity.toString();
+  }
+
+  function handleAddToBagClick(event) {
+   let  buttonId = event.target.id;
+    let itemId = parseInt(buttonId.toString().substring(8));
+    let feedback = document.getElementById('feedback' + itemId);
+    let quantityDisplay = document.getElementById("currentQuantity" + itemId);
+    let quantity = quantityDisplay.innerText;
+    let options = [];
+
+    let selectedMeat = getSelectedMeats(itemId);
+    let selectedToppings = getSelectedToppings(itemId);
+
+    if (selectedMeat == null) {
+      feedback.innerText = "Please choose a meat before proceeding";
+    } else {
+      options = selectedToppings.slice();
+      if(selectedMeat != "") {
+        options.unshift(selectedMeat);
+      }
+      let optionList = options.toString();
+      window.location.href = "addToBag?menuItem=" + itemId + "&quantity=" + quantity + "&options=" + optionList;
+    }
+
+
+  }
+
+  function getSelectedMeats(itemId) {
+    let radioButtonGroup = document.getElementsByName('meatOptions' + itemId);
+
+    if (radioButtonGroup.length === 0) {
+      //this is for if there is no meat required
+      return "";
+    }
+
+   //find the option selected
+    for (const radioButton of radioButtonGroup) {
+      if (radioButton.checked) {
+        return radioButton.value
+      }
+    }
+
+    //if nothing is selected
+    return null;
+  }
+
+  function getSelectedToppings(itemId) {
+    let checkboxesGroup = document.getElementsByName('toppingOptions' + itemId);
+   let selectedValues = [];
+
+   //add all selected items to array
+    for (const checkbox of checkboxesGroup) {
+      if (checkbox.checked) {
+        selectedValues.push(checkbox.value);
+      }
+    }
+    return selectedValues;
+  }
+
+
+  const qMinusButtons = document.querySelectorAll('.minusQuantity');
+  qMinusButtons.forEach(button => {
+    button.addEventListener('click', handleMinusClick);
+  });
+
+  const qAddButtons = document.querySelectorAll('.addQuantity');
+  qAddButtons.forEach(button => {
+    button.addEventListener('click', handleAddQuantityClick);
+  });
+
+  const addToBagButtons = document.querySelectorAll('.addToBag');
+  addToBagButtons.forEach(button => {
+    button.addEventListener('click', handleAddToBagClick);
+  });
+</script>
 
 
 
