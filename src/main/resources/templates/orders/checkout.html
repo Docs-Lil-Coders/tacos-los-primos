@@ -6,19 +6,17 @@
 <body>
 <div th:replace="partials/navbar :: navbar"/>
 
-<div class="checkout-container">
+<form class="checkout-container">
 
     <h4>CHECKOUT</h4>
     <!--progress bar-->
     <div class="progressbar">
-        <div class="progress" id="progress"></div>
         <div class="progress-step progress-step-active" data-title="Confirm Your Order"></div>
         <div class="progress-step" data-title="Contact Information"></div>
-        <div class="progress-step" data-title="Bag Total"></div>
+        <div class="progress-step" data-title="Order Total"></div>
         <div class="progress-step" data-title="Payment Information"></div>
+        <div class="progress" id="progress"></div>
     </div>
-
-    <!-------------------------user order payment tabs - start------------------------------------>
 
     <!----------review order tab - start----------->
     <div class="form-step form-step-active">
@@ -167,8 +165,7 @@
     </div>
     <!----------payment info tab - end----------->
 
-    <!-------------------------user order payment tabs - end------------------------------------>
-</div>
+</form>
 
 <div th:insert="partials/footer :: footer"/>
 

@@ -1,3 +1,9 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 ul {
     list-style-type: none;
     padding: 0;
@@ -104,9 +110,9 @@ a.button:hover {
 .progressbar {
     position: relative;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     counter-reset: step;
-    margin: 2rem 0 4rem;
+    margin: 2rem 10rem 4rem;
 }
 
 .progressbar::before,
@@ -117,13 +123,13 @@ a.button:hover {
     transform: translateY(-50%);
     height: 4px;
     width: 100%;
-    background-color: #BF2D1A;
-    z-index: -1;
+    background-color: #dcdcdc;
+    z-index: 1;
 }
 
 .progress {
     background-color: #BF2D1A;
-    width: 0%;
+    width: 0;
     transition: 0.3s;
 }
 
@@ -136,6 +142,8 @@ a.button:hover {
     justify-content: center;
     align-items: center;
     padding-top: 5px;
+    position: relative;
+    z-index: 2;
 }
 
 .progress-step::before {
@@ -149,6 +157,8 @@ a.button:hover {
     top: calc(100% + 0.5rem);
     font-size: 0.85rem;
     color: #666;
+    width: 200px;
+    text-align: center;
 }
 
 .progress-step-active {
