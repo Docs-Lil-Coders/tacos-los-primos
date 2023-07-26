@@ -8,11 +8,12 @@
 <div sec:authorize="isAuthenticated()">
     <h1> Where to view your profile </h1>
 <h1>Welcome, <span th:text="${user.first_name}"></span></h1>
-    User ID: <span th:text="${#authentication.principal.id}"/>
-    Username: <span th:text="${#authentication.principal.username}"/>
-    Email: <span th:text="${#authentication.principal.email}"/>
-    Phone number: <span th:text="${#authentication.principal.phone}"/>
-    Primary Address: <span th:text="${#authentication.principal.primary_address}"/>
+    User ID: <span th:text="${user.id}"/>
+    Username: <span th:text="${user.username}"/>
+    Email: <span th:text="${user.email}"/>
+    Phone number: <span th:text="${user.phone}"/>
+    Primary Address: <span th:text="${user.primary_address}"/>
+    <a th:href="@{|/edit-profile|}">Edit</a>
 </div>
 
 

@@ -73,9 +73,9 @@ public class UserController {
         return "users/profile";
     }
     @GetMapping("/edit-profile")
-    public String showEdit(@PathVariable Long id, Model model){
-        User userToEdit = userDao.getReferenceById(id);
-        model.addAttribute("user", userToEdit);
+    public String showEdit(Model model){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("user", user);
         return "/users/edit_profile"; //need to go back to change this
     }
 }
