@@ -5,10 +5,15 @@
 <body>
 <div th:replace="partials/navbar :: navbar"/>
 
-
+<div sec:authorize="isAuthenticated()">
     <h1> Where to view your profile </h1>
 <h1>Welcome, <span th:text="${user.first_name}"></span></h1>
-
+    User ID: <span th:text="${#authentication.principal.id}"/>
+    Username: <span th:text="${#authentication.principal.username}"/>
+    Email: <span th:text="${#authentication.principal.email}"/>
+    Phone number: <span th:text="${#authentication.principal.phone}"/>
+    Primary Address: <span th:text="${#authentication.principal.primary_address}"/>
+</div>
 
 
 <div th:insert="partials/footer :: footer"/>
