@@ -78,4 +78,11 @@ public class UserController {
         model.addAttribute("user", user);
         return "/users/edit_profile"; //need to go back to change this
     }
+    @PostMapping("/edit-profile")
+    public String showNew(@ModelAttribute User user){
+        System.out.println(user.getUsername());
+
+        return "/users/profile"; //need to go back to change this
+    }
 }
+
