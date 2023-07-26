@@ -14,20 +14,16 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: -10px; /* Move the profile picture higher */
+    margin-top: -10px;
     margin-right: 15px;
     line-height: 60px;
     font-size: 30px;
 }
-/*.float-start {*/
-/*    float: left;*/
-/*    margin: 0 0 15px 15px;*/
-/*}*/
 .stars-and-text {
-    display: flex; /* Use flexbox to align the stars and review text */
-    align-items: center; /* Center items vertically within the flex container */
-    justify-content: center; /* Center items horizontally within the flex container */
-    margin-bottom: 10px; /* Add some space between the stars and the review text */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
 }
 
 .star-icon {
@@ -39,5 +35,5 @@ body {
     text-align: justify;
 }
 .container {
-    margin-bottom: 40px; /* Adjust the value as needed for more or less space */
+    margin-bottom: 40px;
 }
