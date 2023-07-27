@@ -2,6 +2,7 @@ package com.docslilcoders.tacoslosprimos.controllers;
 
 import com.docslilcoders.tacoslosprimos.models.User;
 import com.docslilcoders.tacoslosprimos.repositories.UserRepository;
+import com.docslilcoders.tacoslosprimos.services.AuthBuddy;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -73,9 +74,53 @@ public class UserController {
         return "users/profile";
     }
     @GetMapping("/edit-profile")
-    public String showEdit(@PathVariable Long id, Model model){
-        User userToEdit = userDao.getReferenceById(id);
-        model.addAttribute("user", userToEdit);
+    public String showEdit(Model model){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("user", user);
         return "/users/edit_profile"; //need to go back to change this
     }
+    @PostMapping("/edit-profile")
+    /*
+    public String doEdit(@ModelAttribute User user){
+
+        }
+        System.out.println(user.getUsername());
+        userDao.save(user);
+
+        return "/users/profile"; //need to go back to change this
+    }
+
+     */
+    public String doEdit(@ModelAttribute User user) {
+        // Check if the user is logged in or not
+        User loggedInUser = AuthBuddy.getLoggedInUser();
+        if (loggedInUser.getId() == 0) {
+            return "redirect:/login";
+        }
+
+        // Retrieve the logged-in user from the SecurityContextHolder
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        // Check if the current user is the same as the logged-in user
+        if (loggedInUser.getId() != currentUser.getId()) {
+            // If they are not the same user, redirect to the login page
+            return "redirect:/login";
+        }
+
+        // Update the user's profile
+        currentUser.setUsername(user.getUsername());
+        currentUser.setEmail(user.getEmail());
+        // Set other fields you want to update
+
+        // Save the updated user in the database
+        userDao.save(currentUser);
+
+        // Redirect the user to the profile page
+        return "redirect:/profile";
+    }
+
+
+
+
 }
+
