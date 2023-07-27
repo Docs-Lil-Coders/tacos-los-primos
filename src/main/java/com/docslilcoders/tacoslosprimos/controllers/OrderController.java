@@ -31,7 +31,9 @@ public class OrderController {
 
 
     @GetMapping("/checkout")
-    public String getAboutPage() {
+    public String getAboutPage(HttpSession session, Model model) {
+        ShoppingCart cart = cartService.getCart(session);
+        model.addAttribute("cart", cart);
         return "orders/checkout";
     }
 
@@ -46,7 +48,6 @@ public class OrderController {
         model.addAttribute("cart", cart);
 
         return "orders/view_bag";
-//        return "test/view_bag_test";
     }
 
     @GetMapping("/addToBag")
