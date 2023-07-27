@@ -16,4 +16,8 @@ public class CartItem {
     private String meatOptionList;
     private int quantity;
 
+    public double getItemTotal() {
+        return menuItem.getPrice() * quantity;
+    }
+
 }

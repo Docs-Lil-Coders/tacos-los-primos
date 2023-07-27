@@ -139,6 +139,9 @@ a.view-more-link:hover {
 }
 
 .menu-item-add-to-bag {
+    font-family: "Poppins", sans-serif;
+    border: none;
+    font-weight: bold;
     color: #FFFFFF;
     background-color: #BF2D1A;
     border-radius: 30px;
