@@ -5,59 +5,58 @@
 <link rel="stylesheet" th:href="@{/css/profile.css}">
 <body>
 <div th:replace="partials/navbar :: navbar"/>
+<div class="page-container">
+    <div class="profile" sec:authorize="isAuthenticated()">
+        <h4>USER PROFILE</h4>
 
-<div class="profile" sec:authorize="isAuthenticated()">
-    <h4>USER PROFILE</h4>
-
-    <div class="profile-layout">
-        <div class="side-bar">
-            <div class="user-img-card">
-                <img class="user-image" src="img/placeholder.png">
-                <p th:text="${user.username}"></p>
+        <div class="profile-layout">
+            <div class="side-bar">
+                <div class="user-img-card">
+                    <img class="user-image" src="img/placeholder.png">
+                    <p th:text="${user.username}"></p>
+                </div>
+                <div class="user-nav">
+                    <ul class="user-links-list">
+                        <li class="user-link-active"><a href="#contact-information">Contact Information</a></li>
+                        <li class="user-link"><a href="#rewards">Rewards</a></li>
+                        <li class="user-link"><a href="#current-order-status">Track Current Order</a></li>
+                        <li class="user-link"><a href="#previous-orders">Previous Orders</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="user-nav">
-                <ul class="user-links-list">
-                    <li class="user-link-active"><a>Profile</a></li>
-                    <li class="user-link"><a>Rewards</a></li>
-                    <li class="user-link"><a>Track Current Order</a></li>
-                    <li class="user-link"><a>Previous Orders</a></li>
-                    <li class="user-link"><a>Settings</a></li>
-                    <li class="user-link"><a>Logout</a></li>
-                </ul>
-            </div>
-        </div>
 
-        <div class="user-info">
-            <div class="profile-section">
-                <p class="sub-title">CONTACT INFORMATION</p>
-                <div class="section-content">
-                    <div class="user-contact-section">
-                        <div>
-                            <p class="contact-info-title">First Name</p>
-                            <p class="contact-info-text" th:text="${user.first_name}"></p>
+            <div class="user-info">
+                <div class="profile-section" id="contact-information">
+                    <p class="sub-title">CONTACT INFORMATION</p>
+                    <div class="section-content">
+                        <div class="user-contact-section">
+                            <div>
+                                <p class="contact-info-title">First Name</p>
+                                <p class="contact-info-text" th:text="${user.first_name}"></p>
+                            </div>
+                            <div>
+                                <p class="contact-info-title">Last Name</p>
+                                <p class="contact-info-text" th:text="*{user.last_name}"></p>
+                            </div>
+                            <div>
+                                <p class="contact-info-title">Email</p>
+                                <p class="contact-info-text" th:text="${user.email}">
+                            </div>
+                            <div>
+                                <p class="contact-info-title">Phone</p>
+                                <p class="contact-info-text" th:text="${user.phone}">
+                            </div>
+                            <div>
+                                <p class="contact-info-title">Primary Address</p>
+                                <p class="contact-info-text" th:text="${user.primary_address}"></p>
+                            </div>
                         </div>
-                        <div>
-                            <p class="contact-info-title">Last Name</p>
-                            <p class="contact-info-text" th:text="*{user.last_name}"></p>
+                        <div class="edit-button">
+                            <a class="button" th:href="@{|/edit-profile|}">Edit Contact Information</a>
                         </div>
-                        <div>
-                            <p class="contact-info-title">Email</p>
-                            <p class="contact-info-text" th:text="${user.email}">
-                        </div>
-                        <div>
-                            <p class="contact-info-title">Phone</p>
-                            <p class="contact-info-text" th:text="${user.phone}">
-                        </div>
-                        <div>
-                            <p class="contact-info-title">Primary Address</p>
-                            <p class="contact-info-text" th:text="${user.primary_address}"></p>
-                        </div>
-                    </div>
-                    <div class="edit-button">
-                        <a class="button" th:href="@{|/edit-profile|}">Edit Contact Information</a>
                     </div>
                 </div>
-                <div class="profile-section">
+                <div class="profile-section" id="rewards">
                     <p class="sub-title">REWARDS</p>
                     <div class="section-content">
                         <div class="rewards-section">
@@ -72,7 +71,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="profile-section">
+                <div class="profile-section" id="current-order-status">
                     <p class="sub-title">CURRENT ORDER STATUS</p>
                     <div class="section-content">
                         <div class="current-order-status">
@@ -82,7 +81,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="profile-section">
+                <div class="profile-section" id="previous-orders">
                     <p class="sub-title">PREVIOUS ORDERS</p>
                     <div class="section-content">
                         <div class="previous-orders-section">
@@ -94,7 +93,9 @@
                                         <div class="menu-item-info">
                                             <p class="menu-item-title"><span>Lorem Ipsum is simply</span> -
                                                 $<span>10.50</span></p>
-                                            <p class="menu-item-description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+                                            <p class="menu-item-description">Lorem Ipsum is simply dummy text of the
+                                                printing and typesetting industry. Lorem Ipsum has been the industry's
+                                                standard dummy text ever since the 1500s</p>
                                             <div class="menu-item-buttons">
                                                 <p><a class="menu-item-add-to-bag" href="/view-bag">Add to Bag</a></p>
                                             </div>
@@ -112,7 +113,9 @@
             </div>
         </div>
     </div>
+    <div class="foot-div">
+        <div th:insert="partials/footer :: footer"/>
+    </div>
 </div>
-<div th:insert="partials/footer :: footer"/>
 </body>
 </html>
