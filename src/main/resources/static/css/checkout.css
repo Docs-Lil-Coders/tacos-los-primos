@@ -46,6 +46,10 @@ a {
     border-radius: 10px;
 }
 
+.bag-item-name {
+    height: 70px;
+}
+
 .bag-total-div {
     display: flex;
     justify-content: center;

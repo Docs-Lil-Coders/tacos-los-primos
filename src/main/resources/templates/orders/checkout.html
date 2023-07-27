@@ -21,6 +21,7 @@
     <!----------review order tab - start----------->
     <div class="form-step form-step-active">
 
+        <div>
         <div th:if="${cart.items.isEmpty()}">
             <p class="m-4">Your bag is currently empty :(</p>
         </div>
@@ -45,28 +46,29 @@
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <p class="bag-title text-nowrap d-flex align-items-center justify-content-center">Unit Price</p>
-                <div th:each="item : ${cart.items}">
-                    <div class="bag-item d-flex align-items-center justify-content-center">$<span
-                            th:text="${item.menuItem.price}"></span></div>
-                </div>
+<!--            <div class="col">-->
+<!--                <p class="bag-title text-nowrap d-flex align-items-center justify-content-center">Unit Price</p>-->
+<!--                <div th:each="item : ${cart.items}">-->
+<!--                    <div class="bag-item d-flex align-items-center justify-content-center">$<span-->
+<!--                            th:text="${item.menuItem.price}"></span></div>-->
+<!--                </div>-->
 
-            </div>
+<!--            </div>-->
             <div class="col">
                 <p class="bag-title d-flex align-items-center justify-content-center">Quantity</p>
                 <div th:each="item, itemIndex : ${cart.items}">
-                    <div class="bag-item d-flex align-items-center justify-content-center">
-                        <!--  !!!   IMPORTANT !!! -->
-                        <!--  DO NOT REMOVE, CHANGE, OR ADD THE CLASSES 'minusQuantity', 'currentQuantity', 'addQuantity', 'deleteItem' AMONGST ANY ELEMENTS -->
-                        <button class="plus-minus p-0 m-0 minusQuantity" th:id="${'minusQuantity' + itemIndex.index}">
-                            -
-                        </button>
-                        <p class="quantity p-0 my-0 mx-3" th:id="${'currentQuantity' + itemIndex.index}"
-                           th:text="${item.quantity}"></p>
-                        <button class="plus-minus p-0 m-0 addQuantity" th:id="${'addQuantity' + itemIndex.index}">+
-                        </button>
-                    </div>
+                                        <div class="bag-item d-flex align-items-center justify-content-center" th:text="${item.quantity}"></div>
+<!--                    <div class="bag-item d-flex align-items-center justify-content-center">-->
+<!--                        &lt;!&ndash;  !!!   IMPORTANT !!! &ndash;&gt;-->
+<!--                        &lt;!&ndash;  DO NOT REMOVE, CHANGE, OR ADD THE CLASSES 'minusQuantity', 'currentQuantity', 'addQuantity', 'deleteItem' AMONGST ANY ELEMENTS &ndash;&gt;-->
+<!--                        <button class="plus-minus p-0 m-0 minusQuantity" th:id="${'minusQuantity' + itemIndex.index}">-->
+<!--                            - -->
+<!--                        </button>-->
+<!--                        <p class="quantity p-0 my-0 mx-3" th:id="${'currentQuantity' + itemIndex.index}"-->
+<!--                           th:text="${item.quantity}"></p>-->
+<!--                        <button class="plus-minus p-0 m-0 addQuantity" th:id="${'addQuantity' + itemIndex.index}">+-->
+<!--                        </button>-->
+<!--                    </div>-->
                 </div>
 
             </div>
@@ -78,15 +80,16 @@
                 </div>
 
             </div>
-            <div class="col">
-                <p class="bag-title d-flex align-items-center justify-content-center"></p>
-                <div th:each="item, itemIndex : ${cart.items}">
-                    <div class="bag-item d-flex align-items-center justify-content-center">
-                        <button class="plus-minus p-0 m-0 deleteItem" th:id="${'deleteItem' + itemIndex.index}">x
-                        </button>
-                    </div>
-                </div>
-            </div>
+<!--            <div class="col">-->
+<!--                <p class="bag-title d-flex align-items-center justify-content-center"></p>-->
+<!--                <div th:each="item, itemIndex : ${cart.items}">-->
+<!--                    <div class="bag-item d-flex align-items-center justify-content-center">-->
+<!--                        <button class="plus-minus p-0 m-0 deleteItem" th:id="${'deleteItem' + itemIndex.index}">x-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+        </div>
         </div>
 
 <!--        <ul class="col-titles">-->
