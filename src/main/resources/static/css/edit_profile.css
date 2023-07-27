@@ -109,3 +109,9 @@ a:hover {
 .form-label {
     font-size: 14px;
 }
+
+.password-section {
+    padding: 30px;
+    width: 300px;
+    margin: auto;
+}
