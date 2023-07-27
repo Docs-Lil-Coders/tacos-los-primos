@@ -31,7 +31,9 @@ public class OrderController {
 
 
     @GetMapping("/checkout")
-    public String getAboutPage() {
+    public String getAboutPage(HttpSession session, Model model) {
+        ShoppingCart cart = cartService.getCart(session);
+        model.addAttribute("cart", cart);
         return "orders/checkout";
     }
 
@@ -46,13 +48,13 @@ public class OrderController {
         model.addAttribute("cart", cart);
 
         return "orders/view_bag";
-//        return "test/view_bag_test";
     }
 
     @GetMapping("/addToBag")
     public String addToCart(@RequestParam("menuItem") String menuItemId,
                             @RequestParam("quantity") String quantity,
                             @RequestParam("options") String options,
+                            @RequestParam("destination") String destination,
                             HttpSession session) {
         ShoppingCart cart = cartService.getCart(session);
         Long itemId = Long.valueOf(menuItemId);
@@ -61,12 +63,35 @@ public class OrderController {
         if(menuItem.isEmpty()) {
             System.out.println("menu item not found");
             //TODO error page
-            return "menu/menu";
+            return "redirect:/menu";
         }
         CartItem cartItem = new CartItem(menuItem.get(), options, quantityValue);
         cart.getItems().add(cartItem);
+        if(destination.equals("menu")){
+            return "redirect:/menu";
+        } else {
+            return "redirect:/view-bag";
+        }
+    }
 
-        return "redirect:/view-bag"; // Redirect to the cart page after adding the product
+    @GetMapping("/editBag")
+    public String editCart(@RequestParam("quantity") String quantity,
+                           @RequestParam("index") String index,
+                           HttpSession session) {
+        ShoppingCart cart = cartService.getCart(session);
+        int itemIndex = Integer.parseInt(index);
+        int itemQuantity = Integer.parseInt(quantity);
+        cart.getItems().get(itemIndex).setQuantity(itemQuantity);
+        return "redirect:/view-bag";
+    }
+
+    @GetMapping("/removeItem")
+    public String removeFromCart(@RequestParam("index") String index,
+                           HttpSession session) {
+        ShoppingCart cart = cartService.getCart(session);
+        int itemIndex = Integer.parseInt(index);
+        cart.getItems().remove(itemIndex);
+        return "redirect:/view-bag";
     }
 
 }

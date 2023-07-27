@@ -15,5 +15,11 @@ import java.util.List;
 public class ShoppingCart {
     private List<CartItem> items = new ArrayList<>();
 
-
+    public double getCartTotal() {
+        double total = 0.0;
+        for(int i = 0; i < items.size(); i++) {
+            total += items.get(i).getItemTotal();
+        }
+        return total;
+    }
 }
