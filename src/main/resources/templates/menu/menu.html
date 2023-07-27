@@ -18,7 +18,7 @@
 </div>
 
 <div class="container-xxl">
-    <!--    <div class="menu">-->
+
     <!---------------------for each menu item--------------------------->
     <!-- APPETIZERS -> CHIPS -->
     <p class="mainCategory" id="appetizers">Appetizers</p>
@@ -44,8 +44,8 @@
                         <img class="menu-item-image" src="/img/placeholder.png">
                     </div>
                 </div>
-            </div> <!-- end if statement -->
-        </div> <!-- end for each -->
+            </div>
+        </div>
     </div>
 
     <!-- APPETIZERS -> OTHER -->
@@ -71,8 +71,8 @@
                         <img class="menu-item-image" src="/img/placeholder.png">
                     </div>
                 </div>
-            </div> <!-- end if statement -->
-        </div> <!-- end for each -->
+            </div>
+        </div>
     </div>
 
     <!-- ENTREES -->
@@ -100,8 +100,8 @@
                     </div>
                 </div>
 
-            </div> <!-- end if statement -->
-        </div> <!-- end for each -->
+            </div>
+        </div>
     </div>
 
 
@@ -128,8 +128,8 @@
                         <img class="menu-item-image" src="/img/placeholder.png">
                     </div>
                 </div>
-            </div> <!-- end if statement -->
-        </div> <!-- end for each -->
+            </div>
+        </div>
     </div>
 
     <!-- SALSAS -->
@@ -155,8 +155,8 @@
                         <img class="menu-item-image" src="/img/placeholder.png">
                     </div>
                 </div>
-            </div> <!-- end if statement -->
-        </div> <!-- end for each -->
+            </div>
+        </div>
     </div>
 
     <!-- BEVERAGES -> SODAS -->
@@ -183,8 +183,8 @@
                         <img class="menu-item-image" src="/img/placeholder.png">
                     </div>
                 </div>
-            </div> <!-- end if statement -->
-        </div> <!-- end for each -->
+            </div>
+        </div>
     </div>
 
     <!--  BEVERAGES -> AGUA FRESCAS -->
@@ -210,8 +210,8 @@
                         <img class="menu-item-image" src="/img/placeholder.png">
                     </div>
                 </div>
-            </div> <!-- end if statement -->
-        </div> <!-- end for each -->
+            </div>
+        </div>
     </div>
 
     <!--  BEVERAGES -> COFFEE -->
@@ -237,8 +237,8 @@
                         <img class="menu-item-image" src="/img/placeholder.png">
                     </div>
                 </div>
-            </div> <!-- end if statement -->
-        </div> <!-- end for each -->
+            </div>
+        </div>
     </div>
 
     <!--  BEVERAGES -> OTHER -->
@@ -264,27 +264,23 @@
                         <img class="menu-item-image" src="/img/placeholder.png">
                     </div>
                 </div>
-            </div> <!-- end if statement -->
-        </div> <!-- end for each -->
+            </div>
+        </div>
     </div>
-    <!------------------------------------------------------------------>
 
-    <!--    </div>-->
 </div>
 
-<!--Creating modals -->
+<!--Creating modals for each item -->
 <div th:each="item : ${menuItems}">
-
     <!-- Modal -->
-    <div class="modal fade" th:attr="id=${'optionsModal' + item.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" th:attr="id=${'optionsModal' + item.id}" tabindex="-1" aria-labelledby="optionsModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel" th:text="${item.item_name}"></h5>
+                    <h5 class="modal-title" id="optionsModal" th:text="${item.item_name}"></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!--          <h5 th:text="${item.item_name}"></h5>-->
                     <div th:if="${item.meatReq.name() =='YES'}">
                         <h6>Chose your meat (1 choice required)</h6>
                         <div th:each="option : ${item.menuItemOptions}">
@@ -322,101 +318,29 @@
     </div>
 </div>
 
+<!-- modal to let user know item was added -->
+<div class="modal fade" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="confModal"  data-backdrop="static"  data-keyboard="false" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confModal">Hooray!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Your item was successfully addded to the bag!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="stayMenu">Keep browsing the menu</button>
+                <button type="button" class="btn btn-primary" id="goToBag">View your Bag</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-<script>
-    function handleMinusClick(event) {
-        const buttonId = event.target.id;
-        let itemId = parseInt(buttonId.toString().substring(13));
-        let quantityDisplay = document.getElementById("currentQuantity" + itemId);
-        let quantity = parseInt(quantityDisplay.innerText);
-        if(quantity > 0) {
-            quantity = quantity - 1;
-            quantityDisplay.innerText = quantity.toString();
-        }
-
-    }
-    function handleAddQuantityClick(event) {
-        const buttonId = event.target.id;
-        let itemId = parseInt(buttonId.toString().substring(11));
-        let quantityDisplay = document.getElementById("currentQuantity" + itemId);
-        let quantity = parseInt(quantityDisplay.innerText);
-        quantity = quantity + 1;
-        quantityDisplay.innerText = quantity.toString();
-    }
-
-    function handleAddToBagClick(event) {
-        let  buttonId = event.target.id;
-        let itemId = parseInt(buttonId.toString().substring(8));
-        let feedback = document.getElementById('feedback' + itemId);
-        let quantityDisplay = document.getElementById("currentQuantity" + itemId);
-        let quantity = quantityDisplay.innerText;
-        let options = [];
-
-        let selectedMeat = getSelectedMeats(itemId);
-        let selectedToppings = getSelectedToppings(itemId);
-
-        if (selectedMeat == null) {
-            feedback.innerText = "Please choose a meat before proceeding";
-        } else {
-            options = selectedToppings.slice();
-            if(selectedMeat != "") {
-                options.unshift(selectedMeat);
-            }
-            let optionList = options.toString();
-            window.location.href = "addToBag?menuItem=" + itemId + "&quantity=" + quantity + "&options=" + optionList;
-        }
-
-
-    }
-
-    function getSelectedMeats(itemId) {
-        let radioButtonGroup = document.getElementsByName('meatOptions' + itemId);
-
-        if (radioButtonGroup.length === 0) {
-            //this is for if there is no meat required
-            return "";
-        }
-
-        //find the option selected
-        for (const radioButton of radioButtonGroup) {
-            if (radioButton.checked) {
-                return radioButton.value
-            }
-        }
-
-        //if nothing is selected
-        return null;
-    }
-
-    function getSelectedToppings(itemId) {
-        let checkboxesGroup = document.getElementsByName('toppingOptions' + itemId);
-        let selectedValues = [];
-
-        //add all selected items to array
-        for (const checkbox of checkboxesGroup) {
-            if (checkbox.checked) {
-                selectedValues.push(checkbox.value);
-            }
-        }
-        return selectedValues;
-    }
-
-
-    const qMinusButtons = document.querySelectorAll('.minusQuantity');
-    qMinusButtons.forEach(button => {
-        button.addEventListener('click', handleMinusClick);
-    });
-
-    const qAddButtons = document.querySelectorAll('.addQuantity');
-    qAddButtons.forEach(button => {
-        button.addEventListener('click', handleAddQuantityClick);
-    });
-
-    const addToBagButtons = document.querySelectorAll('.addToBag');
-    addToBagButtons.forEach(button => {
-        button.addEventListener('click', handleAddToBagClick);
-    });
-</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/menu.js"></script>
 
 <div th:insert="partials/footer :: footer"/>
 </body>

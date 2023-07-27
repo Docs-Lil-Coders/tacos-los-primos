@@ -54,6 +54,7 @@ public class OrderController {
     public String addToCart(@RequestParam("menuItem") String menuItemId,
                             @RequestParam("quantity") String quantity,
                             @RequestParam("options") String options,
+                            @RequestParam("destination") String destination,
                             HttpSession session) {
         ShoppingCart cart = cartService.getCart(session);
         Long itemId = Long.valueOf(menuItemId);
@@ -62,12 +63,15 @@ public class OrderController {
         if(menuItem.isEmpty()) {
             System.out.println("menu item not found");
             //TODO error page
-            return "menu/menu";
+            return "redirect:/menu";
         }
         CartItem cartItem = new CartItem(menuItem.get(), options, quantityValue);
         cart.getItems().add(cartItem);
-
-        return "redirect:/view-bag"; // Redirect to the cart page after adding the product
+        if(destination.equals("menu")){
+            return "redirect:/menu";
+        } else {
+            return "redirect:/view-bag";
+        }
     }
 
     @GetMapping("/editBag")

@@ -44,6 +44,7 @@ a {
 .bag-item-image {
     width: 50px;
     border-radius: 10px;
+    margin-right: 20px;
 }
 
 .bag-item-name {
@@ -54,6 +55,10 @@ a {
     display: flex;
     justify-content: center;
     margin: 0 auto 20px;
+}
+
+.price {
+    margin-right: 20px;
 }
 
 .total-title {
