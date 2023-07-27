@@ -77,14 +77,17 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "first_name='" + first_name + '\'' +
+                "id=" + id +
+                ", first_name='" + first_name + '\'' +
                 ", last_name='" + last_name + '\'' +
                 ", phone=" + phone +
                 ", email='" + email + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", photo_url='" + photo_url + '\'' +
+                ", accumulated_points=" + accumulated_points +
+                ", redeemed_points=" + redeemed_points +
+                ", primary_address='" + primary_address + '\'' +
                 '}';
     }
-
-
 }

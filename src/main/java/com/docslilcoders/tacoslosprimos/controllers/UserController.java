@@ -92,28 +92,56 @@ public class UserController {
 
      */
     public String doEdit(@ModelAttribute User user) {
-        // Check if the user is logged in or not
-        User loggedInUser = AuthBuddy.getLoggedInUser();
-        if (loggedInUser.getId() == 0) {
-            return "redirect:/login";
-        }
+        System.out.println("\n\n\n\n\n\n");
+        System.out.println(user.getFirst_name());
+        System.out.println(user);
+        System.out.println("\n\n\n\n\n\n");
 
-        // Retrieve the logged-in user from the SecurityContextHolder
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println("\n\n\n\n\n\n");
+        System.out.println("logged in");
+        System.out.println(currentUser);
+        System.out.println("\n\n\n\n\n\n");
 
-        // Check if the current user is the same as the logged-in user
-        if (loggedInUser.getId() != currentUser.getId()) {
-            // If they are not the same user, redirect to the login page
-            return "redirect:/login";
-        }
+        currentUser.setFirst_name(user.getFirst_name());
+        currentUser.setLast_name(user.getLast_name());
 
-        // Update the user's profile
-        currentUser.setUsername(user.getUsername());
-        currentUser.setEmail(user.getEmail());
-        // Set other fields you want to update
+//        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println("\n\n\n\n\n\n");
+        System.out.println("logged in");
+        System.out.println(currentUser);
+        System.out.println("\n\n\n\n\n\n");
 
-        // Save the updated user in the database
-        userDao.save(currentUser);
+        user.setId(currentUser.getId());
+        user.setPhoto_url(currentUser.getPhoto_url());
+        user.setAccumulated_points(currentUser.getAccumulated_points());
+        user.setRedeemed_points(currentUser.getRedeemed_points());
+
+        userDao.save(user);
+
+
+        // Check if the user is logged in or not
+//        User loggedInUser = AuthBuddy.getLoggedInUser();
+//        if (loggedInUser.getId() == 0) {
+//            return "redirect:/login";
+//        }
+//
+//        // Retrieve the logged-in user from the SecurityContextHolder
+//        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//
+//        // Check if the current user is the same as the logged-in user
+//        if (loggedInUser.getId() != currentUser.getId()) {
+//            // If they are not the same user, redirect to the login page
+//            return "redirect:/login";
+//        }
+//
+//        // Update the user's profile
+//        currentUser.setUsername(user.getUsername());
+//        currentUser.setEmail(user.getEmail());
+//        // Set other fields you want to update
+//
+//        // Save the updated user in the database
+//        userDao.save(currentUser);
 
         // Redirect the user to the profile page
         return "redirect:/profile";
