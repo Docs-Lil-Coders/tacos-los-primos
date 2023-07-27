@@ -2,48 +2,108 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
       lang="eng" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:insert="partials/header :: head"/>
+<link rel="stylesheet" th:href="@{/css/edit_profile.css}">
 <body>
-<div th:replace="partials/navbar :: navbar"/>
+<div class="page-container">
+    <div th:replace="partials/navbar :: navbar"/>
+    <div class="content-wrap">
 
-<div sec:authorize="isAuthenticated()">
-    <h1>Edit your profile  </h1>
+        <div class="edit-profile-page">
+            <div sec:authorize="isAuthenticated()">
+                <h4>Edit Your Profile</h4>
+            </div>
+
+            <p class="section-title">CONTACT INFORMATION</p>
+
+            <form class="edit-form" th:action="@{/edit-profile}" th:method="post" th:object="${user}">
+                <div class="row">
+                    <div class="col-4 upload-pic-col">
+                        <div class="upload-picture">
+                            <div>
+                                <img class="user-image" src="img/placeholder.png">
+                            </div>
+                            <div class="">
+                                <button class="button" type="button" id="uploadPicture">Upload Picture</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <input type="hidden" name="userId" th:field="*{id}">
+                        <div class="mb-3">
+                            <label for="firstName" class="form-label">First name</label>
+                            <input type="text" name="lastName" class="form-control" id="firstName"
+                                   th:field="*{first_name}" placeholder="New First Name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" name="username" class="form-control" id="username"
+                                   th:field="*{username}" placeholder="New Username">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="text" name="password" class="form-control" id="password"
+                                   th:field="*{password}" placeholder="New Password">
+                        </div>
+                        <div class="mb-3">
+                            <label for="number" class="form-label">Phone number</label>
+                            <input type="text" name="number" class="form-control" id="number" th:field="*{phone}"
+                                   placeholder="New phone number">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="mb-3">
+                            <label for="lastName" class="form-label">Last name</label>
+                            <input type="text" name="lastName" class="form-control" id="lastName"
+                                   th:field="*{last_name}" placeholder="New Last Name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input class="form-control" name="email" id="email" th:field="*{email}"
+                                   placeholder="New email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Confirm Password</label>
+                            <input type="text" name="confirmPassword" class="form-control" id="confirmPassword"
+                                   placeholder="Confirm Password">
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Address</label>
+                            <textarea name="address" class="form-control" id="address" rows="3"
+                                      th:field="*{primary_address}" placeholder="New primary address"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="buttons-div">
+                    <button type="submit" id="saveChanges" class="button">Save Changes</button>
+                </div>
+            </form>
+
+            <p class="section-title">SAVED ADDRESSES</p>
+
+            <div class="address-section">
+                <div class="row">
+
+                    <!--for each address-->
+                    <div class="col-4">
+                        <div class="saved-address-div">
+                            <p class="saved-address">123 address el paso tx 79938</p>
+                            <div class="links-div">
+                                <a id="setPrimary" class="address-links">Set as Primary</a>
+                                <a id="delete" class="address-links">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!--for each end-->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="foot-div">
+        <div th:insert="partials/footer :: footer"/>
+    </div>
 </div>
-
-<form class="mb-3" th:action="@{/edit-profile}" th:method="post" th:object="${user}">
-
-    <input type="hidden" name="userId" th:field="*{id}">
-    <div class="mb-3">
-        <label for="username" class="form-label">Username</label>
-        <input type="text" name="username" class="form-control" id="username" th:field="*{username}" placeholder="New Username">
-    </div>
-    <div class="mb-3">
-        <label for="firstName" class="form-label">First name</label>
-        <input type="text" name="lastName" class="form-control" id="firstName" th:field="*{first_name}" placeholder="New First Name">
-    </div>
-    <div class="mb-3">
-        <label for="lastName" class="form-label">Last name</label>
-        <input type="text" name="lastName" class="form-control" id="lastName" th:field="*{last_name}" placeholder="New Last Name">
-    </div>
-    <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
-        <textarea class="form-control" name="email" id="email" th:field="*{email}" rows="3" placeholder="New email"></textarea>
-    </div>
-    <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input type="text" name="password" class="form-control" id="password" th:field="*{password}" placeholder="New Password">
-    </div>
-    <div class="mb-3">
-        <label for="number" class="form-label">Phone number</label>
-        <input type="text" name="number" class="form-control" id="number" th:field="*{phone}" placeholder="New phone number">
-    </div>
-    <div class="mb-3">
-        <label for="address" class="form-label">Address</label>
-        <input type="text" name="address" class="form-control" id="address" th:field="*{primary_address}" placeholder="New primary address">
-    </div>
-    <button type="submit" class="btn btn-primary">Save Profile</button>
-
-</form>
-
-<div th:insert="partials/footer :: footer"/>
 </body>
 </html>
