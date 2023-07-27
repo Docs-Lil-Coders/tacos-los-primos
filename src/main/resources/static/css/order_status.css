@@ -1,4 +1,29 @@
+.page-container {
+    position: relative;
+    min-height: 100vh;
+}
 
+.content-wrap {
+    padding-bottom: 192px;
+}
+
+.foot-div {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 192px;
+}
+
+.status-form {
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.status-button {
+    display: flex;
+    justify-content: center;
+}
 
 .button {
     display: flex;
@@ -19,4 +44,8 @@
 
 a.button:hover {
     color: #FFFFFF;
+}
+
+.order-status-info {
+    text-align: center;
 }
