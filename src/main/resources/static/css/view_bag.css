@@ -1,7 +1,7 @@
-ul {
-    list-style-type: none;
-    padding: 0;
-}
+/*ul {*/
+/*    list-style-type: none;*/
+/*    padding: 0;*/
+/*}*/
 
 a {
     color: #BF2D1A;
@@ -20,36 +20,46 @@ a {
 
 }
 
-.col-titles {
-    display: grid;
-    grid-template-columns: 2fr 6fr 2fr 2fr 2fr 1fr;
-    grid-column-gap: 10px;
-    grid-row-gap: 10px;
-    align-items: center;
-    margin-top: 20px;
-}
+/*.col-titles {*/
+/*    display: grid;*/
+/*    grid-template-columns: 2fr 10fr 2fr 2fr 2fr 1fr;*/
+/*    grid-column-gap: 10px;*/
+/*    grid-row-gap: 10px;*/
+/*    align-items: center;*/
+/*    margin-top: 20px;*/
+/*}*/
 
 
 .bag-title {
     display: block;
     color: #BF2D1A;
     text-align: center;
+    text-wrap: none;
+    height: 50px;
 }
 
 .bag-title-name {
     display: block;
     color: #BF2D1A;
+    height: 50px;
 }
 
 .bag-item, .bag-item-qty, .bag-item-delete {
     text-align: center;
+    height: 70px;
 }
 
 .bag-item-qty {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     justify-content: space-evenly;
+    height: 70px;
 }
+
+.bag-item-name {
+    height: 70px;
+}
+
 
 .bag-item-image {
     width: 50px;
@@ -65,6 +75,7 @@ a {
 .total-title {
     color: #BF2D1A;
     margin-right: 30px;
+    height: 50px;
 }
 
 .checkout-button {
@@ -72,7 +83,15 @@ a {
     justify-content: center;
 }
 
-.button {
+.plus-minus {
+    background-color: transparent;
+    border: none;
+    font-weight: bold;
+    color: #BF2D1A;
+}
+
+
+.checkoutButton {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -91,4 +110,8 @@ a {
 
 a.button:hover {
     color: #FFFFFF;
+}
+
+.options {
+    font-weight: lighter;
 }

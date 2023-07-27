@@ -10,46 +10,134 @@
 
     <h4>VIEWING YOUR BAG</h4>
 
-    <ul class="col-titles">
-        <li class="bag-title"></li>
-        <li class="bag-title-name">Name</li>
-        <li class="bag-title">Unit Price</li>
-        <li class="bag-title">Quantity</li>
-        <li class="bag-title">Total</li>
-        <li class="bag-title"></li>
-
-        <!-------------------    for each item added to bag------------------------>
-
-        <!--        item image-->
-        <li class="bag-item"><img class="bag-item-image" src="/img/placeholder.png"></li>
-        <!--        item name-->
-        <li class="bag-item-name">Belgium Waffles with strawberries</li>
-        <!--        item price per unit-->
-        <li class="bag-item">$10.50</li>
-        <!--        quantity-->
-        <li class="bag-item-qty">
-            <a class="plus-minus" href="#">+</a>
-            <p>2</p>
-            <a class="plus-minus" href="#">-</a>
-        </li>
-        <!--        total price-->
-        <li class="bag-item">$21.00</li>
-        <!--        remove link-->
-        <li class="bag-item-delete"><a href="#">x</a></li>
-
-
-        <!----------------------------------------------------------------------------->
-    </ul>
-
-    <div class="bag-total-div">
-        <p class="total-title">Bag Sub-total</p>
-        <p class="total-price">$121.50</p>
+    <div th:if="${cart.items.isEmpty()}">
+        <p class="m-4">Your bag is currently empty :(</p>
     </div>
 
-    <div class="checkout-button">
-        <a class="button" href="/checkout">Proceed to Checkout</a>
+    <div th:if="${!cart.items.isEmpty()}">
+        <div class="row">
+            <div class="col">
+                <p class="bag-title d-flex align-items-center justify-content-center"></p>
+                <div th:each="item : ${cart.items}">
+                    <div class="bag-item d-flex align-items-center justify-content-center">
+                        <img class="bag-item-image" src="/img/placeholder.png">
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <p class="bag-title-name d-flex align-items-center">Name</p>
+                <div th:each="item : ${cart.items}">
+                    <div class="bag-item-name d-flex align-items-center">
+                        <div>
+                            <span class="text-nowrap" th:text="${item.menuItem.item_name}"></span><br>
+                            <span class="options text-nowrap" th:text="${item.meatOptionList}"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <p class="bag-title text-nowrap d-flex align-items-center justify-content-center">Unit Price</p>
+                <div th:each="item : ${cart.items}">
+                    <div class="bag-item d-flex align-items-center justify-content-center">$<span
+                            th:text="${item.menuItem.price}"></span></div>
+                </div>
+
+            </div>
+            <div class="col">
+                <p class="bag-title d-flex align-items-center justify-content-center">Quantity</p>
+                <div th:each="item, itemIndex : ${cart.items}">
+                    <div class="bag-item d-flex align-items-center justify-content-center">
+                        <!--  !!!   IMPORTANT !!! -->
+                        <!--  DO NOT REMOVE, CHANGE, OR ADD THE CLASSES 'minusQuantity', 'currentQuantity', 'addQuantity', 'deleteItem' AMONGST ANY ELEMENTS -->
+                        <button class="plus-minus p-0 m-0 minusQuantity" th:id="${'minusQuantity' + itemIndex.index}">
+                            -
+                        </button>
+                        <p class="quantity p-0 my-0 mx-3" th:id="${'currentQuantity' + itemIndex.index}"
+                           th:text="${item.quantity}"></p>
+                        <button class="plus-minus p-0 m-0 addQuantity" th:id="${'addQuantity' + itemIndex.index}">+
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col">
+                <p class="bag-title d-flex align-items-center justify-content-center">Total</p>
+                <div th:each="item : ${cart.items}">
+                    <div class="bag-item d-flex align-items-center justify-content-center">$<span
+                            th:text="${item.getItemTotal()}"></span></div>
+                </div>
+
+            </div>
+            <div class="col">
+                <p class="bag-title d-flex align-items-center justify-content-center"></p>
+                <div th:each="item, itemIndex : ${cart.items}">
+                    <div class="bag-item d-flex align-items-center justify-content-center">
+                        <button class="plus-minus p-0 m-0 deleteItem" th:id="${'deleteItem' + itemIndex.index}">x
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="bag-total-div">
+            <p class="total-title">Bag Sub-total</p>
+            <p class="total-price">$<span th:text="${cart.getCartTotal()}"></span></p>
+        </div>
+
+        <div class="checkout-button">
+            <a class="checkoutButton" href="/checkout">Proceed to Checkout</a>
+        </div>
+
     </div>
 </div>
+
+<script>
+    function handleMinusClick(event) {
+        const buttonId = event.target.id;
+        let itemId = parseInt(buttonId.toString().substring(13));
+        let quantityDisplay = document.getElementById("currentQuantity" + itemId);
+        let quantity = parseInt(quantityDisplay.innerText);
+        if (quantity > 0) {
+            quantity = quantity - 1;
+            quantityDisplay.innerText = quantity.toString();
+        }
+        window.location.href = "editBag?quantity=" + quantity + "&index=" + itemId;
+
+
+    }
+
+    function handleAddQuantityClick(event) {
+        const buttonId = event.target.id;
+        let itemId = parseInt(buttonId.toString().substring(11));
+        let quantityDisplay = document.getElementById("currentQuantity" + itemId);
+        let quantity = parseInt(quantityDisplay.innerText);
+        quantity = quantity + 1;
+        quantityDisplay.innerText = quantity.toString();
+        window.location.href = "editBag?quantity=" + quantity + "&index=" + itemId;
+    }
+
+    function handleDeleteClick(event) {
+        const buttonId = event.target.id;
+        let itemId = buttonId.toString().substring(10);
+        window.location.href = "removeItem?index=" + itemId;
+    }
+
+    const qMinusButtons = document.querySelectorAll('.minusQuantity');
+    qMinusButtons.forEach(button => {
+        button.addEventListener('click', handleMinusClick);
+    });
+
+    const qAddButtons = document.querySelectorAll('.addQuantity');
+    qAddButtons.forEach(button => {
+        button.addEventListener('click', handleAddQuantityClick);
+    });
+
+    const deleteButtons = document.querySelectorAll('.deleteItem');
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', handleDeleteClick);
+    });
+</script>
 
 <div th:insert="partials/footer :: footer"/>
 </body>

@@ -69,4 +69,24 @@ public class OrderController {
         return "redirect:/view-bag"; // Redirect to the cart page after adding the product
     }
 
+    @GetMapping("/editBag")
+    public String editCart(@RequestParam("quantity") String quantity,
+                           @RequestParam("index") String index,
+                           HttpSession session) {
+        ShoppingCart cart = cartService.getCart(session);
+        int itemIndex = Integer.parseInt(index);
+        int itemQuantity = Integer.parseInt(quantity);
+        cart.getItems().get(itemIndex).setQuantity(itemQuantity);
+        return "redirect:/view-bag";
+    }
+
+    @GetMapping("/removeItem")
+    public String removeFromCart(@RequestParam("index") String index,
+                           HttpSession session) {
+        ShoppingCart cart = cartService.getCart(session);
+        int itemIndex = Integer.parseInt(index);
+        cart.getItems().remove(itemIndex);
+        return "redirect:/view-bag";
+    }
+
 }
