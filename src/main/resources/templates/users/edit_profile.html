@@ -41,11 +41,6 @@
                                    th:field="*{username}" placeholder="New Username">
                         </div>
                         <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="text" name="password" class="form-control" id="password"
-                                   th:field="*{password}" placeholder="New Password">
-                        </div>
-                        <div class="mb-3">
                             <label for="number" class="form-label">Phone number</label>
                             <input type="text" name="number" class="form-control" id="number" th:field="*{phone}"
                                    placeholder="New phone number">
@@ -63,11 +58,6 @@
                                    placeholder="New email">
                         </div>
                         <div class="mb-3">
-                            <label for="confirmPassword" class="form-label">Confirm Password</label>
-                            <input type="text" name="confirmPassword" class="form-control" id="confirmPassword"
-                                   placeholder="Confirm Password">
-                        </div>
-                        <div class="mb-3">
                             <label for="address" class="form-label">Address</label>
                             <textarea name="address" class="form-control" id="address" rows="3"
                                       th:field="*{primary_address}" placeholder="New primary address"></textarea>
@@ -76,6 +66,29 @@
                 </div>
                 <div class="buttons-div">
                     <button type="submit" id="saveChanges" class="button">Save Changes</button>
+                </div>
+            </form>
+
+            <p class="section-title">CHANGE PASSWORD</p>
+
+            <form class="password-section">
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Current Password</label>
+                        <input type="text" name="password" class="form-control" id="password"
+                               placeholder="Current Password">
+                    </div>
+                    <div class="mb-3">
+                        <label for="newPassword" class="form-label">New Password</label>
+                        <input type="text" name="newPassword" class="form-control" id="newPassword"
+                               placeholder="New Password">
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Confirm Password</label>
+                        <input type="text" name="confirmPassword" class="form-control" id="confirmPassword"
+                               placeholder="Confirm Password">
+                    </div>
+                <div class="buttons-div">
+                    <button type="submit" id="savePassword" class="button">Change Password</button>
                 </div>
             </form>
 
