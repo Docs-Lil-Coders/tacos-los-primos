@@ -15,7 +15,7 @@
 
             <p class="section-title">CONTACT INFORMATION</p>
 
-            <form class="edit-form" th:action="@{/edit-profile}" th:method="post" th:object="${user}">
+            <form class="edit-form" id="editForm" th:action="@{/edit-profile}" th:method="post" th:object="${user}">
                 <div class="row">
                     <div class="col-4 upload-pic-col">
                         <div class="upload-picture">
@@ -29,64 +29,72 @@
                     </div>
 
                     <div class="col-4">
-                        <input type="hidden" name="userId" th:field="*{id}">
                         <div class="mb-3">
-                            <label for="firstName" class="form-label">First name</label>
-                            <input type="text" name="lastName" class="form-control" id="firstName"
+                            <label for="userFirstName" class="form-label">First name</label>
+                            <input type="text" name="userFirstName" class="form-control" id="userFirstName"
                                    th:field="*{first_name}" placeholder="New First Name">
+                            <div id="firstNameFeedback"></div>
                         </div>
                         <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
                             <input type="text" name="username" class="form-control" id="username"
                                    th:field="*{username}" placeholder="New Username">
+                            <div id="usernameFeedback"></div>
                         </div>
                         <div class="mb-3">
-                            <label for="number" class="form-label">Phone number</label>
-                            <input type="text" name="number" class="form-control" id="number" th:field="*{phone}"
+                            <label for="phone" class="form-label">Phone number</label>
+                            <input type="text" name="phone" class="form-control" id="phone" th:field="*{phone}"
                                    placeholder="New phone number">
+                            <div id="phoneFeedback"></div>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="mb-3">
-                            <label for="lastName" class="form-label">Last name</label>
-                            <input type="text" name="lastName" class="form-control" id="lastName"
+                            <label for="userLastName" class="form-label">Last name</label>
+                            <input type="text" name="userLastName" class="form-control" id="userLastName"
                                    th:field="*{last_name}" placeholder="New Last Name">
+                            <div id="lastNameFeedback"></div>
                         </div>
                         <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input class="form-control" name="email" id="email" th:field="*{email}"
+                            <label for="userEmail" class="form-label">Email</label>
+                            <input class="form-control" name="userEmail" id="userEmail" th:field="*{email}"
                                    placeholder="New email">
+                            <div id="emailFeedback"></div>
                         </div>
                         <div class="mb-3">
-                            <label for="address" class="form-label">Address</label>
-                            <textarea name="address" class="form-control" id="address" rows="3"
+                            <label for="userAddress" class="form-label">Address</label>
+                            <textarea name="userAddress" class="form-control" id="userAddress" rows="3"
                                       th:field="*{primary_address}" placeholder="New primary address"></textarea>
+                            <div id="addressFeedback"></div>
                         </div>
                     </div>
                 </div>
-                <div class="buttons-div">
-                    <button type="submit" id="saveChanges" class="button">Save Changes</button>
-                </div>
             </form>
+                <div class="buttons-div">
+                    <button id="saveChanges" class="button">Save Changes</button>
+                </div>
+
 
             <p class="section-title">CHANGE PASSWORD</p>
 
-            <form class="password-section">
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Current Password</label>
-                        <input type="text" name="password" class="form-control" id="password"
-                               placeholder="Current Password">
-                    </div>
-                    <div class="mb-3">
+            <form th:action="@{/change-password}" th:method="post">
+                <div class="row">
+                    <div class="col my-3">
                         <label for="newPassword" class="form-label">New Password</label>
                         <input type="text" name="newPassword" class="form-control" id="newPassword"
                                placeholder="New Password">
                     </div>
-                    <div class="mb-3">
+                    <div class="col my-3">
                         <label for="confirmPassword" class="form-label">Confirm Password</label>
                         <input type="text" name="confirmPassword" class="form-control" id="confirmPassword"
                                placeholder="Confirm Password">
                     </div>
+                    <div class="col my-3">
+                        <label for="password" class="form-label">Current Password</label>
+                        <input type="text" name="password" class="form-control" id="password"
+                               placeholder="Current Password">
+                    </div>
+                </div>
                 <div class="buttons-div">
                     <button type="submit" id="savePassword" class="button">Change Password</button>
                 </div>
@@ -94,13 +102,29 @@
 
             <p class="section-title">SAVED ADDRESSES</p>
 
+            <button id="addAddressBtn" class="blankBtn mt-1">+ Add New</button>
+
             <div class="address-section">
                 <div class="row">
 
+                    <!-- section to add a new address -->
+                    <div class="col-4 d-none" id="newAddressDiv">
+                        <form th:action="@{/addAddress}" th:method="post">
+                            <div class="saved-address-div">
+                                <label for="newAddress">New Address:</label>
+                                <textarea class="form-control" id="newAddress" name="newAddress" rows="3"></textarea>
+                                <div class="d-flex justify-content-evenly mt-2">
+                                    <button class="button-links" id="cancelButton">Cancel</button>
+                                    <button type="submit" class="button-links">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
                     <!--for each address-->
-                    <div class="col-4">
+                    <div class="col-4" th:each="address : ${currentUser.getUsersAddresses()}">
                         <div class="saved-address-div">
-                            <p class="saved-address">123 address el paso tx 79938</p>
+                            <p class="saved-address" th:text="${address.getAddress()}"></p>
                             <div class="links-div">
                                 <a id="setPrimary" class="address-links">Set as Primary</a>
                                 <a id="delete" class="address-links">Delete</a>
@@ -118,5 +142,268 @@
         <div th:insert="partials/footer :: footer"/>
     </div>
 </div>
+
+<script th:inline="javascript">
+    let usernameTaken = /*[[${usernameTaken}]]*/ 'default';
+    let emailTaken = /*[[${emailTaken}]]*/ "default";
+</script>
+<script>
+    //code for adding a new address
+    let addBtn = document.getElementById("addAddressBtn");
+    let cancelBtn = document.getElementById("cancelButton");
+    let newAddressDiv = document.getElementById("newAddressDiv")
+    addBtn.addEventListener('click', function () {
+        newAddressDiv.classList.remove("d-none");
+    })
+    cancelBtn.addEventListener('click', function (event) {
+        event.preventDefault();
+        newAddressDiv.classList.add("d-none");
+    })
+
+    //code for top section input validation
+    let firstNameInput = document.getElementById("userFirstName");
+    let lastNameInput = document.getElementById("userLastName");
+    let usernameInput = document.getElementById("username");
+    let emailInput = document.getElementById("userEmail");
+    let phoneNumInput = document.getElementById("phone");
+    let addressInput = document.getElementById("userAddress");
+
+    const usernameRegex = /^[a-zA-Z0-9_]{1,30}$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const disAllowedRegex = /^[^"'()*+\-/:;<=>?[\]^`{|}~]*$/;
+    const phoneRegex = /^[0-9]{10}$/;
+    const addressRegex = /^[a-zA-Z0-9, ]{1,50}$/; //TODO - we will need to check this against the API instead once we have it
+
+    let firstNameFeedback = document.getElementById("firstNameFeedback");
+    let lastNameFeedback = document.getElementById("lastNameFeedback");
+    let usernameFeedback = document.getElementById("usernameFeedback");
+    let emailFeedback = document.getElementById("emailFeedback");
+    let phoneFeedback = document.getElementById("phoneFeedback");
+    let addressFeedback = document.getElementById("addressFeedback");
+
+    let submitTopBtn = document.getElementById("saveChanges");
+    let editForm = document.getElementById("editForm");
+
+    if(usernameTaken == true) {
+        usernameInput.classList.add("is-invalid")
+        usernameFeedback.classList.add("invalid-feedback")
+        usernameFeedback.innerText = "Username is taken.";
+
+    }
+
+    if(emailTaken == true) {
+        emailInput.classList.add("is-invalid")
+        emailFeedback.classList.add("invalid-feedback")
+        emailFeedback.innerText = "Email is taken.";
+
+    }
+
+    addTopSectionEventListeners();
+
+    submitTopBtn.addEventListener('click', function (e) {
+        console.log('clicked')
+        e.preventDefault();
+        let validInput = checkInputs();
+
+        if (validInput) {
+            editForm.submit();
+        }
+    })
+    function addTopSectionEventListeners() {
+        firstNameInput.addEventListener("input", function () {
+            checkFirstName();
+        });
+
+        lastNameInput.addEventListener("input", function () {
+            checkLastName();
+        });
+
+        usernameInput.addEventListener("input", function () {
+            checkUsername();
+        });
+
+        emailInput.addEventListener("input", function () {
+            checkEmail();
+        });
+
+        phoneNumInput.addEventListener("input", function () {
+            checkPhone();
+        });
+
+        addressInput.addEventListener("input", function () {
+            checkAddress();
+        });
+
+    }
+    function checkInputs() {
+        let firstNameInput = checkFirstName();
+        let lastNameInput = checkLastName();
+        let usernameInput = checkUsername();
+        let emailInput = checkEmail();
+        let phoneNumberInput = checkPhone();
+        let addressInput = checkAddress();
+
+        return firstNameInput && lastNameInput && phoneNumberInput && addressInput && usernameInput && emailInput;
+    }
+    function checkFirstName() {
+        let validInput = false;
+        if (firstNameInput.value.trim() == "") {
+            firstNameInput.classList.remove("is-valid")
+            firstNameFeedback.classList.remove("valid-feedback")
+            firstNameInput.classList.add("is-invalid")
+            firstNameFeedback.classList.add("invalid-feedback")
+            firstNameFeedback.innerText = "First name cannot be left blank";
+        } else {
+            firstNameInput.classList.remove("is-invalid")
+            firstNameFeedback.classList.remove("invalid-feedback")
+            firstNameInput.classList.add("is-valid")
+            firstNameFeedback.classList.add("valid-feedback")
+            firstNameFeedback.innerText = "Looks good!";
+            validInput = true;
+        }
+        return validInput;
+    }
+    function checkLastName() {
+        let validInput = false;
+        if (lastNameInput.value.trim() == "") {
+            lastNameInput.classList.remove("is-valid")
+            lastNameFeedback.classList.remove("valid-feedback")
+            lastNameInput.classList.add("is-invalid")
+            lastNameFeedback.classList.add("invalid-feedback")
+            lastNameFeedback.innerText = "Last name cannot be left blank";
+        } else {
+            lastNameInput.classList.remove("is-invalid")
+            lastNameFeedback.classList.remove("invalid-feedback")
+            lastNameInput.classList.add("is-valid")
+            lastNameFeedback.classList.add("valid-feedback")
+            lastNameFeedback.innerText = "Looks good!";
+            validInput = true;
+        }
+        return validInput;
+    }
+    function checkUsername() {
+        let validInput = false;
+        if (!usernameRegex.test(usernameInput.value) || !disAllowedRegex.test(usernameInput.value)) {
+            console.log("username should contain only letters, numbers, periods and underscores.")
+            usernameInput.classList.remove("is-valid")
+            usernameFeedback.classList.remove("valid-feedback")
+            usernameInput.classList.add("is-invalid")
+            usernameFeedback.classList.add("invalid-feedback")
+            usernameFeedback.innerText = "username should contain only letters, numbers, and underscores.";
+        } else {
+            usernameInput.classList.remove("is-invalid")
+            usernameFeedback.classList.remove("invalid-feedback")
+            usernameInput.classList.add("is-valid")
+            usernameFeedback.classList.add("valid-feedback")
+            usernameFeedback.innerText = "Looks good!";
+            validInput = true;
+        }
+        return validInput;
+    }
+    function checkEmail() {
+        let validInput = false;
+        if (!emailRegex.test(emailInput.value) || !disAllowedRegex.test(emailInput.value)) {
+            console.log("please ensure emails are in correct email format")
+            emailInput.classList.remove("is-valid")
+            emailFeedback.classList.remove("valid-feedback")
+            emailInput.classList.add("is-invalid")
+            emailFeedback.classList.add("invalid-feedback")
+            emailFeedback.innerText = "Emails should be in correct email format (xxx@xxx.xxx) ";
+        } else {
+            emailInput.classList.remove("is-invalid")
+            emailFeedback.classList.remove("invalid-feedback")
+            emailInput.classList.add("is-valid")
+            emailFeedback.classList.add("valid-feedback")
+            emailFeedback.innerText = "Looks good!";
+            validInput = true;
+        }
+        return validInput;
+    }
+    function checkPhone() {
+        let validInput = false;
+        if (phoneNumInput.value == "") {
+            phoneNumInput.classList.remove("is-invalid")
+            phoneFeedback.classList.remove("invalid-feedback")
+            phoneNumInput.classList.remove("is-valid")
+            phoneFeedback.classList.remove("valid-feedback")
+            phoneFeedback.innerText = "";
+            validInput = true;
+        } else if (!phoneRegex.test(phoneNumInput.value) || !disAllowedRegex.test(phoneNumInput.value)) {
+            phoneNumInput.classList.remove("is-valid")
+            phoneFeedback.classList.remove("valid-feedback")
+            phoneNumInput.classList.add("is-invalid")
+            phoneFeedback.classList.add("invalid-feedback")
+            phoneFeedback.innerText = "Please enter a valid 10 digit phone number or leave phone number blank";
+        } else {
+            phoneNumInput.classList.remove("is-invalid")
+            phoneFeedback.classList.remove("invalid-feedback")
+            phoneNumInput.classList.add("is-valid")
+            phoneFeedback.classList.add("valid-feedback")
+            phoneFeedback.innerText = "Looks good!";
+            validInput = true;
+        }
+        return validInput;
+    }
+    function checkAddress() {
+        let validInput = false;
+        if (!addressRegex.test(addressInput.value) || !disAllowedRegex.test(addressInput.value)) {
+            addressInput.classList.remove("is-valid")
+            addressFeedback.classList.remove("valid-feedback")
+            addressInput.classList.add("is-invalid")
+            addressFeedback.classList.add("invalid-feedback")
+            addressFeedback.innerText = "Please enter a valid address";
+        } else {
+            addressInput.classList.remove("is-invalid")
+            addressFeedback.classList.remove("invalid-feedback")
+            addressInput.classList.add("is-valid")
+            addressFeedback.classList.add("valid-feedback")
+            addressFeedback.innerText = "Looks good!";
+            validInput = true;
+        }
+        return validInput;
+    }
+
+
+
+    function checkPassword() {
+        let validInput = false;
+        if (!passwordRegex.test(passwordInput.value) || !disAllowedRegex.test(passwordInput.value)) {
+            passwordInput.classList.remove("is-valid")
+            passwordFeedback.classList.remove("valid-feedback")
+            passwordInput.classList.add("is-invalid")
+            passwordFeedback.classList.add("invalid-feedback")
+            passwordFeedback.innerText = "Passwords must be 8-10 characters long, contain at least 1 uppercase and 1 lower case letter, and a special symbol (!@#$%&)";
+        } else {
+            passwordInput.classList.remove("is-invalid")
+            passwordFeedback.classList.remove("invalid-feedback")
+            passwordInput.classList.add("is-valid")
+            passwordFeedback.classList.add("valid-feedback")
+            passwordFeedback.innerText = "Password meets complexity requirements.";
+            validInput = true;
+        }
+        return validInput;
+    }
+
+    function checkPasswordConfirm() {
+        let validInput = false;
+        if (passwordInput.value !== passwordConfirmInput.value) {
+            console.log("passwords do not match")
+            passwordConfirmInput.classList.remove("is-valid")
+            confirmPasswordFeedback.classList.remove("valid-feedback")
+            passwordConfirmInput.classList.add("is-invalid")
+            confirmPasswordFeedback.classList.add("invalid-feedback")
+            confirmPasswordFeedback.innerText = "Passwords do not match";
+        } else {
+            passwordConfirmInput.classList.remove("is-invalid")
+            confirmPasswordFeedback.classList.remove("invalid-feedback")
+            passwordConfirmInput.classList.add("is-valid")
+            confirmPasswordFeedback.classList.add("valid-feedback")
+            confirmPasswordFeedback.innerText = "Passwords match";
+            validInput = true;
+        }
+        return validInput;
+    }
+
+</script>
 </body>
 </html>

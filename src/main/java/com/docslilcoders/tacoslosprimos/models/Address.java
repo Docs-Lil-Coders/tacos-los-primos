@@ -26,5 +26,10 @@ public class Address {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    public Address( String address, User user) {
+        this.address = address;
+        this.user = user;
+    }
 }
 

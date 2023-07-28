@@ -109,9 +109,9 @@
     const usernameRegex = /^[a-zA-Z0-9_]{1,30}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%&])[a-zA-Z0-9!@#$%&]{8,20}$/;
-    const disAllowedRegex = /^[^"'()*+,\-/:;<=>?[\]^`{|}~]*$/;
+    const disAllowedRegex = /^[^"'()*+\-/:;<=>?[\]^`{|}~]*$/;
     const phoneRegex = /^[0-9]{10}$/;
-    const addressRegex = /^[a-zA-Z0-9 ]{1,50}$/; //TODO - we will need to check this against the API instead once we have it
+    const addressRegex = /^[a-zA-Z0-9, ]{1,50}$/; //TODO - we will need to check this against the API instead once we have it
 
     let firstNameFeedback = document.getElementById("firstNameFeedback");
     let lastNameFeedback = document.getElementById("lastNameFeedback");
@@ -227,7 +227,7 @@
             lastNameFeedback.classList.remove("valid-feedback")
             lastNameInput.classList.add("is-invalid")
             lastNameFeedback.classList.add("invalid-feedback")
-            lastNameFeedback.innerText = "First name cannot be left blank";
+            lastNameFeedback.innerText = "Last name cannot be left blank";
         } else {
             lastNameInput.classList.remove("is-invalid")
             lastNameFeedback.classList.remove("invalid-feedback")
@@ -320,7 +320,7 @@
 
     function checkPhone() {
         let validInput = false;
-        if (phoneNumInput.value == 0) {
+        if (phoneNumInput.value == "") {
             phoneNumInput.classList.remove("is-invalid")
             phoneFeedback.classList.remove("invalid-feedback")
             phoneNumInput.classList.remove("is-valid")

@@ -29,8 +29,8 @@ public class User {
     @Column(nullable = false)
     private String last_name;
 
-    @Column(nullable = false)
-    private long phone;
+    @Column(nullable = true)
+    private String phone;
 
     @Column(nullable = false)
     private String email;
@@ -41,7 +41,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String photo_url;
 
     @Column(nullable = true)
