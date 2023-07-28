@@ -120,7 +120,7 @@
 
 //sticky menu-nav
     window.onscroll = function () {
-        stickyMenu()
+        stickyMenu();
     };
 
     let menuNav = document.getElementById("menu-nav");
@@ -128,13 +128,12 @@
 
     function stickyMenu() {
         console.log("window.pageYOffset:", window.pageYOffset);
-        console.log(typeof window.pageXOffset);
-        if (window.pageXOffset > margin) {
+
+        console.log()
+        if (window.pageYOffset > margin) {
             menuNav.classList.add("sticky");
-            console.log("class added")
-        } else {
+        } else if (window.pageYOffset <= margin){
             menuNav.classList.remove("sticky");
-            console.log("class removed")
         }
     }
 
