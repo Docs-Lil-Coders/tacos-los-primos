@@ -124,7 +124,7 @@
     };
 
     let menuNav = document.getElementById("menu-nav");
-    let margin = 110;
+    let margin = 120;
 
     function stickyMenu() {
         console.log("window.pageYOffset:", window.pageYOffset);

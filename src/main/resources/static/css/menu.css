@@ -26,8 +26,17 @@
 
     .sticky {
         position: fixed;
-        top: 110px;
-        width: 100%;
+        top: 80px;
+        left: 50%;
+        margin-left: -600px;
+        width: 1200px;
+        z-index: 5;
+        background-color: #FFFFFF;
+        display: block;
+        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 30px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        transition: position 10s;
     }
 }
 @media screen and (max-width: 574px) {
