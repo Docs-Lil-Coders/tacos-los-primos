@@ -118,4 +118,24 @@
         $modal.modal('show');
     }
 
+//sticky menu-nav
+    window.onscroll = function () {
+        stickyMenu()
+    };
+
+    let menuNav = document.getElementById("menu-nav");
+    let margin = 110;
+
+    function stickyMenu() {
+        console.log("window.pageYOffset:", window.pageYOffset);
+        console.log(typeof window.pageXOffset);
+        if (window.pageXOffset > margin) {
+            menuNav.classList.add("sticky");
+            console.log("class added")
+        } else {
+            menuNav.classList.remove("sticky");
+            console.log("class removed")
+        }
+    }
+
 }());
