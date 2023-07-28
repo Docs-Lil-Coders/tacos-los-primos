@@ -3,6 +3,16 @@
     max-width: 960px;
 }
 
+.menu-container {
+    position: relative;
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #FFFFFF;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 20px;
+}
+
 @media screen and (min-width: 575px) {
     .menu-categories {
         display: flex;
@@ -53,70 +63,77 @@ a.menu-category-title:hover {
 }
 
 @media screen and (max-width: 960px) {
-    .menu {
-        display: flex;
-        flex-direction: column;
-        justify-items: center;
-    }
+
 }
 
 @media screen and (min-width: 961px) {
-    .menu {
-        display: grid;
-        flex-wrap: wrap;
-        grid-template-columns: 50% 50%;
-        justify-items: center;
-    }
+
+}
+
+.menu {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 10px;
+}
+
+.menu-sm {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 10px;
+    margin: auto;
 }
 
 .menu-item {
-    width: 550px;
+    width: 300px;
     display: grid;
-    grid-template-columns: 75% 25%;
+    grid-template-rows: 50% 50%;
     justify-self: center;
-    margin: 20px auto 20px;
-    padding: 20px;
-    border-style: solid;
-    border-width: thick;
-    border-radius: 30px;
-    border-color: #BF2D1A;
+    margin: 20px auto;
     background-color: #FFFFFF;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.menu-item-buttons {
-    display: flex;
-    justify-content: space-evenly;
+.menu-item-sm {
+    width: 175px;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    justify-self: center;
+    margin: 20px auto;
+    background-color: #FFFFFF;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .menu-item-info {
     display: grid;
-    grid-template-rows: 20% 60% 20%;
+    grid-template-rows: .5fr 2.5fr 1fr 1fr;
     font-size: 14px;
-    margin-right: 25px;
+    padding: 20px;
+    width: 100%;
+}
+
+.menu-item-info-salsas {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    font-size: 14px;
+    padding: 20px;
+    width: 100%;
 }
 
 .menu-item-title {
     font-weight: bold;
     padding-bottom: 5px;
+    color: #BF2D1A;
+    display: flex;
+    justify-content: space-between;
 }
 
 .img-div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
+    width: 100%;
 }
 
 .menu-item-image {
-    height: 125px;
-    border-radius: 30px;
-}
-
-.menu-ad-img {
-    width: 600px;
-    height: 500px;
-    margin: 20px;
-    border-radius: 30px;
+    width: 100%;
+    height: 100%;
 }
 
 .menu-item-description {
@@ -124,18 +141,19 @@ a.menu-category-title:hover {
     font-weight: normal;
 }
 
-.menu-item-view-more {
-    display: flex;
-    align-items: center;
-}
-
 .view-more-link {
+    text-align: center;
     padding-top: 5px;
     color: #5FBB46;
 }
 
 a.view-more-link:hover {
     color: #BF2D1A;
+}
+
+.add-div {
+    display: flex;
+    justify-content: center;
 }
 
 .menu-item-add-to-bag {
@@ -149,6 +167,7 @@ a.view-more-link:hover {
     display: block;
     width: 125px;
     text-align: center;
+    align-self: center;
 }
 
 a.menu-item-add-to-bag:hover {
@@ -156,17 +175,51 @@ a.menu-item-add-to-bag:hover {
 }
 
 .mainCategory {
-    text-align: center;
-    color: #FFFFFF;
+    position: absolute;
+    left: -15px;
+    width: 400px;
+    height: 50px;
     background-color: #BF2D1A;
+    border-radius: 30px 30px 30px 0;
     font-weight: bold;
     font-size: 25px;
-    padding-top: 30px;
+    color: #FFFFFF;
+    padding-left: 150px;
+    padding-top: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.mainCategory::before {
+    content: "";
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 15px;
+    height: 30px;
+    background-color: #961505;
+    border-radius: 20px 0 0 20px;
+    z-index: 2;
+}
+
+.mainCategory::after {
+    content: "";
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 15px;
+    height: 15px;
+    background-color: #BF2D1A;
 }
 
 .subCategory {
     text-align: center;
     color: #BF2D1A;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 25px;
+}
+
+.main-category {
+    display: block;
+    height: 50px;
+    margin-top: 30px;
 }
