@@ -3,11 +3,17 @@
       lang="eng">
 <head th:insert="partials/header :: head"/>
 <body>
-<div th:replace="partials/navbar :: navbar"/>
+<div class="page-container">
+    <div th:replace="partials/navbar :: navbar"/>
+    <div class="content-wrap">
 
-    <h1>about da restaurant </h1>
+        <h1>about da restaurant </h1>
 
 
-<div th:insert="partials/footer :: footer"/>
+    </div>
+    <div class="foot-div">
+        <div th:insert="partials/footer :: footer"/>
+    </div>
+</div>
 </body>
 </html>

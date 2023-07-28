@@ -4,12 +4,19 @@
 <head th:insert="partials/header :: head"/>
 <link rel="stylesheet" th:href="@{/css/index.css}">
 <body>
-<div th:replace="partials/navbar :: navbar"/>
+<div class="page-container">
+    <div th:replace="partials/navbar :: navbar"/>
+    <div class="content-wrap">
 
 
     <h1> Choosing toppings and meats </h1>
 
 
-<div th:insert="partials/footer :: footer"/>
+    </div>
+    <div class="foot-div">
+        <div th:insert="partials/footer :: footer"/>
+    </div>
+</div>
+
 </body>
 </html>

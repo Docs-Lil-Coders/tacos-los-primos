@@ -50,6 +50,18 @@ a {
     text-decoration: none;
 }
 
+a:hover {
+    cursor: pointer;
+}
+
+.page-container {
+    position: relative;
+    min-height: 100vh;
+}
+
+.content-wrap {
+    padding: 135px 0 192px;
+}
 
 .nav-margin {
     margin-top: 124px;

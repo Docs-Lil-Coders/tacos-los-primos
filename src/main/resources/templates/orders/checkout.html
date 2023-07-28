@@ -4,200 +4,205 @@
 <head th:insert="partials/header :: head"/>
 <link rel="stylesheet" th:href="@{/css/checkout.css}">
 <body>
-<div th:replace="partials/navbar :: navbar"/>
+<div class="page-container">
+    <div th:replace="partials/navbar :: navbar"/>
+    <div class="content-wrap">
 
-<form class="checkout-container">
+        <form class="checkout-container">
 
-    <h4>CHECKOUT</h4>
-    <!--progress bar-->
-    <div class="progressbar">
-        <div class="progress-step progress-step-active" data-title="Confirm Your Order"></div>
-        <div class="progress-step" data-title="Contact Information"></div>
-        <div class="progress-step" data-title="Order Total"></div>
-        <div class="progress-step" data-title="Payment Information"></div>
-        <div class="progress" id="progress"></div>
-    </div>
-
-    <!----------review order tab - start----------->
-    <div class="form-step form-step-active">
-
-        <!-- START FOR EACH ITEM IN CART-->
-        <div>
-            <div th:if="${cart.items.isEmpty()}">
-                <p class="m-4">Your bag is currently empty :(</p>
+            <h4>CHECKOUT</h4>
+            <!--progress bar-->
+            <div class="progressbar">
+                <div class="progress-step progress-step-active" data-title="Confirm Your Order"></div>
+                <div class="progress-step" data-title="Contact Information"></div>
+                <div class="progress-step" data-title="Order Total"></div>
+                <div class="progress-step" data-title="Payment Information"></div>
+                <div class="progress" id="progress"></div>
             </div>
 
-            <div th:if="${!cart.items.isEmpty()}">
-            <div class="row">
-                <div class="col">
-                    <p class="bag-title d-flex align-items-center justify-content-end"></p>
-                    <div th:each="item : ${cart.items}">
-                        <div class="bag-item d-flex align-items-center justify-content-end">
-                            <img class="bag-item-image" src="/img/placeholder.png">
+            <!----------review order tab - start----------->
+            <div class="form-step form-step-active">
+
+                <!-- START FOR EACH ITEM IN CART-->
+                <div>
+                    <div th:if="${cart.items.isEmpty()}">
+                        <p class="m-4">Your bag is currently empty :(</p>
+                    </div>
+
+                    <div th:if="${!cart.items.isEmpty()}">
+                        <div class="row">
+                            <div class="col">
+                                <p class="bag-title d-flex align-items-center justify-content-end"></p>
+                                <div th:each="item : ${cart.items}">
+                                    <div class="bag-item d-flex align-items-center justify-content-end">
+                                        <img class="bag-item-image" src="/img/placeholder.png">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <p class="bag-title-name d-flex align-items-center">Name</p>
+                                <div th:each="item : ${cart.items}">
+                                    <div class="bag-item-name d-flex align-items-center">
+                                        <div>
+                                            <span class="text-nowrap" th:text="${item.menuItem.item_name}"></span><br>
+                                            <span class="options text-nowrap" th:text="${item.meatOptionList}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="filler"></div>
+                            </div>
+                            <div class="col">
+                                <p class="bag-title d-flex align-items-center justify-content-center">Quantity</p>
+                                <div th:each="item, itemIndex : ${cart.items}">
+                                    <div class="bag-item d-flex align-items-center justify-content-center"
+                                         th:text="${item.quantity}"></div>
+                                </div>
+
+                            </div>
+                            <div class="col">
+                                <p class="bag-title d-flex align-items-center justify-content-center">Price</p>
+                                <div th:each="item : ${cart.items}">
+                                    <div class="bag-item d-flex align-items-center justify-content-center">$<span
+                                            th:text="${item.getItemTotal()}"></span></div>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
+
+
+                    <div class="bag-total-div">
+                        <p class="total-title">Bag Sub-total</p>
+                        <p class="total-price">$<span th:text="${cart.getCartTotal()}"></span></p>
+                    </div>
                 </div>
-                <div class="col">
-                    <p class="bag-title-name d-flex align-items-center">Name</p>
-                    <div th:each="item : ${cart.items}">
-                        <div class="bag-item-name d-flex align-items-center">
-                            <div>
-                                <span class="text-nowrap" th:text="${item.menuItem.item_name}"></span><br>
-                                <span class="options text-nowrap" th:text="${item.meatOptionList}"></span>
+                <!-- END ITEMS IN CART  -->
+
+                <div class="place-order-buttons">
+                    <a class="button" href="/view-bag">Return to Bag</a>
+                    <a class="button btn-next" href="#">Next</a>
+                </div>
+
+            </div>
+            <!----------review order tab - end----------->
+
+            <!----------contact info tab - start----------->
+            <div class="form-step">
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="mb-3 form-custom">
+                            <label for="userFirstName" class="form-label">First Name*</label>
+                            <div class="">
+                                <input type="text" class="form-control" id="userFirstName">
+                            </div>
+                        </div>
+                        <div class="mb-3 form-custom">
+                            <label for="userEmail" class="form-label">Email*</label>
+                            <div class="">
+                                <input type="text" class="form-control" id="userEmail">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="mb-3 form-custom">
+                            <label for="userLastName" class="form-label">Last Name*</label>
+                            <div class="">
+                                <input type="text" class="form-control" id="userLastName">
+                            </div>
+                        </div>
+                        <div class="mb-3 form-custom">
+                            <label for="userPhone" class="form-label">Phone</label>
+                            <div class="">
+                                <input type="text" class="form-control" id="userPhone">
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="filler"></div>
+                <div class="mb-3">
+                    <label for="userAddress" class="form-label">Primary Address</label>
+                    <textarea class="form-control" id="userAddress" rows="3"></textarea>
                 </div>
-                <div class="col">
-                    <p class="bag-title d-flex align-items-center justify-content-center">Quantity</p>
-                    <div th:each="item, itemIndex : ${cart.items}">
-                        <div class="bag-item d-flex align-items-center justify-content-center"
-                             th:text="${item.quantity}"></div>
-                    </div>
 
-                </div>
-                <div class="col">
-                    <p class="bag-title d-flex align-items-center justify-content-center">Price</p>
-                    <div th:each="item : ${cart.items}">
-                        <div class="bag-item d-flex align-items-center justify-content-center">$<span
-                                th:text="${item.getItemTotal()}"></span></div>
-                    </div>
-
-                </div>
-            </div>
-            </div>
-
-
-
-        <div class="bag-total-div">
-            <p class="total-title">Bag Sub-total</p>
-            <p class="total-price">$<span th:text="${cart.getCartTotal()}"></span></p>
-        </div>
-        </div>
-        <!-- END ITEMS IN CART  -->
-
-        <div class="place-order-buttons">
-            <a class="button" href="/view-bag">Return to Bag</a>
-            <a class="button btn-next" href="#">Next</a>
-        </div>
-
-    </div>
-    <!----------review order tab - end----------->
-
-    <!----------contact info tab - start----------->
-    <div class="form-step">
-
-        <div class="row">
-            <div class="col-6">
-                <div class="mb-3 form-custom">
-                    <label for="userFirstName" class="form-label">First Name*</label>
-                    <div class="">
-                        <input type="text" class="form-control" id="userFirstName">
-                    </div>
-                </div>
-                <div class="mb-3 form-custom">
-                    <label for="userEmail" class="form-label">Email*</label>
-                    <div class="">
-                        <input type="text" class="form-control" id="userEmail">
-                    </div>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="mb-3 form-custom">
-                    <label for="userLastName" class="form-label">Last Name*</label>
-                    <div class="">
-                        <input type="text" class="form-control" id="userLastName">
-                    </div>
-                </div>
-                <div class="mb-3 form-custom">
-                    <label for="userPhone" class="form-label">Phone</label>
-                    <div class="">
-                        <input type="text" class="form-control" id="userPhone">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="mb-3">
-            <label for="userAddress" class="form-label">Primary Address</label>
-            <textarea class="form-control" id="userAddress" rows="3"></textarea>
-        </div>
-
-        <div class="place-order-buttons">
-            <a class="button btn-prev" href="#">Previous</a>
-            <a class="button btn-next" href="#">Next</a>
-        </div>
-    </div>
-    <!----------contact info tab - end----------->
-
-    <!----------confirm order total - start----------->
-    <div class="form-step">
-
-        <div class="row">
-            <div class="col-6 rewards">
-                <p class="bag-title">REDEEM REWARDS</p>
-                <div class="mb-3 form-custom">
-                    <label for="userRewards" class="form-label">Rewards Balance</label>
-                    <div class="">
-                        <input type="text" class="form-control" id="userRewards">
-                    </div>
-                    <a class="button" href="#">Apply Rewards</a>
-                </div>
-                <div class="mb-3 form-custom">
-                    <label for="userPromo" class="form-label">Promo Code</label>
-                    <div class="">
-                        <input type="text" class="form-control" id="userPromo">
-                    </div>
-                    <a class="button" href="#">Apply Promo</a>
-                </div>
-            </div>
-            <div class="col-6 order-total-price">
-                <p class="bag-title">ORDER TOTAL</p>
-                <ul class="order-price">
-                    <li><p>Order Total</p></li>
-                    <li><p class="dollar-amount">$121.00</p></li>
-                    <li><p>Delivery Charge</p></li>
-                    <li><p class="dollar-amount">$21.00</p></li>
-                    <li><p>Taxes</p></li>
-                    <li><p class="dollar-amount">$1.50</p></li>
-                    <li><p>Discount</p></li>
-                    <li><p class="dollar-amount">-$10.00</p></li>
-                    <li><p>Total</p></li>
-                    <li><p class="dollar-amount">$141.00</p></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="place-order-buttons">
-            <a class="button btn-prev" href="#">Previous</a>
-            <a class="button btn-next" href="#">Next</a>
-        </div>
-
-    </div>
-    <!----------confirm order total - end----------->
-
-    <!----------payment info tab - start----------->
-    <div class="form-step">
-        <div>
-            <form id="payment-form">
-                <div id="payment-element">
-                </div>
                 <div class="place-order-buttons">
                     <a class="button btn-prev" href="#">Previous</a>
-                    <button class="button" id="submit" href="/order-status">Pay now</button>
+                    <a class="button btn-next" href="#">Next</a>
                 </div>
-                <div id="error-message">
+            </div>
+            <!----------contact info tab - end----------->
+
+            <!----------confirm order total - start----------->
+            <div class="form-step">
+
+                <div class="row">
+                    <div class="col-6 rewards">
+                        <p class="bag-title">REDEEM REWARDS</p>
+                        <div class="mb-3 form-custom">
+                            <label for="userRewards" class="form-label">Rewards Balance</label>
+                            <div class="">
+                                <input type="text" class="form-control" id="userRewards">
+                            </div>
+                            <a class="button" href="#">Apply Rewards</a>
+                        </div>
+                        <div class="mb-3 form-custom">
+                            <label for="userPromo" class="form-label">Promo Code</label>
+                            <div class="">
+                                <input type="text" class="form-control" id="userPromo">
+                            </div>
+                            <a class="button" href="#">Apply Promo</a>
+                        </div>
+                    </div>
+                    <div class="col-6 order-total-price">
+                        <p class="bag-title">ORDER TOTAL</p>
+                        <ul class="order-price">
+                            <li><p>Order Total</p></li>
+                            <li><p class="dollar-amount">$121.00</p></li>
+                            <li><p>Delivery Charge</p></li>
+                            <li><p class="dollar-amount">$21.00</p></li>
+                            <li><p>Taxes</p></li>
+                            <li><p class="dollar-amount">$1.50</p></li>
+                            <li><p>Discount</p></li>
+                            <li><p class="dollar-amount">-$10.00</p></li>
+                            <li><p>Total</p></li>
+                            <li><p class="dollar-amount">$141.00</p></li>
+                        </ul>
+                    </div>
                 </div>
-            </form>
-        </div>
+
+                <div class="place-order-buttons">
+                    <a class="button btn-prev" href="#">Previous</a>
+                    <a class="button btn-next" href="#">Next</a>
+                </div>
+
+            </div>
+            <!----------confirm order total - end----------->
+
+            <!----------payment info tab - start----------->
+            <div class="form-step">
+                <div>
+                    <form id="payment-form">
+                        <div id="payment-element">
+                        </div>
+                        <div class="place-order-buttons">
+                            <a class="button btn-prev" href="#">Previous</a>
+                            <button class="button" id="submit" href="/order-status">Pay now</button>
+                        </div>
+                        <div id="error-message">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!----------payment info tab - end----------->
+
+        </form>
+
     </div>
-    <!----------payment info tab - end----------->
-
-</form>
-
-<div th:insert="partials/footer :: footer"/>
+    <div class="foot-div">
+        <div th:insert="partials/footer :: footer"/>
+    </div>
+</div>
 
 <script src="/js/apiKeys.js"></script> <!--put in footer later -->
 <script src="https://js.stripe.com/v3/"></script>
