@@ -15,7 +15,7 @@
 
             <p class="section-title">CONTACT INFORMATION</p>
 
-            <form class="edit-form" th:action="@{/edit-profile}" th:method="post" th:object="${user}">
+            <form class="edit-form" id="editForm" th:action="@{/edit-profile}" th:method="post" th:object="${user}">
                 <div class="row">
                     <div class="col-4 upload-pic-col">
                         <div class="upload-picture">
@@ -29,78 +29,109 @@
                     </div>
 
                     <div class="col-4">
-                        <input type="hidden" name="userId" th:field="*{id}">
                         <div class="mb-3">
-                            <label for="firstName" class="form-label">First name</label>
-                            <input type="text" name="lastName" class="form-control" id="firstName"
+                            <label for="userFirstName" class="form-label">First name</label>
+                            <input type="text" name="userFirstName" class="form-control" id="userFirstName"
                                    th:field="*{first_name}" placeholder="New First Name">
+                            <div id="firstNameFeedback"></div>
                         </div>
                         <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
                             <input type="text" name="username" class="form-control" id="username"
                                    th:field="*{username}" placeholder="New Username">
+                            <div id="usernameFeedback"></div>
                         </div>
                         <div class="mb-3">
-                            <label for="number" class="form-label">Phone number</label>
-                            <input type="text" name="number" class="form-control" id="number" th:field="*{phone}"
+                            <label for="phone" class="form-label">Phone number</label>
+                            <input type="text" name="phone" class="form-control" id="phone" th:field="*{phone}"
                                    placeholder="New phone number">
+                            <div id="phoneFeedback"></div>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="mb-3">
-                            <label for="lastName" class="form-label">Last name</label>
-                            <input type="text" name="lastName" class="form-control" id="lastName"
+                            <label for="userLastName" class="form-label">Last name</label>
+                            <input type="text" name="userLastName" class="form-control" id="userLastName"
                                    th:field="*{last_name}" placeholder="New Last Name">
+                            <div id="lastNameFeedback"></div>
                         </div>
                         <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input class="form-control" name="email" id="email" th:field="*{email}"
+                            <label for="userEmail" class="form-label">Email</label>
+                            <input class="form-control" name="userEmail" id="userEmail" th:field="*{email}"
                                    placeholder="New email">
+                            <div id="emailFeedback"></div>
                         </div>
                         <div class="mb-3">
-                            <label for="address" class="form-label">Address</label>
-                            <textarea name="address" class="form-control" id="address" rows="3"
+                            <label for="userAddress" class="form-label">Address</label>
+                            <textarea name="userAddress" class="form-control" id="userAddress" rows="3"
                                       th:field="*{primary_address}" placeholder="New primary address"></textarea>
+                            <div id="addressFeedback"></div>
                         </div>
                     </div>
                 </div>
-                <div class="buttons-div">
-                    <button type="submit" id="saveChanges" class="button">Save Changes</button>
-                </div>
             </form>
+            <div id="profileUpdateStatus" class="d-none">Your profile was updated successfully!</div>
+            <div class="buttons-div">
+                <button id="saveChanges" type="button" class="button">Save Changes</button>
+            </div>
+
 
             <p class="section-title">CHANGE PASSWORD</p>
 
-            <form class="password-section">
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Current Password</label>
-                        <input type="text" name="password" class="form-control" id="password"
-                               placeholder="Current Password">
-                    </div>
-                    <div class="mb-3">
+            <form th:action="@{/change-password}" th:method="post" id="passwordForm">
+                <div class="row">
+                    <div class="col my-3">
                         <label for="newPassword" class="form-label">New Password</label>
-                        <input type="text" name="newPassword" class="form-control" id="newPassword"
+                        <input type="password" name="newPassword" class="form-control" id="newPassword"
                                placeholder="New Password">
+                        <div id="passwordFeedback"></div>
                     </div>
-                    <div class="mb-3">
+                    <div class="col my-3">
                         <label for="confirmPassword" class="form-label">Confirm Password</label>
-                        <input type="text" name="confirmPassword" class="form-control" id="confirmPassword"
+                        <input type="password" name="confirmPassword" class="form-control" id="confirmPassword"
                                placeholder="Confirm Password">
+                        <div id="confirmPasswordFeedback"></div>
                     </div>
-                <div class="buttons-div">
-                    <button type="submit" id="savePassword" class="button">Change Password</button>
+                    <div class="col my-3">
+                        <label for="password" class="form-label">Current Password</label>
+                        <input type="password" name="password" class="form-control" id="password"
+                               placeholder="Current Password">
+                        <div id="currentPasswordFeedback"></div>
+                    </div>
                 </div>
             </form>
+            <div id="passwordUpdateStatus" class="d-none">Your password was updated successfully!</div>
+
+            <div class="buttons-div">
+                <button id="savePassword" type="button" class="button">Change Password</button>
+            </div>
+
 
             <p class="section-title">SAVED ADDRESSES</p>
+
+            <button id="addAddressBtn" class="blankBtn mt-1">+ Add New</button>
 
             <div class="address-section">
                 <div class="row">
 
+                    <!-- section to add a new address -->
+                    <div class="col-4 d-none" id="newAddressDiv">
+                        <form th:action="@{/addAddress}" th:method="post">
+                            <div class="saved-address-div">
+                                <label for="newAddress">New Address:</label>
+                                <textarea class="form-control" id="newAddress" name="newAddress" rows="3"></textarea>
+                                <div class="d-flex justify-content-evenly mt-2">
+                                    <button class="button-links" id="cancelButton">Cancel</button>
+                                    <button type="submit" class="button-links">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
                     <!--for each address-->
-                    <div class="col-4">
+                    <div class="col-4" th:each="address : ${currentUser.getUsersAddresses()}">
                         <div class="saved-address-div">
-                            <p class="saved-address">123 address el paso tx 79938</p>
+                            <p class="saved-address" th:text="${address.getAddress()}"></p>
                             <div class="links-div">
                                 <a id="setPrimary" class="address-links">Set as Primary</a>
                                 <a id="delete" class="address-links">Delete</a>
@@ -111,12 +142,21 @@
 
                 </div>
             </div>
-        </div>
 
+        </div>
     </div>
     <div class="foot-div">
         <div th:insert="partials/footer :: footer"/>
     </div>
 </div>
+
+<script th:inline="javascript">
+    let usernameTaken = /*[[${usernameTaken}]]*/ 'default';
+    let emailTaken = /*[[${emailTaken}]]*/ "default";
+    let incorrectPassword = /*[[${incorrectPassword}]]*/ "default";
+    let profileUpdated = /*[[${profileUpdated}]]*/ "default";
+    let passwordUpdated = /*[[${passwordUpdated}]]*/ "default";
+</script>
+<script src="/js/editProfile.js"></script>
 </body>
 </html>
