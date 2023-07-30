@@ -18,5 +18,4 @@ public class CartService {
         return cart;
     }
 
-    // Other methods to interact with the shopping cart
 }

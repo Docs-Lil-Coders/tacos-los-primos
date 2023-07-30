@@ -1,19 +1,20 @@
 package com.docslilcoders.tacoslosprimos.controllers;
 
-import com.docslilcoders.tacoslosprimos.models.CartItem;
-import com.docslilcoders.tacoslosprimos.models.MenuItem;
-import com.docslilcoders.tacoslosprimos.models.ShoppingCart;
-import com.docslilcoders.tacoslosprimos.models.User;
+import com.docslilcoders.tacoslosprimos.models.*;
 import com.docslilcoders.tacoslosprimos.repositories.MenuItemRepository;
+import com.docslilcoders.tacoslosprimos.repositories.PromoCodeRepository;
+import com.docslilcoders.tacoslosprimos.repositories.UserRepository;
 import com.docslilcoders.tacoslosprimos.services.CartService;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -23,10 +24,15 @@ public class OrderController {
 
     private final MenuItemRepository menuItemDao;
 
-    public OrderController(MenuItemRepository menuItemDao, CartService cartService) {
+    private final UserRepository userDao;
+    private final PromoCodeRepository promoCodeDao;
+
+    public OrderController(MenuItemRepository menuItemDao, CartService cartService, UserRepository userDao, PromoCodeRepository promoCodedao) {
 
         this.menuItemDao = menuItemDao;
         this.cartService = cartService;
+        this.userDao = userDao;
+        this.promoCodeDao = promoCodedao;
     }
 
 
@@ -34,6 +40,31 @@ public class OrderController {
     public String getAboutPage(HttpSession session, Model model) {
         ShoppingCart cart = cartService.getCart(session);
         model.addAttribute("cart", cart);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            if (authentication.getPrincipal() instanceof User) {
+                User user = (User) authentication.getPrincipal();
+                Optional<User> optionalUser = userDao.findById(user.getId());
+                if (optionalUser.isEmpty()) {
+                    model.addAttribute("pointsAvailable", 0);
+                    model.addAttribute("user", new User());
+                } else {
+                    model.addAttribute("pointsAvailable", optionalUser.get().getAccumulated_points());
+                    model.addAttribute("user", optionalUser.get());
+                }
+            } else {
+                model.addAttribute("pointsAvailable", 0);
+                model.addAttribute("user", new User());
+            }
+        } else {
+            model.addAttribute("pointsAvailable", 0);
+            model.addAttribute("user", new User());
+        }
+
+        List<String> promoCodes = promoCodeDao.findPromoCodeNamesByRedeemedEqualsZero();
+        model.addAttribute("promoCodes", promoCodes);
+
         return "orders/checkout";
     }
 
@@ -60,14 +91,14 @@ public class OrderController {
         Long itemId = Long.valueOf(menuItemId);
         int quantityValue = Integer.parseInt(quantity);
         Optional<MenuItem> menuItem = menuItemDao.findById(itemId);
-        if(menuItem.isEmpty()) {
+        if (menuItem.isEmpty()) {
             System.out.println("menu item not found");
             //TODO error page
             return "redirect:/menu";
         }
         CartItem cartItem = new CartItem(menuItem.get(), options, quantityValue);
         cart.getItems().add(cartItem);
-        if(destination.equals("menu")){
+        if (destination.equals("menu")) {
             return "redirect:/menu";
         } else {
             return "redirect:/view-bag";
@@ -87,11 +118,26 @@ public class OrderController {
 
     @GetMapping("/removeItem")
     public String removeFromCart(@RequestParam("index") String index,
-                           HttpSession session) {
+                                 HttpSession session) {
         ShoppingCart cart = cartService.getCart(session);
         int itemIndex = Integer.parseInt(index);
         cart.getItems().remove(itemIndex);
         return "redirect:/view-bag";
+    }
+
+    @GetMapping("/updateCartFinal")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void test(@RequestParam("orderType") String orderType,
+                     @RequestParam("promoCode") String promoCode,
+                     @RequestParam("pointsRedeemed") String pointsRedeemed,
+                     HttpSession session) {
+        ShoppingCart cart = cartService.getCart(session);
+        if (orderType.equals("delivery")) {
+            cart.setDeliveryOrder(true);
+        }
+        cart.setPromoCodeApplied(promoCode);
+        cart.setRewardsPointsApplied(Integer.parseInt(pointsRedeemed));
+        System.out.println(cart);
     }
 
 }

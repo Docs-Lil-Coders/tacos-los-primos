@@ -23,13 +23,28 @@
             <!----------review order tab - start----------->
             <div class="form-step form-step-active">
 
+
                 <!-- START FOR EACH ITEM IN CART-->
                 <div>
                     <div th:if="${cart.items.isEmpty()}">
-                        <p class="m-4">Your bag is currently empty :(</p>
+                        <p class="m-4 text-center">Your bag is currently empty :(</p>
                     </div>
 
                     <div th:if="${!cart.items.isEmpty()}">
+                        <div class="text-center">
+                            <h2>Place order for: </h2>
+                            <div class="d-flex justify-content-evenly orderTypeContainer">
+                                <div>
+                                    <input type="radio" id="pickUp" name="orderType" value="pickUp" class="checkboxes">
+                                    <label for="pickUp" class="orderTypeLabel"><span class="ms-1"></span>Pick Up</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="delivery" name="orderType" value="delivery" class="checkboxes">
+                                    <label for="delivery" class="orderTypeLabel"><span class="ms-1"></span>Delivery</label>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="row">
                             <div class="col">
                                 <p class="bag-title d-flex align-items-center justify-content-end"></p>
@@ -74,12 +89,13 @@
 
 
                     <div class="bag-total-div">
-                        <p class="total-title">Bag Sub-total</p>
-                        <p class="total-price">$<span th:text="${cart.getCartTotal()}"></span></p>
+                        <p class="total-title">Sub-total</p>
+                        <p class="total-price">$<span  th:text="${cart.getCartTotal()}"></span></p>
                     </div>
                 </div>
                 <!-- END ITEMS IN CART  -->
 
+                <p class="d-none" id="orderTypeFeedback">Please select an order type before proceeding</p>
                 <div class="place-order-buttons">
                     <a class="button" href="/view-bag">Return to Bag</a>
                     <a class="button btn-next" href="#">Next</a>
@@ -96,36 +112,49 @@
                         <div class="mb-3 form-custom">
                             <label for="userFirstName" class="form-label">First Name*</label>
                             <div class="">
-                                <input type="text" class="form-control" id="userFirstName">
+                                <input type="text" class="form-control" id="userFirstName" th:value="${user.first_name}">
+                                <div id="firstNameFeedback"></div>
                             </div>
                         </div>
                         <div class="mb-3 form-custom">
-                            <label for="userEmail" class="form-label">Email*</label>
+                            <label for="userEmail" class="form-label">Email</label>
                             <div class="">
-                                <input type="text" class="form-control" id="userEmail">
+                                <input type="text" class="form-control" id="userEmail" th:value="${user.email}">
+                                <div id="emailFeedback"></div>
                             </div>
+
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="mb-3 form-custom">
                             <label for="userLastName" class="form-label">Last Name*</label>
                             <div class="">
-                                <input type="text" class="form-control" id="userLastName">
+                                <input type="text" class="form-control" id="userLastName" th:value="${user.last_name}">
+                                <div id="lastNameFeedback"></div>
                             </div>
                         </div>
                         <div class="mb-3 form-custom">
                             <label for="userPhone" class="form-label">Phone</label>
                             <div class="">
-                                <input type="text" class="form-control" id="userPhone">
+                                <input type="text" class="form-control" id="userPhone" th:value="${user.phone}">
+                                <div id="phoneFeedback"></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="userAddress" class="form-label">Primary Address</label>
-                    <textarea class="form-control" id="userAddress" rows="3"></textarea>
+                    <label for="userAddress" class="form-label">Address <span th:if="${user.primary_address}"> -
+            <a href="#"> Change?</a></span></label>
+                    <textarea class="form-control" id="userAddress" rows="3" th:text="${user.primary_address}"></textarea>
+                    <div id="addressFeedback"></div>
                 </div>
 
+
+                        <input type="checkbox" id="emailConfirmation" name="confirmation" value="email">
+                        <label for="emailConfirmation">Receive Email Confirmation</label><br>
+
+                        <input type="checkbox" id="phoneConfirmation" name="confirmation" value="phone">
+                        <label for="phoneConfirmation">Receive Phone Confirmation</label>
                 <div class="place-order-buttons">
                     <a class="button btn-prev" href="#">Previous</a>
                     <a class="button btn-next" href="#">Next</a>
@@ -140,33 +169,42 @@
                     <div class="col-6 rewards">
                         <p class="bag-title">REDEEM REWARDS</p>
                         <div class="mb-3 form-custom">
-                            <label for="userRewards" class="form-label">Rewards Balance</label>
-                            <div class="">
-                                <input type="text" class="form-control" id="userRewards">
+                            <div class="d-flex justify-content-between">
+                            <label for="userRewards" class="form-label">Redeem Rewards Points</label>
+                                <label for="userRewards" class="form-label" id="availBalance"></label>
                             </div>
-                            <a class="button" href="#">Apply Rewards</a>
+                            <div class="">
+                                <input type="number" class="form-control" id="userRewards">
+                                <div id="rewardsFeedback"></div>
+                            </div>
+                            <button id="applyRewards"  class="button">Apply Rewards</button>
                         </div>
                         <div class="mb-3 form-custom">
                             <label for="userPromo" class="form-label">Promo Code</label>
                             <div class="">
                                 <input type="text" class="form-control" id="userPromo">
+                                <div id="promoFeedback"></div>
                             </div>
-                            <a class="button" href="#">Apply Promo</a>
+                            <button id="applyPromo" class="button">Apply Promo</button>
                         </div>
                     </div>
                     <div class="col-6 order-total-price">
                         <p class="bag-title">ORDER TOTAL</p>
                         <ul class="order-price">
                             <li><p>Order Total</p></li>
-                            <li><p class="dollar-amount">$121.00</p></li>
+                            <li><p class="dollar-amount">$<span id="cartTotal" th:text="${cart.getCartTotal()}"></span></p></li>
                             <li><p>Delivery Charge</p></li>
-                            <li><p class="dollar-amount">$21.00</p></li>
+                            <li><p class="dollar-amount" id="deliveryCharge">$0.00</p></li>
                             <li><p>Taxes</p></li>
-                            <li><p class="dollar-amount">$1.50</p></li>
-                            <li><p>Discount</p></li>
-                            <li><p class="dollar-amount">-$10.00</p></li>
-                            <li><p>Total</p></li>
-                            <li><p class="dollar-amount">$141.00</p></li>
+                            <li><p class="dollar-amount" id="taxes">$0.00</p></li>
+                            <li><p>Points redeemed:</p></li>
+                            <li><p class="dollar-amount" id="pointsRedeemed">0</p></li>
+                            <li><p>Promo Code</p></li>
+                            <li><p class="dollar-amount" id="promoCode">N/A</p></li>
+                            <li><p>Discounts</p></li>
+                            <li><p class="dollar-amount" id="discount">-$0.00</p></li>
+                            <li><p class="standOut">Total</p></li>
+                            <li><p class="dollar-amount standOut" id="totalCharge">$0.00</p></li>
                         </ul>
                     </div>
                 </div>
@@ -187,7 +225,7 @@
                         </div>
                         <div class="place-order-buttons">
                             <a class="button btn-prev" href="#">Previous</a>
-                            <button class="button" id="submit" href="/order-status">Pay now</button>
+                            <button class="button" id="payNow" href="/order-status">Pay now</button>
                         </div>
                         <div id="error-message">
                         </div>
@@ -204,8 +242,16 @@
     </div>
 </div>
 
-<script src="/js/apiKeys.js"></script> <!--put in footer later -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/apiKeys.js"></script> <!--put in footer later -- should we? that would but this in all pages -->
 <script src="https://js.stripe.com/v3/"></script>
+<script th:inline="javascript">
+        "use strict";
+
+        let pointsAvailable = /*[[${pointsAvailable}]]*/ 'default';
+    let promoCodes = /*[[${promoCodes}]]*/ "default";
+
+</script>
 <script src="/js/checkout.js"></script>
 </body>
 </html>

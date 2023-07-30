@@ -84,6 +84,10 @@ a {
     padding: 10px 0;
 }
 
+.standOut {
+    font-size: x-large;
+}
+
 .button {
     display: flex;
     justify-content: center;
@@ -202,6 +206,39 @@ a.button:hover {
 
 .input-group {
     margin: 2rem 0;
+}
+
+.orderTypeLabel {
+    font-size: 24px;
+    font-weight: normal;
+}
+
+.checkboxes {
+    transform : scale(1.5);
+}
+
+.orderTypeContainer {
+    max-width: 50%;
+    margin: auto;
+}
+
+#orderTypeFeedback {
+    text-align: center;
+    color:  #BF2D1A;
+    font-size: 24px;
+}
+
+.discountButtons {
+    font-family: "Poppins", sans-serif;
+    border: none;
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: #BF2D1A;
+    border-radius: 30px;
+    padding: 10px 15px 5px;
+    display: block;
+    /*width: 125px;*/
+    text-align: center;
 }
 
 @keyframes animate {
