@@ -1,0 +1,32 @@
+.container-1 {
+    display: flex;
+    justify-content: space-between;
+}
+.centered-text {
+    padding: 20px;
+}
+body {
+    margin: 20px;
+}
+
+.column {
+    flex: 1;
+    padding: 0 10px;
+}
+
+.column p {
+    text-align: justify;
+}
+.custom-button {
+    background-color: #BF2D1A;
+    width: 100%;
+    border: 1px solid #BF2D1A;
+    border-radius: 15px;
+}
+.btn.custom-button:focus,
+.btn.custom-button:hover {
+    background-color: #BF2D1A;
+    border-color: #BF2D1A;
+    box-shadow: none !important;
+    outline: none !important;
+}

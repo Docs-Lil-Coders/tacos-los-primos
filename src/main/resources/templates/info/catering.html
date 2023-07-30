@@ -2,12 +2,48 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
       lang="eng">
 <head th:insert="partials/header :: head"/>
+<link rel="stylesheet" th:href="@{/css/catering.css}">
 <body>
 <div th:replace="partials/navbar :: navbar"/>
 
+<h1> CATERING SERVICE</h1>
+<div class-="centered-text">
+    <p>Experience the vibrant flavors of Mexico with our Tacos Los Primos Catering! Our menu includes an array of classic Mexican dishes, such as freshly made guacamole, mouthwatering enchiladas, and delicious street-style tacos. We offer a variety of customizable options to suit your event needs and bring the taste of Mexico to your party.</p>
+</div>
+<div class="container-1">
+    <div class="column">
+        <h1>Birthday Party</h1>
+        <p>Celebrate your birthday with a fiesta of flavors by choosing Mexican food catering. Our catering service offers a delicious and authentic Mexican menu that will delight your guests and make your birthday celebration unforgettable.</p>
+    </div>
+    <div class="column">
+        <h1>Wedding</h1>
+        <p>Add a touch of spice and flavor to your wedding with our exquisite Mexican food catering services. Our team of experienced chefs and staff will ensure that your special day is a culinary delight for you and your guests.</p>
+    </div>
+</div>
+<div class="container mt-5">
+    <h1>Contact Us</h1>
+    <form>
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="mb-3">
+            <label for="subject" class="form-label">Subject Line</label>
+            <input type="text" class="form-control" id="subject" name="subject" required>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="mb-3">
+            <label for="comments" class="form-label">How can we serve you?</label>
+            <textarea class="form-control" id="comments" name="comments" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary custom-button">Submit</button>
+    </form>
+</div>
 
-    <h1> Catering page </h1>
-
+<div class="mt-4"></div>
 
 <div th:insert="partials/footer :: footer"/>
 </body>
