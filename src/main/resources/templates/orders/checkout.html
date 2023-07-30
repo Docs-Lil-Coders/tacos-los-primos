@@ -143,8 +143,9 @@
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="userAddress" class="form-label">Address <span th:if="${user.primary_address}"> -
-            <a href="#"> Change?</a></span></label>
+                    <label for="userAddress" class="form-label">Address</label>
+<!--                    <label for="userAddress" class="form-label">Address <span th:if="${user.primary_address}"> - -->
+<!--            <a href="#"> Change?</a></span></label>-->
                     <textarea class="form-control" id="userAddress" rows="3" th:text="${user.primary_address}"></textarea>
                     <div id="addressFeedback"></div>
                 </div>
