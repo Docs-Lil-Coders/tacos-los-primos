@@ -279,44 +279,47 @@
                         </div>
                         <div class="modal-body">
                             <div th:if="${item.meatReq.name() =='YES'}">
-                                <h6>Chose your meat (1 choice required)</h6>
+                                <h5 class="optionsTitle">Choose your meat (1 choice required)</h5>
                                 <div th:each="option : ${item.menuItemOptions}">
                                     <div th:if="${option.getOptionCategory().name() == 'MEAT'}">
                                         <input type="radio" th:id="${'meatOptions' + item.id}"
                                                th:attr="name=${'meatOptions' + item.id}"
                                                th:value="${option.getOption_name()}">
-                                        <label th:for="${option.getOption_name()}"><span
-                                                th:text="${option.getOption_name()}"></span></label><br>
+                                        <label th:for="${option.getOption_name()}"><span class="option"
+                                                                                         th:text="${option.getOption_name()}"></span></label><br>
                                     </div>
                                 </div>
                             </div>
                             <div th:if="${item.toppingsReq.name() =='YES'}">
-                                <h6>Chose your toppings</h6>
+                                <h5 class="optionsTitle">Choose your toppings</h5>
                                 <div th:each="option : ${item.menuItemOptions}">
                                     <div th:if="${option.getOptionCategory().name() == 'TOPPING'}">
                                         <input type="checkbox" th:id="${'toppingOptions' + item.id}"
                                                th:attr="name=${'toppingOptions' + item.id}"
                                                th:value="${option.getOption_name()}">
-                                        <label th:for="${option.getOption_name()}"><span
-                                                th:text="${option.getOption_name()}"></span></label><br>
+                                        <label th:for="${option.getOption_name()}"><span class="option"
+                                                                                         th:text="${option.getOption_name()}"></span></label><br>
                                     </div>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-center">
+                            <div class="bag-item d-flex align-items-center justify-content-center">
                                 <!--  !!!   IMPORTANT !!! -->
-                                <!--  DO NOT REMOVE, CHANGE, OR ADD THE CLASSES 'minusQuantity', 'currentQuantity', 'addQuantity', 'addToBag' AMONGST ANY ELEMENTS -->
-                                <h6>Quantity:</h6>
-                                <button class="minusQuantity" th:id="${'minusQuantity' + item.id}">-</button>
-                                <p th:id="${'currentQuantity' + item.id}">1</p>
-                                <button class="addQuantity" th:id="${'addQuantity' + item.id}">+</button>
+                                <!--  DO NOT REMOVE, CHANGE, OR ADD THE CLASSES 'minusQuantity', 'currentQuantity', 'addQuantity', 'deleteItem' AMONGST ANY ELEMENTS -->
+                                <button class="plus-minus p-0 m-0 minusQuantity" th:id="${'minusQuantity' + item.id}">-</button>
+                                <p class="quantity p-0 my-0 mx-3" th:id="${'currentQuantity' + item.id}">1</p>
+                                <button class="plus-minus p-0 m-0 addQuantity" th:id="${'addQuantity' + item.id}">+</button>
                             </div>
+
+
                             <div th:id="${'feedback' + item.id}"></div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" th:id="${'addToBag' + item.id}" class="btn btn-primary addToBag">Add
-                                to bag
-                            </button>
+                            <div class="d-flex justify-content-between">
+                                <button type="button" class="modal-button" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" th:id="${'addToBag' + item.id}" class="modal-button addToBag">Add
+                                    to bag
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -330,17 +333,16 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="confModal">Hooray!</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        <h5 class="modal-title text-center" id="confModal">Hooray!</h5>
                     </div>
                     <div class="modal-body">
-                        <p>Your item was successfully addded to the bag!</p>
+                        <h3>Your item was successfully added to the bag!</h3>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" id="stayMenu">Keep browsing the menu</button>
-                        <button type="button" class="btn btn-primary" id="goToBag">View your Bag</button>
+                        <div class="d-flex justify-content-evenly">
+                            <button type="button" class="modal-button" id="stayMenu">Stay on Menu</button>
+                            <button type="button" class="modal-button" id="goToBag">View your Bag</button>
+                        </div>
                     </div>
                 </div>
             </div>
