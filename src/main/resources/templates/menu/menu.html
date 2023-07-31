@@ -10,75 +10,70 @@
 
         <div class="menu-header">
             <h1>OUR MENU</h1>
-            <div class="menu-categories">
-                <p><a class="menu-category-title" href="#appetizers">APPETIZERS</a></p>
-                <p><a class="menu-category-title" href="#entrees">ENTREES</a></p>
-                <p><a class="menu-category-title" href="#sides">SIDES</a></p>
-                <p><a class="menu-category-title" href="#salsas">SALSAS</a></p>
-                <p><a class="menu-category-title" href="#beverages">BEVERAGES</a></p>
-            </div>
         </div>
 
-        <div class="container-xxl">
+        <div class="menu-container" id="menu-container">
+            <div id="menu-nav">
+                <div class="menu-categories">
+                    <p><a class="menu-category-title" href="#appetizers">APPETIZERS</a></p>
+                    <p><a class="menu-category-title" href="#entrees">ENTREES</a></p>
+                    <p><a class="menu-category-title" href="#sides">SIDES</a></p>
+                    <p><a class="menu-category-title" href="#salsas">SALSAS</a></p>
+                    <p><a class="menu-category-title" href="#beverages">BEVERAGES</a></p>
+                </div>
+            </div>
 
-            <!---------------------for each menu item--------------------------->
             <!-- APPETIZERS -> CHIPS -->
-            <p class="mainCategory" id="appetizers">Appetizers</p>
+            <div class="main-category">
+                <p class="mainCategory">Appetizers</p>
+            </div>
+            <div id="appetizers"></div>
             <p class="subCategory">Chips</p>
             <div class="menu">
-                <div th:each="item : ${menuItems}">
-                    <div th:if="${item.mainCategory.name() =='APPETIZERS' && item.subCategory.name() == 'CHIPS'}">
-                        <div class="menu-item">
-                            <div class="menu-item-info">
-                                <p class="menu-item-title"><span th:text="${item.item_name}"></span> - $<span
-                                        th:text="${item.price}"></span></p>
-                                <p class="menu-item-description" th:text="${item.description}"></p>
-                                <div class="menu-item-buttons">
-                                    <p class="menu-item-view-more"><a class="view-more-link"
-                                                                      th:attr="href=${'/view-more/' + item.id}">View
-                                        More</a>
-                                    </p>
-                                    <p>
-                                        <button type="button" class="menu-item-add-to-bag" data-bs-toggle="modal"
-                                                th:attr="data-bs-target=${'#optionsModal' + item.id}">
-                                            Add to bag
-                                        </button>
-                                    </p>
-                                </div>
+                <div th:each="item : ${menuItems}"
+                     th:if="${item.mainCategory.name() =='APPETIZERS' && item.subCategory.name() == 'CHIPS'}">
+                    <div class="menu-item">
+                        <div class="img-div">
+                            <img class="menu-item-image" src="/img/placeholder.png">
+                        </div>
+                        <div class="menu-item-info">
+                            <div class="menu-item-title">
+                                <p th:text="${item.item_name}"></p>
+                                <p><span>$</span><span th:text="${item.price}"></span></p>
                             </div>
-                            <div class="img-div">
-                                <img class="menu-item-image" src="/img/placeholder.png">
+                            <p class="menu-item-description" th:text="${item.description}"></p>
+                            <a class="view-more-link" th:attr="href=${'/view-more/' + item.id}">View More</a>
+                            <div class="add-div">
+                                <button type="button" class="menu-item-add-to-bag" data-bs-toggle="modal"
+                                        th:attr="data-bs-target=${'#optionsModal' + item.id}">Add to bag
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
+
             <!-- APPETIZERS -> OTHER -->
             <p class="subCategory">Other</p>
             <div class="menu">
-                <div th:each="item : ${menuItems}">
-                    <div th:if="${item.mainCategory.name() =='APPETIZERS' && item.subCategory.name() == 'OTHER'}">
-                        <div class="menu-item">
-                            <div class="menu-item-info">
-                                <p class="menu-item-title"><span th:text="${item.item_name}"></span> - $<span
-                                        th:text="${item.price}"></span></p>
-                                <p class="menu-item-description" th:text="${item.description}"></p>
-                                <div class="menu-item-buttons">
-                                    <p class="menu-item-view-more"><a class="view-more-link"
-                                                                      th:attr="href=${'/view-more/' + item.id}">View
-                                        More</a>
-                                    </p>
-                                    <p>
-                                        <button type="button" class="menu-item-add-to-bag" data-bs-toggle="modal"
-                                                th:attr="data-bs-target=${'#optionsModal' + item.id}">
-                                            Add to bag
-                                        </button>
-                                    </p>
-                                </div>
+                <div th:each="item : ${menuItems}"
+                     th:if="${item.mainCategory.name() =='APPETIZERS' && item.subCategory.name() == 'OTHER'}">
+                    <div class="menu-item">
+                        <div class="img-div">
+                            <img class="menu-item-image" src="/img/placeholder.png">
+                        </div>
+                        <div class="menu-item-info">
+                            <div class="menu-item-title">
+                                <p th:text="${item.item_name}"></p>
+                                <p><span>$</span><span th:text="${item.price}"></span></p>
                             </div>
-                            <div class="img-div">
-                                <img class="menu-item-image" src="/img/placeholder.png">
+                            <p class="menu-item-description" th:text="${item.description}"></p>
+                            <a class="view-more-link" th:attr="href=${'/view-more/' + item.id}">View More</a>
+                            <div class="add-div">
+                                <button type="button" class="menu-item-add-to-bag" data-bs-toggle="modal"
+                                        th:attr="data-bs-target=${'#optionsModal' + item.id}">Add to bag
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -86,64 +81,56 @@
             </div>
 
             <!-- ENTREES -->
+            <div class="main-category">
+                <p class="mainCategory">Entrees</p>
+            </div>
+            <div id="entrees"></div>
             <div class="menu">
-                <p class="mainCategory" id="entrees">Entrees</p>
-                <div th:each="item : ${menuItems}">
-                    <div th:if="${item.mainCategory.name() == 'ENTREES'}">
-
-                        <div class="menu-item">
-                            <div class="menu-item-info">
-                                <p class="menu-item-title"><span th:text="${item.item_name}"></span> - $<span
-                                        th:text="${item.price}"></span></p>
-                                <p class="menu-item-description" th:text="${item.description}"></p>
-                                <div class="menu-item-buttons">
-                                    <p class="menu-item-view-more"><a class="view-more-link"
-                                                                      th:attr="href=${'/view-more/' + item.id}">View
-                                        More</a>
-                                    </p>
-                                    <p>
-                                        <button type="button" class="menu-item-add-to-bag" data-bs-toggle="modal"
-                                                th:attr="data-bs-target=${'#optionsModal' + item.id}">
-                                            Add to bag
-                                        </button>
-                                    </p>
-                                </div>
+                <div th:each="item : ${menuItems}" th:if="${item.mainCategory.name() == 'ENTREES'}">
+                    <div class="menu-item">
+                        <div class="img-div">
+                            <img class="menu-item-image" src="/img/placeholder.png">
+                        </div>
+                        <div class="menu-item-info">
+                            <div class="menu-item-title">
+                                <p th:text="${item.item_name}"></p>
+                                <p><span>$</span><span th:text="${item.price}"></span></p>
                             </div>
-                            <div class="img-div">
-                                <img class="menu-item-image" src="/img/placeholder.png">
+                            <p class="menu-item-description" th:text="${item.description}"></p>
+                            <a class="view-more-link" th:attr="href=${'/view-more/' + item.id}">View More</a>
+                            <div class="add-div">
+                                <button type="button" class="menu-item-add-to-bag" data-bs-toggle="modal"
+                                        th:attr="data-bs-target=${'#optionsModal' + item.id}">Add to bag
+                                </button>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
 
 
             <!-- SIDES -->
-            <p class="mainCategory" id="sides">Sides</p>
+            <div class="main-category">
+                <p class="mainCategory">Sides</p>
+            </div>
+            <div id="sides"></div>
             <div class="menu">
-                <div th:each="item : ${menuItems}">
-                    <div th:if="${item.mainCategory.name() =='SIDES'}">
-                        <div class="menu-item">
-                            <div class="menu-item-info">
-                                <p class="menu-item-title"><span th:text="${item.item_name}"></span> - $<span
-                                        th:text="${item.price}"></span></p>
-                                <p class="menu-item-description" th:text="${item.description}"></p>
-                                <div class="menu-item-buttons">
-                                    <p class="menu-item-view-more"><a class="view-more-link"
-                                                                      th:attr="href=${'/view-more/' + item.id}">View
-                                        More</a>
-                                    </p>
-                                    <p>
-                                        <button type="button" class="menu-item-add-to-bag" data-bs-toggle="modal"
-                                                th:attr="data-bs-target=${'#optionsModal' + item.id}">
-                                            Add to bag
-                                        </button>
-                                    </p>
-                                </div>
+                <div th:each="item : ${menuItems}" th:if="${item.mainCategory.name() =='SIDES'}">
+                    <div class="menu-item">
+                        <div class="img-div">
+                            <img class="menu-item-image" src="/img/placeholder.png">
+                        </div>
+                        <div class="menu-item-info">
+                            <div class="menu-item-title">
+                                <p th:text="${item.item_name}"></p>
+                                <p><span>$</span><span th:text="${item.price}"></span></p>
                             </div>
-                            <div class="img-div">
-                                <img class="menu-item-image" src="/img/placeholder.png">
+                            <p class="menu-item-description" th:text="${item.description}"></p>
+                            <a class="view-more-link" th:attr="href=${'/view-more/' + item.id}">View More</a>
+                            <div class="add-div">
+                                <button type="button" class="menu-item-add-to-bag" data-bs-toggle="modal"
+                                        th:attr="data-bs-target=${'#optionsModal' + item.id}">Add to bag
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -151,30 +138,25 @@
             </div>
 
             <!-- SALSAS -->
-            <p class="mainCategory" id="salsas">salsas</p>
-            <div class="menu">
-                <div th:each="item : ${menuItems}">
-                    <div th:if="${item.mainCategory.name() =='SALSAS'}">
-                        <div class="menu-item">
-                            <div class="menu-item-info">
-                                <p class="menu-item-title"><span th:text="${item.item_name}"></span> - $<span
-                                        th:text="${item.price}"></span></p>
-                                <p class="menu-item-description" th:text="${item.description}"></p>
-                                <div class="menu-item-buttons">
-                                    <p class="menu-item-view-more"><a class="view-more-link"
-                                                                      th:attr="href=${'/view-more/' + item.id}">View
-                                        More</a>
-                                    </p>
-                                    <p>
-                                        <button type="button" class="menu-item-add-to-bag" data-bs-toggle="modal"
-                                                th:attr="data-bs-target=${'#optionsModal' + item.id}">
-                                            Add to bag
-                                        </button>
-                                    </p>
-                                </div>
+            <div class="main-category">
+                <p class="mainCategory">Salsas</p>
+            </div>
+            <div id="salsas"></div>
+            <div class="menu-sm">
+                <div th:each="item : ${menuItems}" th:if="${item.mainCategory.name() =='SALSAS'}">
+                    <div class="menu-item-sm">
+                        <div class="img-div">
+                            <img class="menu-item-image" src="/img/placeholder.png">
+                        </div>
+                        <div class="menu-item-info-salsas">
+                            <div class="menu-item-title">
+                                <p th:text="${item.item_name}"></p>
+                                <p><span>$</span><span th:text="${item.price}"></span></p>
                             </div>
-                            <div class="img-div">
-                                <img class="menu-item-image" src="/img/placeholder.png">
+                            <div class="add-div">
+                                <button type="button" class="menu-item-add-to-bag" data-bs-toggle="modal"
+                                        th:attr="data-bs-target=${'#optionsModal' + item.id}">Add to bag
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -182,31 +164,27 @@
             </div>
 
             <!-- BEVERAGES -> SODAS -->
-            <p class="mainCategory" id="beverages">Beverages</p>
+            <div class="main-category">
+                <p class="mainCategory">Beverages</p>
+            </div>
+            <div id="beverages"></div>
             <p class="subCategory">Sodas</p>
-            <div class="menu">
-                <div th:each="item : ${menuItems}">
-                    <div th:if="${item.mainCategory.name() =='BEVERAGES' && item.subCategory.name() == 'SODAS'}">
-                        <div class="menu-item">
-                            <div class="menu-item-info">
-                                <p class="menu-item-title"><span th:text="${item.item_name}"></span> - $<span
-                                        th:text="${item.price}"></span></p>
-                                <p class="menu-item-description" th:text="${item.description}"></p>
-                                <div class="menu-item-buttons">
-                                    <p class="menu-item-view-more"><a class="view-more-link"
-                                                                      th:attr="href=${'/view-more/' + item.id}">View
-                                        More</a>
-                                    </p>
-                                    <p>
-                                        <button type="button" class="menu-item-add-to-bag" data-bs-toggle="modal"
-                                                th:attr="data-bs-target=${'#optionsModal' + item.id}">
-                                            Add to bag
-                                        </button>
-                                    </p>
-                                </div>
+            <div class="menu-sm">
+                <div th:each="item : ${menuItems}"
+                     th:if="${item.mainCategory.name() =='BEVERAGES' && item.subCategory.name() == 'SODAS'}">
+                    <div class="menu-item-sm">
+                        <div class="img-div">
+                            <img class="menu-item-image" src="/img/placeholder.png">
+                        </div>
+                        <div class="menu-item-info-salsas">
+                            <div class="menu-item-title">
+                                <p th:text="${item.item_name}"></p>
+                                <p><span>$</span><span th:text="${item.price}"></span></p>
                             </div>
-                            <div class="img-div">
-                                <img class="menu-item-image" src="/img/placeholder.png">
+                            <div class="add-div">
+                                <button type="button" class="menu-item-add-to-bag" data-bs-toggle="modal"
+                                        th:attr="data-bs-target=${'#optionsModal' + item.id}">Add to bag
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -214,30 +192,23 @@
             </div>
 
             <!--  BEVERAGES -> AGUA FRESCAS -->
-            <p class="subCategory">Agua Frescas</p>
-            <div class="menu">
-                <div th:each="item : ${menuItems}">
-                    <div th:if="${item.mainCategory.name() =='BEVERAGES' && item.subCategory.name() == 'AGUAFRESCAS'}">
-                        <div class="menu-item">
-                            <div class="menu-item-info">
-                                <p class="menu-item-title"><span th:text="${item.item_name}"></span> - $<span
-                                        th:text="${item.price}"></span></p>
-                                <p class="menu-item-description" th:text="${item.description}"></p>
-                                <div class="menu-item-buttons">
-                                    <p class="menu-item-view-more"><a class="view-more-link"
-                                                                      th:attr="href=${'/view-more/' + item.id}">View
-                                        More</a>
-                                    </p>
-                                    <p>
-                                        <button type="button" class="menu-item-add-to-bag" data-bs-toggle="modal"
-                                                th:attr="data-bs-target=${'#optionsModal' + item.id}">
-                                            Add to bag
-                                        </button>
-                                    </p>
-                                </div>
+            <p class="subCategory">Aguas Frescas</p>
+            <div class="menu-sm">
+                <div th:each="item : ${menuItems}"
+                     th:if="${item.mainCategory.name() =='BEVERAGES' && item.subCategory.name() == 'AGUAFRESCAS'}">
+                    <div class="menu-item-sm">
+                        <div class="img-div">
+                            <img class="menu-item-image" src="/img/placeholder.png">
+                        </div>
+                        <div class="menu-item-info-salsas">
+                            <div class="menu-item-title">
+                                <p th:text="${item.item_name}"></p>
+                                <p><span>$</span><span th:text="${item.price}"></span></p>
                             </div>
-                            <div class="img-div">
-                                <img class="menu-item-image" src="/img/placeholder.png">
+                            <div class="add-div">
+                                <button type="button" class="menu-item-add-to-bag" data-bs-toggle="modal"
+                                        th:attr="data-bs-target=${'#optionsModal' + item.id}">Add to bag
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -245,30 +216,23 @@
             </div>
 
             <!--  BEVERAGES -> COFFEE -->
-            <p class="subCategory">COFFEE</p>
-            <div class="menu">
-                <div th:each="item : ${menuItems}">
-                    <div th:if="${item.mainCategory.name() =='BEVERAGES' && item.subCategory.name() == 'COFFEE'}">
-                        <div class="menu-item">
-                            <div class="menu-item-info">
-                                <p class="menu-item-title"><span th:text="${item.item_name}"></span> - $<span
-                                        th:text="${item.price}"></span></p>
-                                <p class="menu-item-description" th:text="${item.description}"></p>
-                                <div class="menu-item-buttons">
-                                    <p class="menu-item-view-more"><a class="view-more-link"
-                                                                      th:attr="href=${'/view-more/' + item.id}">View
-                                        More</a>
-                                    </p>
-                                    <p>
-                                        <button type="button" class="menu-item-add-to-bag" data-bs-toggle="modal"
-                                                th:attr="data-bs-target=${'#optionsModal' + item.id}">
-                                            Add to bag
-                                        </button>
-                                    </p>
-                                </div>
+            <p class="subCategory">Coffee</p>
+            <div class="menu-sm">
+                <div th:each="item : ${menuItems}"
+                     th:if="${item.mainCategory.name() =='BEVERAGES' && item.subCategory.name() == 'COFFEE'}">
+                    <div class="menu-item-sm">
+                        <div class="img-div">
+                            <img class="menu-item-image" src="/img/placeholder.png">
+                        </div>
+                        <div class="menu-item-info-salsas">
+                            <div class="menu-item-title">
+                                <p th:text="${item.item_name}"></p>
+                                <p><span>$</span><span th:text="${item.price}"></span></p>
                             </div>
-                            <div class="img-div">
-                                <img class="menu-item-image" src="/img/placeholder.png">
+                            <div class="add-div">
+                                <button type="button" class="menu-item-add-to-bag" data-bs-toggle="modal"
+                                        th:attr="data-bs-target=${'#optionsModal' + item.id}">Add to bag
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -276,30 +240,23 @@
             </div>
 
             <!--  BEVERAGES -> OTHER -->
-            <div class="menu">
-                <p class="subCategory">Other</p>
-                <div th:each="item : ${menuItems}">
-                    <div th:if="${item.mainCategory.name() =='BEVERAGES' && item.subCategory.name() == 'OTHER'}">
-                        <div class="menu-item">
-                            <div class="menu-item-info">
-                                <p class="menu-item-title"><span th:text="${item.item_name}"></span> - $<span
-                                        th:text="${item.price}"></span></p>
-                                <p class="menu-item-description" th:text="${item.description}"></p>
-                                <div class="menu-item-buttons">
-                                    <p class="menu-item-view-more"><a class="view-more-link"
-                                                                      th:attr="href=${'/view-more/' + item.id}">View
-                                        More</a>
-                                    </p>
-                                    <p>
-                                        <button type="button" class="menu-item-add-to-bag" data-bs-toggle="modal"
-                                                th:attr="data-bs-target=${'#optionsModal' + item.id}">
-                                            Add to bag
-                                        </button>
-                                    </p>
-                                </div>
+            <p class="subCategory">Other</p>
+            <div class="menu-sm">
+                <div th:each="item : ${menuItems}"
+                     th:if="${item.mainCategory.name() =='BEVERAGES' && item.subCategory.name() == 'OTHER'}">
+                    <div class="menu-item-sm">
+                        <div class="img-div">
+                            <img class="menu-item-image" src="/img/placeholder.png">
+                        </div>
+                        <div class="menu-item-info-salsas">
+                            <div class="menu-item-title">
+                                <p th:text="${item.item_name}"></p>
+                                <p><span>$</span><span th:text="${item.price}"></span></p>
                             </div>
-                            <div class="img-div">
-                                <img class="menu-item-image" src="/img/placeholder.png">
+                            <div class="add-div">
+                                <button type="button" class="menu-item-add-to-bag" data-bs-toggle="modal"
+                                        th:attr="data-bs-target=${'#optionsModal' + item.id}">Add to bag
+                                </button>
                             </div>
                         </div>
                     </div>
