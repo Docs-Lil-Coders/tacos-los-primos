@@ -8,31 +8,34 @@
     <div th:replace="partials/navbar :: navbar"/>
     <div class="content-wrap">
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm-4 item-image">
-            <img class="info-picture" src="/img/placeholder.png">
-        </div>
-        <div class="col-sm-8">
-            <p class="info-title">Belgium Waffles with strawberries</p>
-            <p class="info-par">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-                has been the industry's standard dummy text ever since the 1500s, when an unknown printer</p>
-            <p class="info-sub-title">Ingredients</p>
-            <p class="info-par">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-                has been the industry's standard dummy text</p>
-            <p class="info-sub-title">Nutrition Facts</p>
-            <p class="info-par">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-                has been the industry's standard dummy text ever since the 1500s, when</p>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4 item-image">
+                    <img class="info-picture" src="/img/placeholder.png">
+                </div>
+                <div class="col-sm-8">
+                    <p class="info-title">Belgium Waffles with strawberries</p>
+                    <p class="info-par">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                        Ipsum
+                        has been the industry's standard dummy text ever since the 1500s, when an unknown printer</p>
+                    <p class="info-sub-title">Ingredients</p>
+                    <p class="info-par">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                        Ipsum
+                        has been the industry's standard dummy text</p>
+                    <p class="info-sub-title">Nutrition Facts</p>
+                    <p class="info-par">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                        Ipsum
+                        has been the industry's standard dummy text ever since the 1500s, when</p>
+                </div>
+            </div>
+            <div class="add-button">
+                <a class="button" href="/view-bag">Add to bag</a>
+            </div>
         </div>
     </div>
-    <div class="add-button">
-        <a class="button" href="/view-bag">Add to bag</a>
+    <div class="foot-div">
+        <div th:insert="partials/footer :: footer"/>
     </div>
 </div>
-
-        <div class="foot-div">
-            <div th:insert="partials/footer :: footer"/>
-        </div>
-    </div>
 </body>
 </html>
