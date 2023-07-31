@@ -16,7 +16,7 @@
             <div id="menu-nav">
                 <div class="menu-categories">
                     <p><a class="menu-category-title" href="#appetizers">APPETIZERS</a></p>
-                    <p><a class="menu-category-title" href="#appetizers">ENTREES</a></p>
+                    <p><a class="menu-category-title" href="#entrees">ENTREES</a></p>
                     <p><a class="menu-category-title" href="#sides">SIDES</a></p>
                     <p><a class="menu-category-title" href="#salsas">SALSAS</a></p>
                     <p><a class="menu-category-title" href="#beverages">BEVERAGES</a></p>
@@ -25,8 +25,9 @@
 
             <!-- APPETIZERS -> CHIPS -->
             <div class="main-category">
-                <p class="mainCategory" id="appetizers">Appetizers</p>
+                <p class="mainCategory">Appetizers</p>
             </div>
+            <div id="appetizers"></div>
             <p class="subCategory">Chips</p>
             <div class="menu">
                 <div th:each="item : ${menuItems}"
@@ -81,8 +82,9 @@
 
             <!-- ENTREES -->
             <div class="main-category">
-                <p class="mainCategory" id="entrees">Entrees</p>
+                <p class="mainCategory">Entrees</p>
             </div>
+            <div id="entrees"></div>
             <div class="menu">
                 <div th:each="item : ${menuItems}" th:if="${item.mainCategory.name() == 'ENTREES'}">
                     <div class="menu-item">
@@ -109,8 +111,9 @@
 
             <!-- SIDES -->
             <div class="main-category">
-                <p class="mainCategory" id="sides">Sides</p>
+                <p class="mainCategory">Sides</p>
             </div>
+            <div id="sides"></div>
             <div class="menu">
                 <div th:each="item : ${menuItems}" th:if="${item.mainCategory.name() =='SIDES'}">
                     <div class="menu-item">
@@ -136,8 +139,9 @@
 
             <!-- SALSAS -->
             <div class="main-category">
-                <p class="mainCategory" id="salsas">Salsas</p>
+                <p class="mainCategory">Salsas</p>
             </div>
+            <div id="salsas"></div>
             <div class="menu-sm">
                 <div th:each="item : ${menuItems}" th:if="${item.mainCategory.name() =='SALSAS'}">
                     <div class="menu-item-sm">
@@ -161,8 +165,9 @@
 
             <!-- BEVERAGES -> SODAS -->
             <div class="main-category">
-                <p class="mainCategory" id="beverages">Beverages</p>
+                <p class="mainCategory">Beverages</p>
             </div>
+            <div id="beverages"></div>
             <p class="subCategory">Sodas</p>
             <div class="menu-sm">
                 <div th:each="item : ${menuItems}"

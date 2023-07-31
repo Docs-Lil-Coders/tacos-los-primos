@@ -241,10 +241,12 @@ a.menu-item-add-to-bag:hover {
     margin: 30px 0 10px;
 }
 
-#appetizers:before, #appetizers:before, #sides:before, #salsas:before, #beverages:before {
+
+#appetizers:before, #entrees:before, #sides:before, #salsas:before, #beverages:before {
     content: "";
     display: block;
     visibility: hidden;
-    margin-top: -124px;
-    height: 124px;
+    margin-top: -200px;
+    height: 200px;
 }
+
