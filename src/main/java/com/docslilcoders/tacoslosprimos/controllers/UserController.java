@@ -80,17 +80,17 @@ public class UserController {
         return "/users/edit_profile"; //need to go back to change this
     }
     @PostMapping("/edit-profile")
-    /*
+
     public String doEdit(@ModelAttribute User user){
 
-        }
+
         System.out.println(user.getUsername());
         userDao.save(user);
 
         return "/users/profile"; //need to go back to change this
     }
 
-     */
+     /*
     public String doEdit(@ModelAttribute User user) {
         // Check if the user is logged in or not
         User loggedInUser = AuthBuddy.getLoggedInUser();
@@ -117,10 +117,12 @@ public class UserController {
 
         // Redirect the user to the profile page
         return "redirect:/profile";
+
+      */
     }
 
 
 
 
-}
+
 
