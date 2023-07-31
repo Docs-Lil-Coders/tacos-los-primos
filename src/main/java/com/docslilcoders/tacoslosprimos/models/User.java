@@ -29,8 +29,8 @@ public class User {
     @Column(nullable = false)
     private String last_name;
 
-    @Column(nullable = false)
-    private long phone;
+    @Column(nullable = true)
+    private String phone;
 
     @Column(nullable = false)
     private String email;
@@ -41,7 +41,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String photo_url;
 
     @Column(nullable = true)
@@ -59,19 +59,19 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Order> userOrders;
 
-  public User(User copy) {
-      id = copy.id; // This line is SUPER important! Many things won't work if it's absent
-      first_name = copy.first_name;
-      last_name = copy.last_name;
-      phone = copy.phone;
-      email = copy.email;
-      username = copy.username;
-      password = copy.password;
-      photo_url = copy.photo_url;
-      accumulated_points = copy.accumulated_points;
-      redeemed_points = copy.redeemed_points;
-      primary_address = copy.primary_address;
-  }
+    public User(User copy) {
+        id = copy.id; // This line is SUPER important! Many things won't work if it's absent
+        first_name = copy.first_name;
+        last_name = copy.last_name;
+        phone = copy.phone;
+        email = copy.email;
+        username = copy.username;
+        password = copy.password;
+        photo_url = copy.photo_url;
+        accumulated_points = copy.accumulated_points;
+        redeemed_points = copy.redeemed_points;
+        primary_address = copy.primary_address;
+    }
 
 
     @Override

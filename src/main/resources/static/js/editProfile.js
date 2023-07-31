@@ -1,22 +1,40 @@
 (function () {
     "use strict";
 
+
+//code for adding a new address
+    let addBtn = document.getElementById("addAddressBtn");
+    let cancelBtn = document.getElementById("cancelButton");
+    let newAddressDiv = document.getElementById("newAddressDiv")
+    addBtn.addEventListener('click', function () {
+        newAddressDiv.classList.remove("d-none");
+    })
+    cancelBtn.addEventListener('click', function (event) {
+        event.preventDefault();
+        newAddressDiv.classList.add("d-none");
+    })
+
+//code for top section and password input validation
+//grabbing inputs
     let firstNameInput = document.getElementById("userFirstName");
     let lastNameInput = document.getElementById("userLastName");
     let usernameInput = document.getElementById("username");
     let emailInput = document.getElementById("userEmail");
-    let passwordInput = document.getElementById("userPassword");
-    let passwordConfirmInput = document.getElementById("confirmUserPassword");
     let phoneNumInput = document.getElementById("phone");
     let addressInput = document.getElementById("userAddress");
+    let currentPasswordInput = document.getElementById("password");
+    let newPasswordInput = document.getElementById("newPassword");
+    let confirmPasswordInput = document.getElementById("confirmPassword");
 
+//creating requirements
     const usernameRegex = /^[a-zA-Z0-9_]{1,30}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%&])[a-zA-Z0-9!@#$%&]{8,20}$/;
     const disAllowedRegex = /^[^"'()*+\-/:;<=>?[\]^`{|}~]*$/;
     const phoneRegex = /^[0-9]{10}$/;
+    const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%&])[a-zA-Z0-9!@#$%&]{8,20}$/;
     const addressRegex = /^[a-zA-Z0-9, ]{1,50}$/; //TODO - we will need to check this against the API instead once we have it
 
+//grabbing the feedback divs
     let firstNameFeedback = document.getElementById("firstNameFeedback");
     let lastNameFeedback = document.getElementById("lastNameFeedback");
     let usernameFeedback = document.getElementById("usernameFeedback");
@@ -25,36 +43,64 @@
     let addressFeedback = document.getElementById("addressFeedback");
     let passwordFeedback = document.getElementById("passwordFeedback");
     let confirmPasswordFeedback = document.getElementById("confirmPasswordFeedback");
+    let currentPasswordFeedback = document.getElementById("currentPasswordFeedback");
+    let profileUpdateStatus = document.getElementById("profileUpdateStatus");
+    let passwordUpdateStatus = document.getElementById("passwordUpdateStatus");
 
-    let submitBtn = document.getElementById("createAccount");
-    let form = document.getElementById("registerForm");
+//buttons and forms for submission
+    let submitTopBtn = document.getElementById("saveChanges");
+    let editForm = document.getElementById("editForm");
+    let savePasswordBtn = document.getElementById("savePassword");
+    let passwordForm = document.getElementById("passwordForm");
 
-    if(usernameTaken == true) {
-        usernameInput.classList.add("is-invalid")
-        usernameFeedback.classList.add("invalid-feedback")
-        usernameFeedback.innerText = "Username is taken.";
-
-    }
-
-    if(emailTaken == true) {
-        emailInput.classList.add("is-invalid")
-        emailFeedback.classList.add("invalid-feedback")
-        emailFeedback.innerText = "Email is taken.";
-
-    }
-
-    addEventListeners();
-
-    submitBtn.addEventListener('click', function (e) {
+    savePasswordBtn.addEventListener("click", function (e) {
         e.preventDefault();
-        let validInput = checkInputs();
+        let validInput = checkPasswordInputs();
 
         if (validInput) {
-            form.submit();
+            passwordForm.submit();
         }
     })
 
-    function addEventListeners() {
+    if (usernameTaken == true) {
+        usernameInput.classList.add("is-invalid")
+        usernameFeedback.classList.add("invalid-feedback")
+        usernameFeedback.innerText = "Username is taken.";
+    }
+
+    if (emailTaken == true) {
+        emailInput.classList.add("is-invalid")
+        emailFeedback.classList.add("invalid-feedback")
+        emailFeedback.innerText = "Email is taken.";
+    }
+
+    if (incorrectPassword == true) {
+        currentPasswordInput.classList.add("is-invalid")
+        currentPasswordFeedback.classList.add("invalid-feedback")
+        currentPasswordFeedback.innerText = "Password could not be verified.";
+    }
+
+    if (profileUpdated == true) {
+        profileUpdateStatus.classList.remove("d-none");
+    }
+
+    if (passwordUpdated == true) {
+        passwordUpdateStatus.classList.remove("d-none");
+    }
+
+    addTopSectionEventListeners();
+    addPasswordEventListeners();
+
+    submitTopBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        let validInput = checkTopInputs();
+
+        if (validInput) {
+            editForm.submit();
+        }
+    })
+
+    function addTopSectionEventListeners() {
         firstNameInput.addEventListener("input", function () {
             checkFirstName();
         });
@@ -71,14 +117,6 @@
             checkEmail();
         });
 
-        passwordInput.addEventListener("input", function () {
-            checkPassword();
-        });
-
-        passwordConfirmInput.addEventListener("input", function () {
-            checkPasswordConfirm();
-        });
-
         phoneNumInput.addEventListener("input", function () {
             checkPhone();
         });
@@ -88,21 +126,40 @@
         });
 
     }
-    function checkInputs() {
+
+    function addPasswordEventListeners() {
+        newPasswordInput.addEventListener("input", function () {
+            checkPassword()
+        });
+
+        confirmPasswordInput.addEventListener("input", function () {
+            checkPasswordConfirm()
+        });
+    }
+
+    function checkTopInputs() {
         let firstNameInput = checkFirstName();
         let lastNameInput = checkLastName();
         let usernameInput = checkUsername();
         let emailInput = checkEmail();
         let phoneNumberInput = checkPhone();
         let addressInput = checkAddress();
+
+        return firstNameInput && lastNameInput && phoneNumberInput && addressInput && usernameInput && emailInput;
+    }
+
+    function checkPasswordInputs() {
         let passwordInput = checkPassword();
         let passwordConfirmInput = false;
+        let currentPasswordInput = checkCurrentPassword();
 
         if (passwordInput) {
             passwordConfirmInput = checkPasswordConfirm();
         }
-        return firstNameInput && lastNameInput && phoneNumberInput && addressInput && usernameInput && emailInput && passwordInput && passwordConfirmInput;
+
+        return passwordInput && passwordConfirmInput && currentPasswordInput;
     }
+
     function checkFirstName() {
         let validInput = false;
         if (firstNameInput.value.trim() == "") {
@@ -121,6 +178,7 @@
         }
         return validInput;
     }
+
     function checkLastName() {
         let validInput = false;
         if (lastNameInput.value.trim() == "") {
@@ -139,10 +197,10 @@
         }
         return validInput;
     }
+
     function checkUsername() {
         let validInput = false;
         if (!usernameRegex.test(usernameInput.value) || !disAllowedRegex.test(usernameInput.value)) {
-            console.log("username should contain only letters, numbers, periods and underscores.")
             usernameInput.classList.remove("is-valid")
             usernameFeedback.classList.remove("valid-feedback")
             usernameInput.classList.add("is-invalid")
@@ -158,10 +216,10 @@
         }
         return validInput;
     }
+
     function checkEmail() {
         let validInput = false;
         if (!emailRegex.test(emailInput.value) || !disAllowedRegex.test(emailInput.value)) {
-            console.log("please ensure emails are in correct email format")
             emailInput.classList.remove("is-valid")
             emailFeedback.classList.remove("valid-feedback")
             emailInput.classList.add("is-invalid")
@@ -177,43 +235,7 @@
         }
         return validInput;
     }
-    function checkPassword() {
-        let validInput = false;
-        if (!passwordRegex.test(passwordInput.value) || !disAllowedRegex.test(passwordInput.value)) {
-            passwordInput.classList.remove("is-valid")
-            passwordFeedback.classList.remove("valid-feedback")
-            passwordInput.classList.add("is-invalid")
-            passwordFeedback.classList.add("invalid-feedback")
-            passwordFeedback.innerText = "Passwords must be 8-10 characters long, contain at least 1 uppercase and 1 lower case letter, and a special symbol (!@#$%&)";
-        } else {
-            passwordInput.classList.remove("is-invalid")
-            passwordFeedback.classList.remove("invalid-feedback")
-            passwordInput.classList.add("is-valid")
-            passwordFeedback.classList.add("valid-feedback")
-            passwordFeedback.innerText = "Password meets complexity requirements.";
-            validInput = true;
-        }
-        return validInput;
-    }
-    function checkPasswordConfirm() {
-        let validInput = false;
-        if (passwordInput.value !== passwordConfirmInput.value) {
-            console.log("passwords do not match")
-            passwordConfirmInput.classList.remove("is-valid")
-            confirmPasswordFeedback.classList.remove("valid-feedback")
-            passwordConfirmInput.classList.add("is-invalid")
-            confirmPasswordFeedback.classList.add("invalid-feedback")
-            confirmPasswordFeedback.innerText = "Passwords do not match";
-        } else {
-            passwordConfirmInput.classList.remove("is-invalid")
-            confirmPasswordFeedback.classList.remove("invalid-feedback")
-            passwordConfirmInput.classList.add("is-valid")
-            confirmPasswordFeedback.classList.add("valid-feedback")
-            confirmPasswordFeedback.innerText = "Passwords match";
-            validInput = true;
-        }
-        return validInput;
-    }
+
     function checkPhone() {
         let validInput = false;
         if (phoneNumInput.value == "") {
@@ -228,7 +250,7 @@
             phoneFeedback.classList.remove("valid-feedback")
             phoneNumInput.classList.add("is-invalid")
             phoneFeedback.classList.add("invalid-feedback")
-            phoneFeedback.innerText = "Please enter a valid 10 digit phone number. OR leave phone as 0 to do this step later.";
+            phoneFeedback.innerText = "Please enter a valid 10 digit phone number or leave phone number blank";
         } else {
             phoneNumInput.classList.remove("is-invalid")
             phoneFeedback.classList.remove("invalid-feedback")
@@ -239,10 +261,10 @@
         }
         return validInput;
     }
+
     function checkAddress() {
         let validInput = false;
         if (!addressRegex.test(addressInput.value) || !disAllowedRegex.test(addressInput.value)) {
-
             addressInput.classList.remove("is-valid")
             addressFeedback.classList.remove("valid-feedback")
             addressInput.classList.add("is-invalid")
@@ -254,6 +276,63 @@
             addressInput.classList.add("is-valid")
             addressFeedback.classList.add("valid-feedback")
             addressFeedback.innerText = "Looks good!";
+            validInput = true;
+        }
+        return validInput;
+    }
+
+
+    function checkPassword() {
+        let validInput = false;
+        if (!passwordRegex.test(newPasswordInput.value) || !disAllowedRegex.test(newPasswordInput.value)) {
+            newPasswordInput.classList.remove("is-valid")
+            passwordFeedback.classList.remove("valid-feedback")
+            newPasswordInput.classList.add("is-invalid")
+            passwordFeedback.classList.add("invalid-feedback")
+            passwordFeedback.innerText = "Passwords must be 8-10 characters long, contain at least 1 uppercase and 1 lower case letter, and a special symbol (!@#$%&)";
+        } else {
+            newPasswordInput.classList.remove("is-invalid")
+            passwordFeedback.classList.remove("invalid-feedback")
+            newPasswordInput.classList.add("is-valid")
+            passwordFeedback.classList.add("valid-feedback")
+            passwordFeedback.innerText = "Password meets complexity requirements.";
+            validInput = true;
+        }
+        return validInput;
+    }
+
+//
+    function checkPasswordConfirm() {
+        let validInput = false;
+        if (newPasswordInput.value !== confirmPasswordInput.value) {
+            confirmPasswordInput.classList.remove("is-valid")
+            confirmPasswordFeedback.classList.remove("valid-feedback")
+            confirmPasswordInput.classList.add("is-invalid")
+            confirmPasswordFeedback.classList.add("invalid-feedback")
+            confirmPasswordFeedback.innerText = "Passwords do not match";
+        } else {
+            confirmPasswordInput.classList.remove("is-invalid")
+            confirmPasswordFeedback.classList.remove("invalid-feedback")
+            confirmPasswordInput.classList.add("is-valid")
+            confirmPasswordFeedback.classList.add("valid-feedback")
+            confirmPasswordFeedback.innerText = "Passwords match";
+            validInput = true;
+        }
+        return validInput;
+    }
+
+    function checkCurrentPassword() {
+        let validInput = false;
+        if (currentPasswordInput.value.trim() == "") {
+            currentPasswordInput.classList.remove("is-valid")
+            currentPasswordFeedback.classList.remove("valid-feedback")
+            currentPasswordInput.classList.add("is-invalid")
+            currentPasswordFeedback.classList.add("invalid-feedback")
+            currentPasswordFeedback.innerText = "Please enter your current password to save your changes";
+        } else {
+            currentPasswordInput.classList.remove("is-invalid")
+            currentPasswordFeedback.classList.remove("invalid-feedback")
+            currentPasswordFeedback.innerText = "";
             validInput = true;
         }
         return validInput;

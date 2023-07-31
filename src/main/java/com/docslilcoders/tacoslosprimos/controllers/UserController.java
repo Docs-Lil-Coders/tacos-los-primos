@@ -1,27 +1,32 @@
 package com.docslilcoders.tacoslosprimos.controllers;
 
+import com.docslilcoders.tacoslosprimos.models.Address;
 import com.docslilcoders.tacoslosprimos.models.User;
+import com.docslilcoders.tacoslosprimos.repositories.AddressRepository;
 import com.docslilcoders.tacoslosprimos.repositories.UserRepository;
 import com.docslilcoders.tacoslosprimos.services.AuthBuddy;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Optional;
 
 @Controller
 public class UserController {
 
     private final UserRepository userDao;
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
+
+    private final AddressRepository addressDao;
 
 
-    public UserController(UserRepository userDao, PasswordEncoder passwordEncoder) {
+    public UserController(UserRepository userDao, PasswordEncoder passwordEncoder, AddressRepository addressDao) {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
+        this.addressDao = addressDao;
     }
 
     @GetMapping("/register")
@@ -53,7 +58,8 @@ public class UserController {
             String hash = passwordEncoder.encode(user.getPassword());
             user.setPassword(hash);
             userDao.save(user);
-            System.out.println(user);
+            Address usersAddress = new Address(user.getPrimary_address(), user);
+            addressDao.save(usersAddress);
             return "redirect:/login";
         }
     }
@@ -64,8 +70,6 @@ public class UserController {
 
     @GetMapping("/profile")
     public String getProfilePage(Model model) {
-
-
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (user.getId() == 0) {
             return "redirect:/login";
@@ -73,54 +77,123 @@ public class UserController {
         model.addAttribute("user", user);
         return "users/profile";
     }
+
     @GetMapping("/edit-profile")
-    public String showEdit(Model model){
+    public String showEdit(Model model,
+                           @RequestParam(name = "usernameTaken", required = false) boolean usernameTaken,
+                           @RequestParam(name = "emailTaken", required = false) boolean emailTaken,
+                           @RequestParam(name = "incorrectPassword", required = false) boolean incorrectPassword,
+                           @RequestParam(name = "profileUpdated", required = false) boolean profileUpdated,
+                           @RequestParam(name = "passwordUpdated", required = false) boolean passwordUpdated){
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (user.getId() == 0) {
+            return "redirect:/login";
+        }
+
+
+        Optional<User> optionalUser = userDao.findById(user.getId());
+        if(optionalUser.isEmpty()) {
+            //TODO error page
+            return "redirect:/login";
+        }
+        model.addAttribute("usernameTaken", usernameTaken);
+        model.addAttribute("emailTaken", emailTaken);
+        model.addAttribute("incorrectPassword", incorrectPassword);
+        model.addAttribute("profileUpdated", profileUpdated);
+        model.addAttribute("passwordUpdated", passwordUpdated);
+        model.addAttribute("currentUser", optionalUser.get());
         model.addAttribute("user", user);
-        return "/users/edit_profile"; //need to go back to change this
+        return "/users/edit_profile";
     }
     @PostMapping("/edit-profile")
-    /*
-    public String doEdit(@ModelAttribute User user){
-
-        }
-        System.out.println(user.getUsername());
-        userDao.save(user);
-
-        return "/users/profile"; //need to go back to change this
-    }
-
-     */
-    public String doEdit(@ModelAttribute User user) {
-        // Check if the user is logged in or not
-        User loggedInUser = AuthBuddy.getLoggedInUser();
-        if (loggedInUser.getId() == 0) {
-            return "redirect:/login";
-        }
-
-        // Retrieve the logged-in user from the SecurityContextHolder
+    public String doEdit(@ModelAttribute User user, RedirectAttributes redirectAttributes) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        // Check if the current user is the same as the logged-in user
-        if (loggedInUser.getId() != currentUser.getId()) {
-            // If they are not the same user, redirect to the login page
+        if (currentUser.getId() == 0) {
             return "redirect:/login";
         }
 
-        // Update the user's profile
+        boolean usernameTaken = false;
+        boolean emailTaken = false;
+
+        if(!currentUser.getUsername().equals(user.getUsername()) && (userDao.findByUsername(user.getUsername()) != null)) {
+            System.out.println("username taken ");
+            usernameTaken = true;
+        }
+
+        if(!currentUser.getEmail().equals(user.getEmail()) && userDao.findByEmail(user.getEmail()) != null) {
+            System.out.println("email taken ");
+            emailTaken = true;
+        }
+
+        if(usernameTaken || emailTaken) {
+            redirectAttributes.addAttribute("usernameTaken", usernameTaken);
+            redirectAttributes.addAttribute("emailTaken", emailTaken);
+            return "redirect:/edit-profile";
+        } else {
+        //this sets it for the current session
+        currentUser.setFirst_name(user.getFirst_name());
+        currentUser.setLast_name(user.getLast_name());
         currentUser.setUsername(user.getUsername());
+        currentUser.setPhone(user.getPhone());
         currentUser.setEmail(user.getEmail());
-        // Set other fields you want to update
+        currentUser.setPrimary_address(user.getPrimary_address());
 
-        // Save the updated user in the database
-        userDao.save(currentUser);
+        //this fills in the missing fields from the user object from form
+        user.setId(currentUser.getId());
+        user.setPhoto_url(currentUser.getPhoto_url());
+        user.setAccumulated_points(currentUser.getAccumulated_points());
+        user.setRedeemed_points(currentUser.getRedeemed_points());
+        user.setPassword(currentUser.getPassword());
 
-        // Redirect the user to the profile page
-        return "redirect:/profile";
+        userDao.save(user);
+            redirectAttributes.addAttribute("profileUpdated", true);
+        return "redirect:/edit-profile";
+        }
     }
+
+    @PostMapping("/change-password")
+    public String changePassword(@RequestParam String newPassword, @RequestParam String password, RedirectAttributes redirectAttributes){
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Optional<User> optionalUser = userDao.findById(loggedInUser.getId());
+        if(optionalUser.isEmpty()) {
+            //TODO error page
+            return "redirect:/login";
+        }
+
+        String currentPassword = optionalUser.get().getPassword();
+
+        boolean passwordCorrect = passwordEncoder.matches(password, currentPassword);
+        if(passwordCorrect) {
+            String newPasswordHash = passwordEncoder.encode(newPassword);
+            optionalUser.get().setPassword(newPasswordHash);
+            userDao.save(optionalUser.get());
+            redirectAttributes.addAttribute("passwordUpdated", true);
+        } else {
+            redirectAttributes.addAttribute("incorrectPassword", true);
+            return "redirect:/edit-profile";
+        }
+        return "redirect:/edit-profile";
+    }
+
+    @PostMapping("/addAddress")
+    public String addAddress(@RequestParam String newAddress) {
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Optional<User> optionalUser = userDao.findById(loggedInUser.getId());
+        if(optionalUser.isEmpty()) {
+            //TODO error page
+            return "redirect:/login";
+        }
+        Address address = new Address(newAddress, optionalUser.get());
+        addressDao.save(address);
+
+
+        return "redirect:/edit-profile";
+    }
+
+
+
 
 
 
 
 }
-
