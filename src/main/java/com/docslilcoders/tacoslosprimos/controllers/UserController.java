@@ -129,6 +129,14 @@ public class UserController {
             redirectAttributes.addAttribute("emailTaken", emailTaken);
             return "redirect:/edit-profile";
         } else {
+
+            //update the new address in the address table too
+            if(!currentUser.getPrimary_address().equals(user.getPrimary_address())) {
+                Address findAddress = addressDao.findByAddress(currentUser.getPrimary_address());
+                findAddress.setAddress(user.getPrimary_address());
+                addressDao.save(findAddress);
+            }
+
         //this sets it for the current session
         currentUser.setFirst_name(user.getFirst_name());
         currentUser.setLast_name(user.getLast_name());
