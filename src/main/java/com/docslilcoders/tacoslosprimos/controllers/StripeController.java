@@ -27,7 +27,7 @@ public class StripeController {
 
     @GetMapping(value = "/stripe-token" , produces = "application/json")
     @ResponseBody
-    public String createPaymentIntent()//PASS IN ORDER ID AS PARAMETER
+    public String createPaymentIntent()//PASS IN ORDER ID AS PARAMETER... cart on the sessio
      {
          //FETCH ORDER FROM DATABASE
         Gson gson = new Gson();
@@ -40,7 +40,7 @@ public class StripeController {
                                 .build()
                 )
                 .setCurrency("USD")
-                .setAmount(3333L) //USE ORDER TOTAL
+                .setAmount(3333L) //USE ORDER TOTAL amount of order
                 .build();
 
         try {
