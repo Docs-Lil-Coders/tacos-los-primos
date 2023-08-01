@@ -14,7 +14,7 @@
                 <div class="profile-layout">
                     <div class="side-bar">
                         <div class="user-img-card">
-                            <img class="user-image" src="img/placeholder.png">
+                            <img class="user-image" th:src="${user.photo_url}">
                             <p th:text="${user.username}"></p>
                         </div>
                         <div class="user-nav">

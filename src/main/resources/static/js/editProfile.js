@@ -53,6 +53,12 @@
     let savePasswordBtn = document.getElementById("savePassword");
     let passwordForm = document.getElementById("passwordForm");
 
+    // filestack
+    let picker;
+    let imgTag = document.getElementById("newPhotoTag");
+    let uploadedPhotoURL = "";
+    let userPhotoField = document.getElementById("userPhotoEdit");
+
     savePasswordBtn.addEventListener("click", function (e) {
         e.preventDefault();
         let validInput = checkPasswordInputs();
@@ -96,6 +102,9 @@
         let validInput = checkTopInputs();
 
         if (validInput) {
+            if(uploadedPhotoURL.trim() != ""){
+                userPhotoField.value = uploadedPhotoURL;
+            }
             editForm.submit();
         }
     })
@@ -337,5 +346,29 @@
         }
         return validInput;
     }
+
+    //filestack
+    window.addEventListener('DOMContentLoaded', function () {
+        const client = filestack.init(fileStackKey);
+
+        const options = {
+            accept: ["image/*"],
+            onUploadDone: (res) => {
+                const url = res.filesUploaded[0].url;
+                uploadedPhotoURL = url;
+                imgTag.src = url;
+            },
+
+        };
+
+
+        document.getElementById("updatePicture").addEventListener("click", function (e) {
+            e.preventDefault();
+            picker = client.picker(options);
+            client.picker(options).open();
+        });
+
+
+    });
 
 })();

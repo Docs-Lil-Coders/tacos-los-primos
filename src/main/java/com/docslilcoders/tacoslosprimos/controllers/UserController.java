@@ -54,7 +54,6 @@ public class UserController {
             model.addAttribute("emailTaken", emailTaken);
             return "users/register";
         } else {
-            user.setPhoto_url("");
             String hash = passwordEncoder.encode(user.getPassword());
             user.setPassword(hash);
             userDao.save(user);
@@ -137,10 +136,11 @@ public class UserController {
         currentUser.setPhone(user.getPhone());
         currentUser.setEmail(user.getEmail());
         currentUser.setPrimary_address(user.getPrimary_address());
+        currentUser.setPhoto_url(user.getPhoto_url());
 
         //this fills in the missing fields from the user object from form
         user.setId(currentUser.getId());
-        user.setPhoto_url(currentUser.getPhoto_url());
+//        user.setPhoto_url(currentUser.getPhoto_url());
         user.setAccumulated_points(currentUser.getAccumulated_points());
         user.setRedeemed_points(currentUser.getRedeemed_points());
         user.setPassword(currentUser.getPassword());
