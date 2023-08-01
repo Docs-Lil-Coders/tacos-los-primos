@@ -44,8 +44,8 @@
         console.log(data);
 
         //getting the lat and lon from the user input
-        let lat1 = data[0];
-        let lon1 = data[1];
+        let lat1 = data[1];
+        let lon1 = data[0];
 
         //this is the lat and long of the restaurant
         let lat2 = 33.480222919384744;
@@ -54,6 +54,14 @@
         let distance = getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2);
 
         console.log('Distance:', distance);
+
+            if (distance > 20) {
+                console.log("Sorry, we cannot deliver to this address as it is more than 20 km away from our store.");
+            } else {
+                console.log("Delivery is possible! Your order will be delivered soon.");
+            }
+
+
     } catch (error) {
         console.error('Error:', error);
     }
