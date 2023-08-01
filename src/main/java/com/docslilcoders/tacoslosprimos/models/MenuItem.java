@@ -30,7 +30,7 @@ public class MenuItem {
     private String photo;
 
     @Column(nullable = true)
-    private String nutritionWords;
+    private String longDescription;
 
     @Column(nullable = false)
     private double price;
@@ -56,6 +56,9 @@ public class MenuItem {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "menuItem")
     private List<OrderedItem> orderedItems;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "menuItem")
+    private NutritionInformation nutritionInformation;
 
 
     public enum mainCat {
