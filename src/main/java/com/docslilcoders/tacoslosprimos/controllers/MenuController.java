@@ -1,10 +1,13 @@
 package com.docslilcoders.tacoslosprimos.controllers;
 
+import com.docslilcoders.tacoslosprimos.models.MenuItem;
 import com.docslilcoders.tacoslosprimos.repositories.MenuItemRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.Optional;
 
 @Controller
 public class MenuController {
@@ -22,8 +25,16 @@ public class MenuController {
         return "menu/menu";
     }
 
-    @GetMapping("/view-more/{id}")
-    public String getViewMorePage(@PathVariable String id) {
-        return "menu/view_more";
+    @GetMapping("/menu/{id}")
+    public String getViewMorePage(@PathVariable Long id, Model model) {
+        Optional<MenuItem> optionalMenuItem = menuItemDao.findById(id);
+
+        if (optionalMenuItem.isEmpty()) {
+            System.out.println("Item with id " + id + " not found!");
+            return "/error";
+        }
+
+        model.addAttribute("menuItem", optionalMenuItem.get());
+        return "/menu/view_more";
     }
 }

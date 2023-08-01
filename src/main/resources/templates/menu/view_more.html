@@ -14,10 +14,8 @@
                     <img class="info-picture" src="/img/placeholder.png">
                 </div>
                 <div class="col-sm-8">
-                    <p class="info-title">Belgium Waffles with strawberries</p>
-                    <p class="info-par">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                        Ipsum
-                        has been the industry's standard dummy text ever since the 1500s, when an unknown printer</p>
+                    <p class="info-title" th:text="${menuItem.item_name}"></p>
+                    <p class="info-par" th:text="${menuItem.description}"></p>
                     <p class="info-sub-title">Ingredients</p>
                     <p class="info-par">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
                         Ipsum
