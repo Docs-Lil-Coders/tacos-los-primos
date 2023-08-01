@@ -2,13 +2,64 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
       lang="eng">
 <head th:insert="partials/header :: head"/>
+<link rel="stylesheet" th:href="@{/css/about_us.css}">
 <body>
 <div class="page-container">
     <div th:replace="partials/navbar :: navbar"/>
     <div class="content-wrap">
 
-        <h1>about da restaurant </h1>
+        <div class="about-us-container">
+            <h1>ABOUT US</h1>
 
+            <div class="about-us">
+                    <img class="about-img" src="/img/placeholder.png">
+                    <p class="about-us-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab cumque eligendi error hic pariatur possimus repellendus sequi? Adipisci architecto assumenda, dignissimos error est fugit illum iure laborum, placeat sit sunt! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab cumque eligendi error hic pariatur possimus repellendus sequi? Adipisci architecto assumenda, dignissimos error est fugit illum iure laborum, placeat sit sunt!</p>
+            </div>
+
+            <p class="our-title">OUR STORY</p>
+
+            <div class="our-story">
+                <p class="about-us-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab cumque eligendi error hic pariatur possimus repellendus sequi? Adipisci architecto assumenda, dignissimos error est fugit illum iure laborum, placeat sit sunt! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab cumque eligendi error hic pariatur possimus repellendus sequi? Adipisci architecto assumenda, dignissimos error est fugit illum iure laborum, placeat sit sunt!</p>
+                <img class="about-img" src="/img/placeholder.png">
+            </div>
+
+            <p class="our-title">OUR TEAM</p>
+
+            <div class="cards-layout">
+
+                <div class="our-cards">
+                    <div class="box-relative">
+                        <img class="our-img" src="/img/placeholder.png">
+                        <div class="box">
+                            <i></i>
+                            <p class="our-name">John Doe</p>
+                            <p class="our-info">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus eius eos minima necessit atibus odit quasi quo rem</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="our-cards">
+                    <div class="box-relative">
+                        <img class="our-img" src="/img/placeholder.png">
+                        <div class="box">
+                            <i></i>
+                            <p class="our-name">John Doe</p>
+                            <p class="our-info">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus eius eos minima necessit atibus odit quasi quo rem</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="our-cards">
+                    <div class="box-relative">
+                        <img class="our-img" src="/img/placeholder.png">
+                        <div class="box">
+                            <i></i>
+                            <p class="our-name">John Doe</p>
+                            <p class="our-info">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus eius eos minima necessit atibus odit quasi quo rem</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
 
     </div>
     <div class="foot-div">
