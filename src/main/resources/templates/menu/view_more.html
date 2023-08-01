@@ -8,35 +8,70 @@
     <div th:replace="partials/navbar :: navbar"/>
     <div class="content-wrap">
 
-        <div class="container">
+        <div class="view-container">
             <div class="row">
                 <div class="col-sm-4 item-image">
                     <img class="info-picture" src="/img/placeholder.png">
                 </div>
-                <div class="col-sm-8">
-                    <p class="info-title" th:text="${menuItem.item_name}"></p>
-                    <p class="info-par" th:text="${menuItem.description}"></p>
+                <div class="item-info col-sm-8">
+                    <p class="info-title" th:text="${item.item_name}"></p>
+                    <p class="info-par" th:text="${item.description}"></p>
+                    <div th:if="${item.meatReq.name() =='YES'}">
+                        <p class="info-sub-title">Meat Options:</p>
+                        <ul class="meat-options">
+                            <li th:each="option : ${item.menuItemOptions}"
+                                th:if="${option.getOptionCategory().name() == 'MEAT'}">
+                                <p th:text="${option.getOption_name()}"></p>
+                            </li>
+                        </ul>
+                    </div>
                     <p class="info-sub-title">Ingredients</p>
-                    <p class="info-par">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                        Ipsum
-                        has been the industry's standard dummy text</p>
-                    <p class="info-sub-title">Nutrition Facts</p>
-                    <p class="info-par">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                        Ipsum
-                        has been the industry's standard dummy text ever since the 1500s, when</p>
+                    <p class="info-par" th:text="${item.longDescription}"></p>
+                    <p class="info-sub-title">Nutrition Summary</p>
+                    <ul class="nutrition">
+                        <li>
+                            <p>
+                                <span th:text="${item.getNutritionInformation().getCalories()}"></span>
+                                <span> Cal.</span>
+                            </p>
+                            <p>Calories</p>
+                        </li>
+                        <li>
+                            <p>
+                                <span th:text="${item.getNutritionInformation().getTotalFat()}"></span>
+                                <span>g</span>
+                            </p>
+                            <p>Total Fat</p>
+                        </li>
+                        <li>
+                            <p>
+                                <span th:text="${item.getNutritionInformation().getTotalCarbs()}"></span>
+                                <span>g</span>
+                            </p>
+                            <p>Total Carbs</p>
+                        </li>
+                        <li>
+                            <p>
+                                <span th:text="${item.getNutritionInformation().getProtein()}"></span>
+                                <span>g</span>
+                            </p>
+                            <p>Protein</p>
+                        </li>
+                    </ul>
                 </div>
             </div>
 
-            <p th:text="${menuItem.getNutritionInformation().getCalories()}"></p>
-
             <div class="add-button">
-                <a class="button" href="/view-bag">Add to bag</a>
+                <button class="button" type="button">Add to bag
+                </button>
             </div>
         </div>
+
     </div>
     <div class="foot-div">
         <div th:insert="partials/footer :: footer"/>
     </div>
 </div>
+
 </body>
 </html>

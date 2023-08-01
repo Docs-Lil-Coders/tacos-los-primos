@@ -34,7 +34,7 @@ public class MenuController {
             return "/error";
         }
 
-        model.addAttribute("menuItem", optionalMenuItem.get());
+        model.addAttribute("item", optionalMenuItem.get());
         return "/menu/view_more";
     }
 }
