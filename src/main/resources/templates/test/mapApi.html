@@ -38,6 +38,20 @@
         let inputValue = document.getElementById('address').value
         console.log(inputValue)
 
+        try {
+            let data = await geocode(inputValue, MAP_BOX_KEY);
+
+            if (data) {
+                console.log('Address exists:', inputValue);
+                // Your existing code to calculate distance and show the results.
+            } else {
+                console.log('Address does not exist or is not recognized:', inputValue);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            console.log('Address does not exist or is not recognized:', inputValue);
+        }
+
         try{
 
         let data = await geocode(inputValue, MAP_BOX_KEY);
