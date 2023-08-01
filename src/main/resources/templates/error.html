@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
+      lang="eng">
+<head th:insert="partials/header :: head"/>
+<link rel="stylesheet" th:href="@{/css/error.css}">
+<body>
+<div class="page-container">
+    <div th:replace="partials/navbar :: navbar"/>
+    <div class="content-wrap">
+
+        <div class="error-container">
+            <img class="error-img" src="/img/logo-white-border.png">
+            <h1>Oops!</h1>
+            <h4>An error occurred. Please try again.</h4>
+            <a class="error-link" href="/">Return to home page</a>
+        </div>
+
+    </div>
+    <div class="foot-div">
+        <div th:insert="partials/footer :: footer"/>
+    </div>
+</div>
+</body>
+</html>

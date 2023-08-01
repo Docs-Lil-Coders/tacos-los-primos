@@ -1,0 +1,15 @@
+.error-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.error-img {
+    width: 300px;
+}
+
+.error-link {
+    color: #5FBB46;
+}
