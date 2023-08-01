@@ -26,6 +26,9 @@
                         has been the industry's standard dummy text ever since the 1500s, when</p>
                 </div>
             </div>
+
+            <p th:text="${menuItem.getNutritionInformation().getCalories()}"></p>
+
             <div class="add-button">
                 <a class="button" href="/view-bag">Add to bag</a>
             </div>
