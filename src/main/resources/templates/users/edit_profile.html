@@ -16,14 +16,15 @@
             <p class="section-title">CONTACT INFORMATION</p>
 
             <form class="edit-form" id="editForm" th:action="@{/edit-profile}" th:method="post" th:object="${user}">
+                <input type="hidden" name="userPhotoEdit" id="userPhotoEdit" th:field="*{photo_url}">
                 <div class="row">
                     <div class="col-4 upload-pic-col">
                         <div class="upload-picture">
                             <div>
-                                <img class="user-image" src="img/placeholder.png">
+                                <img class="user-image" th:src="*{photo_url}"  id="newPhotoTag">
                             </div>
                             <div class="">
-                                <button class="button" type="button" id="uploadPicture">Upload Picture</button>
+                                <button class="button" type="button" id="updatePicture">Update Picture</button>
                             </div>
                         </div>
                     </div>
@@ -133,8 +134,8 @@
                         <div class="saved-address-div">
                             <p class="saved-address" th:text="${address.getAddress()}"></p>
                             <div class="links-div">
-                                <a id="setPrimary" class="address-links">Set as Primary</a>
-                                <a id="delete" class="address-links">Delete</a>
+                                <a id="setPrimary" class="address-links" th:href="${'/updatePrimaryAddress?newAddress=' + address.getAddress()}">Set as Primary</a>
+                                <a id="delete" class="address-links" th:href="${'/deleteAddress?addressId=' + address.getId()}">Delete</a>
                             </div>
                         </div>
                     </div>
@@ -149,7 +150,8 @@
         <div th:insert="partials/footer :: footer"/>
     </div>
 </div>
-
+<script src="/js/apiKeys.js"></script>
+<script src="https://static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
 <script th:inline="javascript">
     let usernameTaken = /*[[${usernameTaken}]]*/ 'default';
     let emailTaken = /*[[${emailTaken}]]*/ "default";

@@ -23,6 +23,7 @@ public class Address {
     @Column(nullable = false)
     private String address;
 
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -31,4 +32,5 @@ public class Address {
         this.address = address;
         this.user = user;
     }
+
 }

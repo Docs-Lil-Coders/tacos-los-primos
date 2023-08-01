@@ -1,10 +1,13 @@
 package com.docslilcoders.tacoslosprimos.controllers;
 
 import com.docslilcoders.tacoslosprimos.models.Address;
+import com.docslilcoders.tacoslosprimos.models.ShoppingCart;
 import com.docslilcoders.tacoslosprimos.models.User;
 import com.docslilcoders.tacoslosprimos.repositories.AddressRepository;
 import com.docslilcoders.tacoslosprimos.repositories.UserRepository;
 import com.docslilcoders.tacoslosprimos.services.AuthBuddy;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -54,7 +57,6 @@ public class UserController {
             model.addAttribute("emailTaken", emailTaken);
             return "users/register";
         } else {
-            user.setPhoto_url("");
             String hash = passwordEncoder.encode(user.getPassword());
             user.setPassword(hash);
             userDao.save(user);
@@ -130,6 +132,16 @@ public class UserController {
             redirectAttributes.addAttribute("emailTaken", emailTaken);
             return "redirect:/edit-profile";
         } else {
+
+            //update the new address in the address table too
+            if(!currentUser.getPrimary_address().trim().equals(user.getPrimary_address().trim())) {
+                Address findAddress = addressDao.findByAddress(currentUser.getPrimary_address().trim());
+                if (findAddress != null) {
+                    findAddress.setAddress(user.getPrimary_address().trim());
+                    addressDao.save(findAddress);
+                }
+            }
+
         //this sets it for the current session
         currentUser.setFirst_name(user.getFirst_name());
         currentUser.setLast_name(user.getLast_name());
@@ -137,10 +149,11 @@ public class UserController {
         currentUser.setPhone(user.getPhone());
         currentUser.setEmail(user.getEmail());
         currentUser.setPrimary_address(user.getPrimary_address());
+        currentUser.setPhoto_url(user.getPhoto_url());
 
         //this fills in the missing fields from the user object from form
         user.setId(currentUser.getId());
-        user.setPhoto_url(currentUser.getPhoto_url());
+//        user.setPhoto_url(currentUser.getPhoto_url());
         user.setAccumulated_points(currentUser.getAccumulated_points());
         user.setRedeemed_points(currentUser.getRedeemed_points());
         user.setPassword(currentUser.getPassword());
@@ -191,7 +204,39 @@ public class UserController {
     }
 
 
+    @GetMapping("/updatePrimaryAddress")
+    public String updateAddress(@RequestParam("newAddress") String newAddress) {
+        System.out.println("\n\n\n\n" + newAddress + "\n\n\n\n");
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (currentUser.getId() == 0) {
+            return "redirect:/login";
+        }
+        Optional<User> optionalUser = userDao.findById(currentUser.getId());
+        if(optionalUser.isEmpty()) {
+            //TODO error page
+            return "redirect:/login";
+        }
 
+        optionalUser.get().setPrimary_address(newAddress);
+        currentUser.setPrimary_address(newAddress);
+        userDao.save(optionalUser.get());
+
+        return "redirect:/edit-profile";
+    }
+
+    @GetMapping("/deleteAddress")
+    public String deleteAddress(@RequestParam("addressId") String addressId) {
+        System.out.println("\n\n\n\n" + addressId + "\n\n\n\n");
+        Optional<Address> optionalAddress = addressDao.findById(Long.valueOf(addressId));
+        if(optionalAddress.isEmpty()) {
+            //TODO error page
+            return "redirect:/";
+        }
+
+        addressDao.delete(optionalAddress.get());
+
+        return "redirect:/edit-profile";
+    }
 
 
 

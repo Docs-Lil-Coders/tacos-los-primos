@@ -29,6 +29,12 @@
     let submitBtn = document.getElementById("createAccount");
     let form = document.getElementById("registerForm");
 
+    // filestack
+    let picker;
+    let imgTag = document.getElementById("img");
+    let uploadedPhotoURL = "";
+    let userPhotoField = document.getElementById("userPhoto");
+
     if(usernameTaken == true) {
         usernameInput.classList.add("is-invalid")
         usernameFeedback.classList.add("invalid-feedback")
@@ -50,6 +56,11 @@
         let validInput = checkInputs();
 
         if (validInput) {
+            if(uploadedPhotoURL.trim() == ""){
+                userPhotoField.value = "https://cdn.filestackcontent.com/kSmq62MpTRCUZgm0CRni"
+            } else {
+                userPhotoField.value = uploadedPhotoURL;
+            }
             form.submit();
         }
     })
@@ -142,7 +153,6 @@
     function checkUsername() {
         let validInput = false;
         if (!usernameRegex.test(usernameInput.value) || !disAllowedRegex.test(usernameInput.value)) {
-            console.log("username should contain only letters, numbers, periods and underscores.")
             usernameInput.classList.remove("is-valid")
             usernameFeedback.classList.remove("valid-feedback")
             usernameInput.classList.add("is-invalid")
@@ -161,7 +171,6 @@
     function checkEmail() {
         let validInput = false;
         if (!emailRegex.test(emailInput.value) || !disAllowedRegex.test(emailInput.value)) {
-            console.log("please ensure emails are in correct email format")
             emailInput.classList.remove("is-valid")
             emailFeedback.classList.remove("valid-feedback")
             emailInput.classList.add("is-invalid")
@@ -198,7 +207,6 @@
     function checkPasswordConfirm() {
         let validInput = false;
         if (passwordInput.value !== passwordConfirmInput.value) {
-            console.log("passwords do not match")
             passwordConfirmInput.classList.remove("is-valid")
             confirmPasswordFeedback.classList.remove("valid-feedback")
             passwordConfirmInput.classList.add("is-invalid")
@@ -258,5 +266,31 @@
         }
         return validInput;
     }
+
+
+
+
+    window.addEventListener('DOMContentLoaded', function () {
+        const client = filestack.init(fileStackKey);
+
+        const options = {
+            accept: ["image/*"],
+            onUploadDone: (res) => {
+                const url = res.filesUploaded[0].url;
+                uploadedPhotoURL = url;
+                imgTag.src = url;
+            },
+
+        };
+
+
+        document.getElementById("uploadPicture").addEventListener("click", function (e) {
+            e.preventDefault();
+            picker = client.picker(options);
+            client.picker(options).open();
+        });
+
+
+    });
 
 })();

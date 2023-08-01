@@ -11,11 +11,12 @@
         <div class=" container-fluid register-form">
             <h4>REGISTER</h4>
             <form th:action="@{/register}" method="POST" th:object="${user}" id="registerForm">
+                <input type="hidden" name="userPhoto" id="userPhoto" th:field="*{photo_url}">
                 <div class="row">
                     <div class="col-4 upload-pic-col">
                         <div class="upload-picture">
                             <div>
-                                <img class="user-image" src="img/placeholder.png">
+                                <img class="user-image" src="https://cdn.filestackcontent.com/kSmq62MpTRCUZgm0CRni" id="img">
                             </div>
                             <div class="">
                                 <button class="button" type="button" id="uploadPicture">Upload Picture</button>
@@ -97,7 +98,8 @@
         <div th:insert="partials/footer :: footer"/>
     </div>
 </div>
-
+<script src="/js/apiKeys.js"></script>
+<script src="https://static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
 <script th:inline="javascript">
     let usernameTaken = /*[[${usernameTaken}]]*/ 'default';
     let emailTaken = /*[[${emailTaken}]]*/ "default";
