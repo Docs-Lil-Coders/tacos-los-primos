@@ -8,89 +8,92 @@
     <div th:replace="partials/navbar :: navbar"/>
     <div class="content-wrap">
 
-        <!--carousel-->
-        <div class="carousel-custom">
-            <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="/img/placeholder.png" class="d-block w-100 carousel-img" alt="...">
+        <div class="index-div">
+            <!--carousel-->
+            <div class="carousel-custom">
+                <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="/img/placeholder.png" class="d-block w-100 carousel-img" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="/img/placeholder.png" class="d-block w-100 carousel-img" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="/img/placeholder.png" class="d-block w-100 carousel-img" alt="...">
+                        </div>
                     </div>
-                    <div class="carousel-item">
-                        <img src="/img/placeholder.png" class="d-block w-100 carousel-img" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="/img/placeholder.png" class="d-block w-100 carousel-img" alt="...">
-                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade"
+                            data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade"
+                            data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade"
-                        data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade"
-                        data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
             </div>
-        </div>
 
-        <!--buttons-->
-        <div class="buttons-div">
-            <a href="/menu" class="button">Order Now</a>
-            <a href="/order-status" class="button">Track Your Order</a>
-        </div>
+            <!--buttons-->
+            <div class="buttons-div">
+                <a href="/menu" class="button">Order Now</a>
+                <a href="/order-status" class="button">Track Your Order</a>
+            </div>
 
-        <!--popular dishes-->
-        <div>
-            <h1>Popular Dishes</h1>
-            <ul class="popular-dishes-cards">
-                <li><img src="/img/placeholder.png" width="200px" class="m-2 dishes-card"></li>
-                <li><img src="/img/placeholder.png" width="200px" class="m-2 dishes-card"></li>
-                <li><img src="/img/placeholder.png" width="200px" class="m-2 dishes-card"></li>
-                <li><img src="/img/placeholder.png" width="200px" class="m-2 dishes-card"></li>
-                <li><img src="/img/placeholder.png" width="200px" class="m-2 dishes-card"></li>
-            </ul>
-        </div>
+            <!--popular dishes-->
+            <div>
+                <h1>Popular Dishes</h1>
+                <ul class="popular-dishes-cards">
+                    <li><img src="/img/placeholder.png" width="200px" class="m-2 dishes-card"></li>
+                    <li><img src="/img/placeholder.png" width="200px" class="m-2 dishes-card"></li>
+                    <li><img src="/img/placeholder.png" width="200px" class="m-2 dishes-card"></li>
+                    <li><img src="/img/placeholder.png" width="200px" class="m-2 dishes-card"></li>
+                    <li><img src="/img/placeholder.png" width="200px" class="m-2 dishes-card"></li>
+                </ul>
+            </div>
 
-        <!--visit us-->
-        <h1>Visit Us</h1>
-        <div class="visit-us">
+            <!--visit us-->
+            <h1>Visit Us</h1>
+            <div class="visit-us">
 
-            <div class="contact-us">
-                <p class="sub-title-text">CONTACT US</p>
-                <form>
-                    <div class="mb-3">
-                        <input type="text" class="form-control" id="contactUsName" placeholder="Name">
-                    </div>
-                    <div class="mb-3">
-                        <input type="text" class="form-control" id="contactUsSubject" placeholder="Subject Line">
-                    </div>
-                    <div class="mb-3">
-                        <input type="email" class="form-control" id="contactUsEmail" placeholder="Email*">
-                    </div>
-                    <div class="mb-3">
+                <div class="contact-us">
+                    <p class="sub-title-text">CONTACT US</p>
+                    <form>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="contactUsName" placeholder="Name">
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="contactUsSubject" placeholder="Subject Line">
+                        </div>
+                        <div class="mb-3">
+                            <input type="email" class="form-control" id="contactUsEmail" placeholder="Email*">
+                        </div>
+                        <div class="mb-3">
                 <textarea class="form-control" id="contactUsText" rows="3"
                           placeholder="How can we serve you?"></textarea>
-                    </div>
-                    <button type="submit" class="contact-us-button">Submit</button>
-                </form>
-            </div>
+                        </div>
+                        <button type="submit" class="contact-us-button">Submit</button>
+                    </form>
+                </div>
 
 
-            <div class="special-requests">
-                <p class="sub-title-text">SPECIAL REQUESTS?</p>
-                <p class="info-text">Do you have dietary concerns? Questions about an upcoming event?
-                    <br>Give us a call or shoot an email, we'll get back to you soon!</p>
-                <p class="sub-title-text">TACOS LOS PRIMOS</p>
-                <p class="info-text">6011 W. Thomas Rd, <br>Phoenix AZ 85033
-                    <br>(480)586-7556
-                    <br><a class="google-link" href="http://google.com">Click to View Google Map</a></p>
-                <p class="sub-title-text">HOURS</p>
-                <p class="info-text">Monday - Wednesday: 8am - 9pm
-                    <br>Thursday - Friday: 8am - 10pm
-                    <br>Saturday: 9am - 10pm
-                    <br>Sunday: 9am - 9pm</p>
+                <div class="special-requests">
+                    <p class="sub-title-text">SPECIAL REQUESTS?</p>
+                    <p class="info-text">Do you have dietary concerns? Questions about an upcoming event?
+                        <br>Give us a call or shoot an email, we'll get back to you soon!</p>
+                    <p class="sub-title-text">TACOS LOS PRIMOS</p>
+                    <p class="info-text">6011 W. Thomas Rd, <br>Phoenix AZ 85033
+                        <br>(480)586-7556
+                        <br><a class="google-link" href="https://goo.gl/maps/s1NXxTEq6syRrzgD9">Click to View Google
+                            Map</a></p>
+                    <p class="sub-title-text">HOURS</p>
+                    <p class="info-text">Monday - Wednesday: 8am - 9pm
+                        <br>Thursday - Friday: 8am - 10pm
+                        <br>Saturday: 9am - 10pm
+                        <br>Sunday: 9am - 9pm</p>
+                </div>
             </div>
         </div>
 

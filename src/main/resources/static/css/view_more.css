@@ -1,7 +1,14 @@
+.view-container {
+    max-width: 1200px;
+    margin: -120px auto 0;
+    background-color: #FFFFFF;
+    padding: 120px 50px 0;
+}
+
 .info-title {
     color: #BF2D1A;
     margin-bottom: 5px;
-    font-size: 20px;
+    font-size: 25px;
 }
 
 .info-sub-title {
@@ -16,13 +23,19 @@
     color: black;
     font-family: 'Poppins', sans-serif;
     font-weight: normal;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
 }
 
 .item-image {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.item-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .info-picture {
@@ -54,4 +67,63 @@
 
 a.button:hover {
     color: #FFFFFF;
+}
+
+.nutrition {
+    display: flex;
+    justify-content: space-evenly;
+    list-style-type: none;
+    text-align: center;
+    font-weight: normal;
+    padding-top: 20px;
+}
+
+.meat-options {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-evenly;
+    font-weight: normal;
+}
+
+/*modal*/
+.optionsTitle {
+    font-weight: bold;
+}
+
+.option {
+    font-weight: normal;
+}
+
+.plus-minus {
+    background-color: transparent;
+    border: none;
+    font-weight: bold;
+    color: #BF2D1A;
+    font-size: 24px;
+}
+
+.quantity {
+    font-size: 24px;
+}
+
+.add-div {
+    display: flex;
+    justify-content: center;
+}
+
+.modal-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5px;
+    color: #FFFFFF;
+    background-color: #BF2D1A;
+    border: #BF2D1A;
+    border-radius: 50px;
+    height: 36px;
+    width: 200px;
+    margin: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
