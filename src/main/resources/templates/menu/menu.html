@@ -42,7 +42,7 @@
                                 <p><span>$</span><span th:text="${item.price}"></span></p>
                             </div>
                             <p class="menu-item-description" th:text="${item.description}"></p>
-                            <a class="view-more-link" th:attr="href=${'/view-more/' + item.id}">View More</a>
+                            <a class="view-more-link" th:href="|/menu/${item.id}|">View More</a>
                             <div class="add-div">
                                 <button type="button" class="menu-item-add-to-bag" data-bs-toggle="modal"
                                         th:attr="data-bs-target=${'#optionsModal' + item.id}">Add to bag
@@ -69,7 +69,7 @@
                                 <p><span>$</span><span th:text="${item.price}"></span></p>
                             </div>
                             <p class="menu-item-description" th:text="${item.description}"></p>
-                            <a class="view-more-link" th:attr="href=${'/view-more/' + item.id}">View More</a>
+                            <a class="view-more-link" th:href="|/menu/${item.id}|">View More</a>
                             <div class="add-div">
                                 <button type="button" class="menu-item-add-to-bag" data-bs-toggle="modal"
                                         th:attr="data-bs-target=${'#optionsModal' + item.id}">Add to bag
@@ -97,7 +97,7 @@
                                 <p><span>$</span><span th:text="${item.price}"></span></p>
                             </div>
                             <p class="menu-item-description" th:text="${item.description}"></p>
-                            <a class="view-more-link" th:attr="href=${'/view-more/' + item.id}">View More</a>
+                            <a class="view-more-link" th:href="|/menu/${item.id}|">View More</a>
                             <div class="add-div">
                                 <button type="button" class="menu-item-add-to-bag" data-bs-toggle="modal"
                                         th:attr="data-bs-target=${'#optionsModal' + item.id}">Add to bag
@@ -126,7 +126,7 @@
                                 <p><span>$</span><span th:text="${item.price}"></span></p>
                             </div>
                             <p class="menu-item-description" th:text="${item.description}"></p>
-                            <a class="view-more-link" th:attr="href=${'/view-more/' + item.id}">View More</a>
+                            <a class="view-more-link" th:href="|/menu/${item.id}|">View More</a>
                             <div class="add-div">
                                 <button type="button" class="menu-item-add-to-bag" data-bs-toggle="modal"
                                         th:attr="data-bs-target=${'#optionsModal' + item.id}">Add to bag
