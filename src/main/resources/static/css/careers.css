@@ -1,23 +1,31 @@
-h1 {
-    color: #BF2D1A;
-    text-align: center;
-}
-p {
+.careers-par {
     text-decoration: none;
     font-weight: bold;
+    font-size: 14px;
 }
+
+.careers {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.careers-list {
+    font-size: 14px;
+}
+
+.careers-title {
+   font-size: 16px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
 .green {
     color: #5FBB46;
 }
-body {
-    background-image: url('../img/ricepaper.png');
-}
+
 .white-container {
     background-color: #FFFFFF;
     max-width: 900px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: white;
-    height: 800px;
-    font-size: 14px;
+    margin: -120px auto 0;
+    padding: 120px 100px 200px;
 }
