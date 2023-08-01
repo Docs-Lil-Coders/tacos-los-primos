@@ -135,7 +135,7 @@
                             <p class="saved-address" th:text="${address.getAddress()}"></p>
                             <div class="links-div">
                                 <a id="setPrimary" class="address-links" th:href="${'/updatePrimaryAddress?newAddress=' + address.getAddress()}">Set as Primary</a>
-                                <a id="delete" class="address-links">Delete</a>
+                                <a id="delete" class="address-links" th:href="${'/deleteAddress?addressId=' + address.getId()}">Delete</a>
                             </div>
                         </div>
                     </div>

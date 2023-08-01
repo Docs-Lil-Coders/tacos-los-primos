@@ -136,8 +136,10 @@ public class UserController {
             //update the new address in the address table too
             if(!currentUser.getPrimary_address().trim().equals(user.getPrimary_address().trim())) {
                 Address findAddress = addressDao.findByAddress(currentUser.getPrimary_address().trim());
-                findAddress.setAddress(user.getPrimary_address().trim());
-                addressDao.save(findAddress);
+                if (findAddress != null) {
+                    findAddress.setAddress(user.getPrimary_address().trim());
+                    addressDao.save(findAddress);
+                }
             }
 
         //this sets it for the current session
@@ -203,7 +205,7 @@ public class UserController {
 
 
     @GetMapping("/updatePrimaryAddress")
-    public String test(@RequestParam("newAddress") String newAddress) {
+    public String updateAddress(@RequestParam("newAddress") String newAddress) {
         System.out.println("\n\n\n\n" + newAddress + "\n\n\n\n");
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (currentUser.getId() == 0) {
@@ -218,6 +220,20 @@ public class UserController {
         optionalUser.get().setPrimary_address(newAddress);
         currentUser.setPrimary_address(newAddress);
         userDao.save(optionalUser.get());
+
+        return "redirect:/edit-profile";
+    }
+
+    @GetMapping("/deleteAddress")
+    public String deleteAddress(@RequestParam("addressId") String addressId) {
+        System.out.println("\n\n\n\n" + addressId + "\n\n\n\n");
+        Optional<Address> optionalAddress = addressDao.findById(Long.valueOf(addressId));
+        if(optionalAddress.isEmpty()) {
+            //TODO error page
+            return "redirect:/";
+        }
+
+        addressDao.delete(optionalAddress.get());
 
         return "redirect:/edit-profile";
     }

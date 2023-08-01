@@ -23,6 +23,7 @@ public class Address {
     @Column(nullable = false)
     private String address;
 
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -32,12 +33,4 @@ public class Address {
         this.user = user;
     }
 
-    @Override
-    public String toString() {
-        return "Address{" +
-                "id=" + id +
-                ", address='" + address + '\'' +
-                ", user=" + user +
-                '}';
-    }
 }
