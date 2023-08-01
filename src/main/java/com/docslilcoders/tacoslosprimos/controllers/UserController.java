@@ -1,10 +1,13 @@
 package com.docslilcoders.tacoslosprimos.controllers;
 
 import com.docslilcoders.tacoslosprimos.models.Address;
+import com.docslilcoders.tacoslosprimos.models.ShoppingCart;
 import com.docslilcoders.tacoslosprimos.models.User;
 import com.docslilcoders.tacoslosprimos.repositories.AddressRepository;
 import com.docslilcoders.tacoslosprimos.repositories.UserRepository;
 import com.docslilcoders.tacoslosprimos.services.AuthBuddy;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -131,9 +134,9 @@ public class UserController {
         } else {
 
             //update the new address in the address table too
-            if(!currentUser.getPrimary_address().equals(user.getPrimary_address())) {
-                Address findAddress = addressDao.findByAddress(currentUser.getPrimary_address());
-                findAddress.setAddress(user.getPrimary_address());
+            if(!currentUser.getPrimary_address().trim().equals(user.getPrimary_address().trim())) {
+                Address findAddress = addressDao.findByAddress(currentUser.getPrimary_address().trim());
+                findAddress.setAddress(user.getPrimary_address().trim());
                 addressDao.save(findAddress);
             }
 
@@ -199,7 +202,25 @@ public class UserController {
     }
 
 
+    @GetMapping("/updatePrimaryAddress")
+    public String test(@RequestParam("newAddress") String newAddress) {
+        System.out.println("\n\n\n\n" + newAddress + "\n\n\n\n");
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (currentUser.getId() == 0) {
+            return "redirect:/login";
+        }
+        Optional<User> optionalUser = userDao.findById(currentUser.getId());
+        if(optionalUser.isEmpty()) {
+            //TODO error page
+            return "redirect:/login";
+        }
 
+        optionalUser.get().setPrimary_address(newAddress);
+        currentUser.setPrimary_address(newAddress);
+        userDao.save(optionalUser.get());
+
+        return "redirect:/edit-profile";
+    }
 
 
 
