@@ -295,6 +295,24 @@
         })
             .then(response => {
                 if (response.ok) {
+                   placeOrderRequest();
+                } else {
+                    // Handle other response statuses if needed
+                }
+            })
+            .catch(error => {
+                // Handle errors if any
+            });
+    }
+
+    let finalAddress = document.getElementById("userAddress");
+
+    function placeOrderRequest() {
+        fetch('/placeOrder?address=' + finalAddress.value, {
+            method: 'GET',
+        })
+            .then(response => {
+                if (response.ok) {
                     // Empty response received, handle success if needed
                 } else {
                     // Handle other response statuses if needed
@@ -424,7 +442,7 @@
                     value = 20.0;
                     break;
                 default:
-                    value = 5.0;
+                    value = 0.0;
             }
         }
         return value;
