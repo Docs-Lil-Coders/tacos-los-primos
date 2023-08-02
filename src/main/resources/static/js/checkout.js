@@ -356,7 +356,7 @@
     let applyPointsBtn = document.getElementById("applyRewards");
     let pointsFeedback = document.getElementById("rewardsFeedback");
     let pointsInput = document.getElementById("userRewards");
-    const pointsRegex = /^[0-9]{1,3}$/;
+    const pointsRegex = /^[0-9]{1,5}$/;
 
     let pointsRedeemed = 0;
     let promoCodeApplied = "N/A";

@@ -241,6 +241,11 @@ a.button:hover {
     text-align: center;
 }
 
+
+.options {
+    font-weight: lighter;
+}
+
 @keyframes animate {
     from {
         transform: scale(1, 0);

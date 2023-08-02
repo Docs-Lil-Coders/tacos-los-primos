@@ -34,7 +34,7 @@
 
 <!--            for delivery-->
             <div th:if="${order.orderType.name() == 'DELIVERY'}">
-            <p>order has been placed</p> <!-- this one is always true -->
+            <p>order has been placed - yes</p> <!-- this one is always true -->
             <p>order is being prepared - <span th:text="${(order.orderStatus.name() == 'BEING_PREPARED') ? 'yes' : 'no'}"> </span></p>
             <p>order is out for delivery - <span th:text="${order.orderStatus.name() == 'OUT_FOR_DELIVERY' ? 'yes' : 'no'}"> </span></p>
             <p>order is delivered - <span th:text="${order.orderStatus.name() == 'DELIVERED' ? 'yes' : 'no'}"> </span></p>
@@ -44,7 +44,7 @@
 
 <!--            for pick up-->
             <div th:if="${order.orderType.name() == 'PICKUP'}">
-                <p>order has been placed</p> <!-- this one is always true -->
+                <p>order has been placed - yes</p> <!-- this one is always true -->
                 <p>order is being prepared - <span th:text="${(order.orderStatus.name() == 'BEING_PREPARED') ? 'yes' : 'no'}"> </span></p>
                 <p>order is ready for pick up - <span th:text="${order.orderStatus.name() == 'PICKUP_READY' ? 'yes' : 'no'}"> </span></p>
                 <p>order is complete - <span th:text="${order.orderStatus.name() == 'COMPLETE' ? 'yes' : 'no'}"> </span></p>

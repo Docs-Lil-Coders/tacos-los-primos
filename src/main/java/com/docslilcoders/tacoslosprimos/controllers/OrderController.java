@@ -1,10 +1,7 @@
 package com.docslilcoders.tacoslosprimos.controllers;
 
 import com.docslilcoders.tacoslosprimos.models.*;
-import com.docslilcoders.tacoslosprimos.repositories.MenuItemRepository;
-import com.docslilcoders.tacoslosprimos.repositories.OrderRepository;
-import com.docslilcoders.tacoslosprimos.repositories.PromoCodeRepository;
-import com.docslilcoders.tacoslosprimos.repositories.UserRepository;
+import com.docslilcoders.tacoslosprimos.repositories.*;
 import com.docslilcoders.tacoslosprimos.services.CartService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
@@ -28,14 +25,15 @@ public class OrderController {
     private final UserRepository userDao;
     private final PromoCodeRepository promoCodeDao;
     private final OrderRepository orderDao;
+    private final OrderedItemRepository orderedItemDao;
 
-    public OrderController(MenuItemRepository menuItemDao, CartService cartService, UserRepository userDao, PromoCodeRepository promoCodeDao, OrderRepository orderDao) {
-
+    public OrderController(MenuItemRepository menuItemDao, CartService cartService, UserRepository userDao, PromoCodeRepository promoCodeDao, OrderRepository orderDao, OrderedItemRepository orderedItemDao) {
         this.menuItemDao = menuItemDao;
         this.cartService = cartService;
         this.userDao = userDao;
         this.promoCodeDao = promoCodeDao;
         this.orderDao = orderDao;
+        this.orderedItemDao = orderedItemDao;
     }
 
 
@@ -207,11 +205,13 @@ public class OrderController {
             newOrder = new Order(address, status, type, price);
         }
 
-        long timestamp = System.currentTimeMillis();
 
-        System.out.println("Current Timestamp: " + timestamp);
         Order savedOrder = orderDao.save(newOrder);
         long orderId = savedOrder.getId();
+        for(int i = 0; i < cart.getItems().size(); i++){
+            OrderedItem orderedItem = new OrderedItem(cart.getItems().get(i).getQuantity(), cart.getItems().get(i).getMeatOptionList(), cart.getItems().get(i).getMenuItem(), newOrder);
+            orderedItemDao.save(orderedItem);
+        }
         cartService.resetCart(session);
         return "?orderId=178913" + orderId + "&guest=" + guest;
     }
