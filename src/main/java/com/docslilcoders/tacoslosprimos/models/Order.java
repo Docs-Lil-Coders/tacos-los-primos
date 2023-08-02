@@ -50,6 +50,21 @@ public class Order {
       PICKUP, DELIVERY
     }
 
+    public Order(String address, orderStatus orderStatusValue, orderType orderType, double totalPrice, User user){
+        this.address = address;
+        this.orderStatus = orderStatusValue;
+        this.orderType = orderType;
+        this.totalPrice = totalPrice;
+        this.user = user;
+    }
+
+    public Order(String address, orderStatus orderStatusValue, orderType orderType, double totalPrice){
+        this.address = address;
+        this.orderStatus = orderStatusValue;
+        this.orderType = orderType;
+        this.totalPrice = totalPrice;
+    }
+
 
 }
 

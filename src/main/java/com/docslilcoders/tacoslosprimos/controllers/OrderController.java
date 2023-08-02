@@ -2,6 +2,7 @@ package com.docslilcoders.tacoslosprimos.controllers;
 
 import com.docslilcoders.tacoslosprimos.models.*;
 import com.docslilcoders.tacoslosprimos.repositories.MenuItemRepository;
+import com.docslilcoders.tacoslosprimos.repositories.OrderRepository;
 import com.docslilcoders.tacoslosprimos.repositories.PromoCodeRepository;
 import com.docslilcoders.tacoslosprimos.repositories.UserRepository;
 import com.docslilcoders.tacoslosprimos.services.CartService;
@@ -21,18 +22,18 @@ import java.util.Optional;
 public class OrderController {
 
     private CartService cartService;
-
     private final MenuItemRepository menuItemDao;
-
     private final UserRepository userDao;
     private final PromoCodeRepository promoCodeDao;
+    private final OrderRepository orderDao;
 
-    public OrderController(MenuItemRepository menuItemDao, CartService cartService, UserRepository userDao, PromoCodeRepository promoCodedao) {
+    public OrderController(MenuItemRepository menuItemDao, CartService cartService, UserRepository userDao, PromoCodeRepository promoCodeDao, OrderRepository orderDao) {
 
         this.menuItemDao = menuItemDao;
         this.cartService = cartService;
         this.userDao = userDao;
-        this.promoCodeDao = promoCodedao;
+        this.promoCodeDao = promoCodeDao;
+        this.orderDao = orderDao;
     }
 
 
@@ -127,17 +128,56 @@ public class OrderController {
 
     @GetMapping("/updateCartFinal")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void test(@RequestParam("orderType") String orderType,
+    public void updateCart(@RequestParam("orderType") String orderType,
                      @RequestParam("promoCode") String promoCode,
                      @RequestParam("pointsRedeemed") String pointsRedeemed,
                      HttpSession session) {
         ShoppingCart cart = cartService.getCart(session);
         if (orderType.equals("delivery")) {
             cart.setDeliveryOrder(true);
+        } else {
+            cart.setDeliveryOrder(false);
         }
         cart.setPromoCodeApplied(promoCode);
         cart.setRewardsPointsApplied(Integer.parseInt(pointsRedeemed));
-        System.out.println(cart);
+    }
+
+    @GetMapping("/placeOrder")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void placeOrder( @RequestParam("address") String address, HttpSession session) {
+        ShoppingCart cart = cartService.getCart(session);
+        Order.orderStatus status = Order.orderStatus.PLACED;
+        Order.orderType type;
+        if(cart.getDeliveryOrder()){
+            type = Order.orderType.DELIVERY;
+        } else {
+            type = Order.orderType.PICKUP;
+        }
+
+        double price = cart.getCompleteTotal();
+        Order newOrder;
+
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            if (authentication.getPrincipal() instanceof User) {
+                User user = (User) authentication.getPrincipal();
+                Optional<User> optionalUser = userDao.findById(user.getId());
+                if (optionalUser.isEmpty()) {
+                   newOrder = new Order(address, status, type, price);
+                } else {
+                    newOrder = new Order(address, status, type, price, optionalUser.get());
+                }
+            } else {
+                newOrder = new Order(address, status, type, price);
+            }
+        } else {
+            newOrder = new Order(address, status, type, price);
+        }
+
+
+        orderDao.save(newOrder);
+
     }
 
 }
