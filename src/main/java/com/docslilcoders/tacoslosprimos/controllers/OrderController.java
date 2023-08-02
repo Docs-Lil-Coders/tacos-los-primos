@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+
 @Controller
 public class OrderController {
 
@@ -163,6 +164,12 @@ public class OrderController {
                    newOrder = new Order(address, status, type, price);
                 } else {
                     newOrder = new Order(address, status, type, price, optionalUser.get());
+                    //update points
+                    int currentPoints = optionalUser.get().getAccumulated_points();
+                    int pointsUsed = cart.getRewardsPointsApplied();
+                    int pointsToAdd = 5;
+                    optionalUser.get().setAccumulated_points(currentPoints - pointsUsed + pointsToAdd);
+                    userDao.save(optionalUser.get());
                 }
             } else {
                 newOrder = new Order(address, status, type, price);
@@ -173,7 +180,7 @@ public class OrderController {
 
 
         orderDao.save(newOrder);
-
+        cartService.resetCart(session);
     }
 
 }
