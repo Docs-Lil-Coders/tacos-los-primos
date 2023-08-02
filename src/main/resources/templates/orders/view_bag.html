@@ -41,7 +41,7 @@
                         <p class="bag-title text-nowrap d-flex align-items-center justify-content-center">Unit Price</p>
                         <div th:each="item : ${cart.items}">
                             <div class="bag-item d-flex align-items-center justify-content-center">$<span
-                                    th:text="${item.menuItem.price}"></span></div>
+                                    th:text="${item.menuItem.getPriceString()}"></span></div>
                         </div>
 
                     </div>
@@ -68,7 +68,7 @@
                         <p class="bag-title d-flex align-items-center justify-content-center">Total</p>
                         <div th:each="item : ${cart.items}">
                             <div class="bag-item d-flex align-items-center justify-content-center">$<span
-                                    th:text="${item.getItemTotal()}"></span></div>
+                                    th:text="${item.getItemTotalString()}"></span></div>
                         </div>
 
                     </div>
@@ -87,7 +87,7 @@
 
                 <div class="bag-total-div">
                     <p class="total-title">Bag Sub-total</p>
-                    <p class="total-price">$<span th:text="${cart.getCartTotal()}"></span></p>
+                    <p class="total-price">$<span th:text="${cart.getCartTotalString()}"></span></p>
                 </div>
 
                 <div class="checkout-button">

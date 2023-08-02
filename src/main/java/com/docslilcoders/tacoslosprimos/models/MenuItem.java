@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 @NoArgsConstructor
@@ -80,6 +81,11 @@ public class MenuItem {
 
     public enum toppingsReq {
         YES, NO
+    }
+
+    public String getPriceString(){
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        return decimalFormat.format(price);
     }
 
 }

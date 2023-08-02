@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,7 +71,12 @@ public class ShoppingCart {
         for (int i = 0; i < items.size(); i++) {
             total += items.get(i).getItemTotal();
         }
-        return total;
+        return Math.round(total * 100.0) / 100.0;
+    }
+
+    public String getCartTotalString() {
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        return decimalFormat.format(getCartTotal());
     }
 
     @Override
