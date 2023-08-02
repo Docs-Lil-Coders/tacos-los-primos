@@ -33,6 +33,9 @@ public class MenuItem {
     @Column(nullable = true)
     private String longDescription;
 
+    @Column(nullable = true)
+    private String ingredients;
+
     @Column(nullable = false)
     private double price;
 

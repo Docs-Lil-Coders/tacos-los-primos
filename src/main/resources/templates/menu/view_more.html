@@ -15,7 +15,7 @@
                 </div>
                 <div class="item-info col-sm-8">
                     <p class="info-title" th:text="${item.item_name}"></p>
-                    <p class="info-par" th:text="${item.description}"></p>
+                    <p class="info-par" th:text="${item.longDescription}"></p>
                     <div th:if="${item.meatReq.name() =='YES'}">
                         <p class="info-sub-title">Meat Options:</p>
                         <ul class="meat-options">
@@ -25,8 +25,17 @@
                             </li>
                         </ul>
                     </div>
+                    <div th:if="${item.toppingsReq.name() =='YES'}">
+                        <p class="info-sub-title">Topping Options:</p>
+                        <ul class="meat-options">
+                            <li th:each="option : ${item.menuItemOptions}"
+                                th:if="${option.getOptionCategory().name() == 'TOPPING'}">
+                                <p th:text="${option.getOption_name()}"></p>
+                            </li>
+                        </ul>
+                    </div>
                     <p class="info-sub-title">Ingredients</p>
-                    <p class="info-par" th:text="${item.longDescription}"></p>
+                    <p class="info-par" th:text="${item.ingredients}"></p>
                     <p class="info-sub-title">Nutrition Summary</p>
                     <ul class="nutrition">
                         <li>

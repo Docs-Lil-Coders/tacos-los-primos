@@ -19,14 +19,10 @@
         button.addEventListener('click', handleAddToBagClick);
     });
 
-    let stayOnMenuBtn = document.getElementById('stayMenu');
-    stayOnMenuBtn.addEventListener("click", function () {
-        window.location.href = url + "&destination=menu";
-    })
 
     let goToBagBtn = document.getElementById("goToBag");
     goToBagBtn.addEventListener("click", function () {
-        window.location.href = url + "&destination=bag";
+        window.location = "/view-bag";
     })
 
 
@@ -70,11 +66,31 @@
             }
             let optionList = options.toString();
             url = "addToBag?menuItem=" + itemId + "&quantity=" + quantity + "&options=" + optionList;
+            addToBag();
             $('#optionsModal' + itemId).modal('hide');
             showConfirmationModal();
         }
 
     }
+
+
+
+    function addToBag() {
+        fetch('/' + url, {
+            method: 'GET',
+        })
+            .then(response => {
+                if (response.ok) {
+                    // Empty response received, handle success if needed
+                } else {
+                    // Handle other response statuses if needed
+                }
+            })
+            .catch(error => {
+                // Handle errors if any
+            });
+    }
+
 
     function getSelectedMeats(itemId) {
         let radioButtonGroup = document.getElementsByName('meatOptions' + itemId);
@@ -110,10 +126,10 @@
 
     function showConfirmationModal() {
         const $modal = $('#confirmation');
-        $modal.modal({
-            backdrop: 'static', // Prevents closing the modal by clicking outside
-            keyboard: false     // Prevents closing the modal by pressing the Escape key
-        });
+        // $modal.modal({
+        //     backdrop: 'static', // Prevents closing the modal by clicking outside
+        //     keyboard: false     // Prevents closing the modal by pressing the Escape key
+        // });
 
         $modal.modal('show');
     }

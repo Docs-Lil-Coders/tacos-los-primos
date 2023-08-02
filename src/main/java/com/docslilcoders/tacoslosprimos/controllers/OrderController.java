@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Controller
@@ -83,10 +84,10 @@ public class OrderController {
     }
 
     @GetMapping("/addToBag")
-    public String addToCart(@RequestParam("menuItem") String menuItemId,
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void addToCart(@RequestParam("menuItem") String menuItemId,
                             @RequestParam("quantity") String quantity,
                             @RequestParam("options") String options,
-                            @RequestParam("destination") String destination,
                             HttpSession session) {
         ShoppingCart cart = cartService.getCart(session);
         Long itemId = Long.valueOf(menuItemId);
@@ -95,15 +96,10 @@ public class OrderController {
         if (menuItem.isEmpty()) {
             System.out.println("menu item not found");
             //TODO error page
-            return "redirect:/menu";
+            throw new NoSuchElementException("Menu item not found");
         }
         CartItem cartItem = new CartItem(menuItem.get(), options, quantityValue);
         cart.getItems().add(cartItem);
-        if (destination.equals("menu")) {
-            return "redirect:/menu";
-        } else {
-            return "redirect:/view-bag";
-        }
     }
 
     @GetMapping("/editBag")
