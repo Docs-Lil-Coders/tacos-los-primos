@@ -1,5 +1,6 @@
 package com.docslilcoders.tacoslosprimos.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -51,14 +52,15 @@ public class MenuItem {
     @Enumerated(EnumType.STRING)
     private toppingsReq toppingsReq;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "menuItem")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "menuItem",fetch = FetchType.LAZY)
     private List<MenuItemOption> menuItemOptions;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "menuItem")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "menuItem",fetch = FetchType.LAZY)
     private List<OrderedItem> orderedItems;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "menuItem")
-    private NutritionInformation nutritionInformation;
+//    @OneToOne(cascade = CascadeType.ALL, mappedBy = "menuItem",fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    private NutritionInformation nutritionInformation;
 
 
     public enum mainCat {
