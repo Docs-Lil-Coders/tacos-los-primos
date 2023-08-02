@@ -71,16 +71,102 @@
             </div>
 
             <div class="add-button">
-                <button class="button" type="button">Add to bag
+                <button type="button" class="menu-item-add-to-bag button" data-bs-toggle="modal"
+                        th:attr="data-bs-target=${'#optionsModal' + item.id}">Add to bag
                 </button>
             </div>
         </div>
 
     </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" th:attr="id=${'optionsModal' + item.id}" tabindex="-1"
+         aria-labelledby="optionsModal"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="optionsModal" th:text="${item.item_name}"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div th:if="${item.meatReq.name() =='YES'}">
+                        <h5 class="optionsTitle">Choose your meat (1 choice required)</h5>
+                        <div th:each="option : ${item.menuItemOptions}">
+                            <div th:if="${option.getOptionCategory().name() == 'MEAT'}">
+                                <input type="radio" th:id="${'meatOptions' + item.id}"
+                                       th:attr="name=${'meatOptions' + item.id}"
+                                       th:value="${option.getOption_name()}">
+                                <label th:for="${option.getOption_name()}"><span class="option"
+                                                                                 th:text="${option.getOption_name()}"></span></label><br>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:if="${item.toppingsReq.name() =='YES'}">
+                        <h5 class="optionsTitle">Choose your toppings</h5>
+                        <div th:each="option : ${item.menuItemOptions}">
+                            <div th:if="${option.getOptionCategory().name() == 'TOPPING'}">
+                                <input type="checkbox" th:id="${'toppingOptions' + item.id}"
+                                       th:attr="name=${'toppingOptions' + item.id}"
+                                       th:value="${option.getOption_name()}">
+                                <label th:for="${option.getOption_name()}"><span class="option"
+                                                                                 th:text="${option.getOption_name()}"></span></label><br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bag-item d-flex align-items-center justify-content-center">
+                        <!--  !!!   IMPORTANT !!! -->
+                        <!--  DO NOT REMOVE, CHANGE, OR ADD THE CLASSES 'minusQuantity', 'currentQuantity', 'addQuantity', 'deleteItem' AMONGST ANY ELEMENTS -->
+                        <button class="plus-minus p-0 m-0 minusQuantity" th:id="${'minusQuantity' + item.id}">-</button>
+                        <p class="quantity p-0 my-0 mx-3" th:id="${'currentQuantity' + item.id}">1</p>
+                        <button class="plus-minus p-0 m-0 addQuantity" th:id="${'addQuantity' + item.id}">+</button>
+                    </div>
+
+
+                    <div th:id="${'feedback' + item.id}"></div>
+                </div>
+                <div class="modal-footer">
+                    <div class="d-flex justify-content-between">
+                        <button type="button" class="modal-button" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" th:id="${'addToBag' + item.id}" class="modal-button addToBag">Add
+                            to bag
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="confModal"
+         data-backdrop="static"
+         data-keyboard="false" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="confModal">Hooray!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h3>Your item was successfully added to the bag!</h3>
+                </div>
+                <div class="modal-footer">
+                    <div class="d-flex justify-content-evenly">
+                        <button type="button" class="modal-button" id="goToMenu">Return to Menu</button>
+                        <button type="button" class="modal-button" id="goToBag">View your Bag</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="foot-div">
         <div th:insert="partials/footer :: footer"/>
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/viewMore.js"></script>
 </body>
 </html>
