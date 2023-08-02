@@ -123,6 +123,15 @@ public class OrderController {
         return "redirect:/view-bag";
     }
 
+    @GetMapping("/thankYou")
+    public String showConfirmation(@RequestParam("orderId") String orderId, @RequestParam("guest") boolean guest, Model model) {
+        System.out.println("\n\n\n" + orderId);
+        System.out.println("\n\n\n" + guest);
+        model.addAttribute("orderId", orderId);
+        model.addAttribute("guest", guest);
+        return "orders/orderConfirmation";
+    }
+
     @GetMapping("/updateCartFinal")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateCart(@RequestParam("orderType") String orderType,
@@ -140,9 +149,10 @@ public class OrderController {
     }
 
     @GetMapping("/placeOrder")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void placeOrder( @RequestParam("address") String address, HttpSession session) {
+    @ResponseBody
+    public String placeOrder( @RequestParam("address") String address, HttpSession session) {
         ShoppingCart cart = cartService.getCart(session);
+        boolean guest = true;
         Order.orderStatus status = Order.orderStatus.PLACED;
         Order.orderType type;
         if(cart.getDeliveryOrder()){
@@ -163,6 +173,7 @@ public class OrderController {
                 if (optionalUser.isEmpty()) {
                    newOrder = new Order(address, status, type, price);
                 } else {
+                    guest = false;
                     newOrder = new Order(address, status, type, price, optionalUser.get());
                     //update points
                     int currentPoints = optionalUser.get().getAccumulated_points();
@@ -179,8 +190,10 @@ public class OrderController {
         }
 
 
-        orderDao.save(newOrder);
+        Order savedOrder = orderDao.save(newOrder);
+        Long orderId = savedOrder.getId();
         cartService.resetCart(session);
+        return "?orderId=178913" + orderId + "&guest=" + guest;
     }
 
 }

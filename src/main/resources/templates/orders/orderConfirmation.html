@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
+      lang="eng">
+<head th:insert="partials/header :: head"/>
+<link rel="stylesheet" th:href="@{/css/orderConfirmation.css}">
+<body>
+<div class="page-container">
+    <div th:replace="partials/navbar :: navbar"/>
+    <div class="content-wrap">
+
+        <div class="some-container">
+
+            <h1>THANK YOU!</h1>
+            <p>We are thrilled to confirm that your order has been successfully placed!</p>
+            <p>Your order is now being processed with love and care by our team.</p>
+            <p>Your order number is: <strong th:text="${orderId}"></strong></p>
+            <p>You can use this number to get the latest updates on your order <a href="/order-status">here</a></p>
+            <!-- this statement means that only a logged in user should get this points received message-->
+            <div th:if="${guest != true}">
+                <p>You are earning 5 points for placing this order! 🌟</p>
+            </div>
+
+            <hr>
+
+            <!-- this statement means that only a guest user should receive the register suggestion -->
+            <div th:if="${guest == true}">
+                <h3>Join Our Community!</h3>
+                <p>We want to make your experience with us even more delightful!</p>
+                <p>By creating an account, you'll unlock a world of benefits:</p>
+                <ul>
+                    <li>Receive a warm welcome with a $5 discount on your first order!</li>
+                    <li>Collect sweet points on every order you make, turning them into delightful discounts.</li>
+                    <li>Enjoy faster checkout with your information conveniently prefilled.</li>
+                </ul>
+                <p>Don't wait any longer, click <a href="/register">here</a> join our loving community today!</p>
+            </div>
+
+
+        </div>
+
+    </div>
+    <div class="foot-div">
+        <div th:insert="partials/footer :: footer"/>
+    </div>
+</div>
+
+</body>
+</html>

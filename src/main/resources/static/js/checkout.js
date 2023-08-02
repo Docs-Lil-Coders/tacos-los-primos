@@ -313,13 +313,21 @@
         })
             .then(response => {
                 if (response.ok) {
-                    // Empty response received, handle success if needed
+                    // Handle success message from the server
+                    return response.text(); // This will read the response as text
                 } else {
                     // Handle other response statuses if needed
+                    throw new Error('Order placement failed');
                 }
+            })
+            .then(message => {
+                // Handle the success message returned from the server
+                // console.log(message); // Output the message to the console
+                window.location = "/thankYou" + message;
             })
             .catch(error => {
                 // Handle errors if any
+                console.error(error);
             });
     }
 
@@ -482,7 +490,8 @@
     }
 
     let payNowBtn = document.getElementById("payNow");
-    payNowBtn.addEventListener("click", function () {
+    payNowBtn.addEventListener("click", function (event) {
+        event.preventDefault();
         cartGetRequest();
     })
 
