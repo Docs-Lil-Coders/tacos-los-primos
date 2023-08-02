@@ -11,25 +11,44 @@
         <h4>ORDER STATUS</h4>
 
         <div class="container-sm">
-            <form>
+            <form th:action="@{/order-status}" method="POST"  id="statusForm">
                 <div class="status-form">
                     <label for="orderNumber" class="form-label">Order Number: </label>
                     <div class="">
-                        <input type="text" class="form-control" id="orderNumber">
+                        <input type="number" class="form-control" id="orderNumber">
+                        <div id="orderFeedback"></div>
                     </div>
                 </div>
 
                 <div class="status-button">
-                    <button type="submit" class="button" href="#">Check Status</button>
+                    <button type=submit class="button" id="checkStatus">Check Status</button>
                 </div>
             </form>
         </div>
 
-        <div class="order-status-info">
-            <p>Your Order had been Confirmed</p>
-            <p>Your Order is being prepared</p>
-            <p>Estimated delivery time</p>
-            <p>5:00 PM</p>
+        <div th:if="${orderNotFound}">
+            <p>order not found</p>
+        </div>
+
+        <div th:if="${order != null}">
+
+<!--            for delivery-->
+            <div th:if="${order.orderType.name() == 'DELIVERY'}">
+            <p>order has been placed</p> <!-- this one is always true -->
+            <p>order is being prepared - <span th:text="${(order.orderStatus.name() == 'BEING_PREPARED') ? 'yes' : 'no'}"> </span></p>
+            <p>order is out for delivery - <span th:text="${order.orderStatus.name() == 'OUT_FOR_DELIVERY' ? 'yes' : 'no'}"> </span></p>
+            <p>order is delivered - <span th:text="${order.orderStatus.name() == 'DELIVERED' ? 'yes' : 'no'}"> </span></p>
+            <p>order is complete - <span th:text="${order.orderStatus.name() == 'COMPLETE' ? 'yes' : 'no'}"> </span></p>
+            </div>
+
+
+<!--            for pick up-->
+            <div th:if="${order.orderType.name() == 'PICKUP'}">
+                <p>order has been placed</p> <!-- this one is always true -->
+                <p>order is being prepared - <span th:text="${(order.orderStatus.name() == 'BEING_PREPARED') ? 'yes' : 'no'}"> </span></p>
+                <p>order is ready for pick up - <span th:text="${order.orderStatus.name() == 'PICKUP_READY' ? 'yes' : 'no'}"> </span></p>
+                <p>order is complete - <span th:text="${order.orderStatus.name() == 'COMPLETE' ? 'yes' : 'no'}"> </span></p>
+            </div>
         </div>
 
     </div>
@@ -37,5 +56,50 @@
         <div th:insert="partials/footer :: footer"/>
     </div>
 </div>
+<script>
+
+    let statusForm = document.getElementById("statusForm");
+    let submitBtn = document.getElementById("checkStatus");
+    let orderNumberInput = document.getElementById("orderNumber");
+    let orderFeedback = document.getElementById("orderFeedback");
+    const orderNumberRegex = /^[0-9]{1,20}$/;
+
+    submitBtn.addEventListener("click", function(event){
+        event.preventDefault();
+        let validOrder = checkOrderNumber();
+        console.log(validOrder)
+
+        if (validOrder === true) {
+            statusForm.action = "/order-status?orderId=" + orderNumberInput.value;
+            statusForm.submit();
+        }
+    });
+
+    function checkOrderNumber() {
+        let validInput = false;
+        if (orderNumberInput.value.trim() === "") {
+            orderNumberInput.classList.remove("is-valid")
+            orderFeedback.classList.remove("valid-feedback")
+            orderNumberInput.classList.add("is-invalid")
+            orderFeedback.classList.add("invalid-feedback")
+            orderFeedback.innerText = "No order number entered.";
+        } else if (!orderNumberRegex.test(orderNumberInput.value)) {
+            orderNumberInput.classList.remove("is-valid")
+            orderFeedback.classList.remove("valid-feedback")
+            orderNumberInput.classList.add("is-invalid")
+            orderFeedback.classList.add("invalid-feedback")
+            orderFeedback.innerText = "Please enter a valid order number";
+        } else {
+            orderNumberInput.classList.remove("is-invalid")
+            orderFeedback.classList.remove("invalid-feedback")
+            orderNumberInput.classList.add("is-valid")
+            orderFeedback.classList.add("valid-feedback")
+            orderFeedback.innerText = "";
+            validInput = true;
+        }
+        return validInput;
+    }
+
+</script>
 </body>
 </html>

@@ -72,7 +72,25 @@ public class OrderController {
     }
 
     @GetMapping("/order-status")
-    public String getOrderStatusPage() {
+    public String getOrderStatusPage(@RequestParam(required = false) boolean orderNotFound, Model model) {
+        model.addAttribute("orderNotFound", orderNotFound);
+        return "orders/order_status";
+    }
+
+    @PostMapping("/order-status")
+    public String getOrderStatusPage(@RequestParam("orderId") String orderId, Model model) {
+        if(orderId.length() < 7) {
+            return "redirect:/order-status?orderNotFound=true";
+        }
+        String trimmedNumber = orderId.substring(6);
+        long result = Long.parseLong(trimmedNumber);
+        Optional<Order> order = orderDao.findById(result);
+        if (order.isEmpty()) {
+            System.out.println("item not found");
+            //TODO error page
+           return "redirect:/order-status?orderNotFound=true";
+        }
+        model.addAttribute("order", order.get());
         return "orders/order_status";
     }
 
@@ -189,9 +207,11 @@ public class OrderController {
             newOrder = new Order(address, status, type, price);
         }
 
+        long timestamp = System.currentTimeMillis();
 
+        System.out.println("Current Timestamp: " + timestamp);
         Order savedOrder = orderDao.save(newOrder);
-        Long orderId = savedOrder.getId();
+        long orderId = savedOrder.getId();
         cartService.resetCart(session);
         return "?orderId=178913" + orderId + "&guest=" + guest;
     }

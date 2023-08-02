@@ -26,6 +26,12 @@ public class Order {
     @Column(nullable = false)
     private String address;
 
+    @Column(nullable = true)
+    private String placedAt;
+
+    @Column(nullable = true)
+    private String scheduledFor;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private orderStatus orderStatus;
