@@ -22,7 +22,7 @@
                         <p class="bag-title d-flex align-items-center justify-content-center"></p>
                         <div th:each="item : ${cart.items}">
                             <div class="bag-item d-flex align-items-center justify-content-center">
-                                <img class="bag-item-image" src="/img/placeholder.png">
+                                <img class="bag-item-image" th:src="${item.getMenuItem().getPhoto()}">
                             </div>
                         </div>
                     </div>

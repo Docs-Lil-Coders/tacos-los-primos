@@ -34,7 +34,7 @@
                      th:if="${item.mainCategory.name() =='APPETIZERS' && item.subCategory.name() == 'CHIPS'}">
                     <div class="menu-item">
                         <div class="img-div">
-                            <img class="menu-item-image" src="/img/placeholder.png">
+                            <img class="menu-item-image" th:src="${item.getPhoto()}">
                         </div>
                         <div class="menu-item-info">
                             <div class="menu-item-title">
@@ -61,7 +61,7 @@
                      th:if="${item.mainCategory.name() =='APPETIZERS' && item.subCategory.name() == 'OTHER'}">
                     <div class="menu-item">
                         <div class="img-div">
-                            <img class="menu-item-image" src="/img/placeholder.png">
+                            <img class="menu-item-image" th:src="${item.getPhoto()}">
                         </div>
                         <div class="menu-item-info">
                             <div class="menu-item-title">
@@ -89,7 +89,7 @@
                 <div th:each="item : ${menuItems}" th:if="${item.mainCategory.name() == 'ENTREES'}">
                     <div class="menu-item">
                         <div class="img-div">
-                            <img class="menu-item-image" src="/img/placeholder.png">
+                            <img class="menu-item-image" th:src="${item.getPhoto()}">
                         </div>
                         <div class="menu-item-info">
                             <div class="menu-item-title">
@@ -118,7 +118,7 @@
                 <div th:each="item : ${menuItems}" th:if="${item.mainCategory.name() =='SIDES'}">
                     <div class="menu-item">
                         <div class="img-div">
-                            <img class="menu-item-image" src="/img/placeholder.png">
+                            <img class="menu-item-image" th:src="${item.getPhoto()}">
                         </div>
                         <div class="menu-item-info">
                             <div class="menu-item-title">
@@ -146,7 +146,7 @@
                 <div th:each="item : ${menuItems}" th:if="${item.mainCategory.name() =='SALSAS'}">
                     <div class="menu-item-sm">
                         <div class="img-div">
-                            <img class="menu-item-image" src="/img/placeholder.png">
+                            <img class="menu-item-image" th:src="${item.getPhoto()}">
                         </div>
                         <div class="menu-item-info-salsas">
                             <div class="menu-item-title">
@@ -174,7 +174,7 @@
                      th:if="${item.mainCategory.name() =='BEVERAGES' && item.subCategory.name() == 'SODAS'}">
                     <div class="menu-item-sm">
                         <div class="img-div">
-                            <img class="menu-item-image" src="/img/placeholder.png">
+                            <img class="menu-item-image" th:src="${item.getPhoto()}">
                         </div>
                         <div class="menu-item-info-salsas">
                             <div class="menu-item-title">
@@ -198,7 +198,7 @@
                      th:if="${item.mainCategory.name() =='BEVERAGES' && item.subCategory.name() == 'AGUAFRESCAS'}">
                     <div class="menu-item-sm">
                         <div class="img-div">
-                            <img class="menu-item-image" src="/img/placeholder.png">
+                            <img class="menu-item-image" th:src="${item.getPhoto()}">
                         </div>
                         <div class="menu-item-info-salsas">
                             <div class="menu-item-title">
@@ -222,7 +222,7 @@
                      th:if="${item.mainCategory.name() =='BEVERAGES' && item.subCategory.name() == 'COFFEE'}">
                     <div class="menu-item-sm">
                         <div class="img-div">
-                            <img class="menu-item-image" src="/img/placeholder.png">
+                            <img class="menu-item-image" th:src="${item.getPhoto()}">
                         </div>
                         <div class="menu-item-info-salsas">
                             <div class="menu-item-title">
@@ -246,7 +246,7 @@
                      th:if="${item.mainCategory.name() =='BEVERAGES' && item.subCategory.name() == 'OTHER'}">
                     <div class="menu-item-sm">
                         <div class="img-div">
-                            <img class="menu-item-image" src="/img/placeholder.png">
+                            <img class="menu-item-image" th:src="${item.getPhoto()}">
                         </div>
                         <div class="menu-item-info-salsas">
                             <div class="menu-item-title">
