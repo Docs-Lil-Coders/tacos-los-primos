@@ -59,6 +59,8 @@ public class UserController {
         } else {
             String hash = passwordEncoder.encode(user.getPassword());
             user.setPassword(hash);
+            //give the user some points for signing up
+            user.setAccumulated_points(50);
             userDao.save(user);
             Address usersAddress = new Address(user.getPrimary_address(), user);
             addressDao.save(usersAddress);

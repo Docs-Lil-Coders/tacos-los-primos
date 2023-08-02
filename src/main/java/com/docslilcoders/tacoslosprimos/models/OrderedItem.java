@@ -34,6 +34,13 @@ public class OrderedItem {
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
+    public OrderedItem(int quantity, String meatOptionList, MenuItem menuItem, Order order){
+        this.quantity = quantity;
+        this.meatOptionList = meatOptionList;
+        this.menuItem = menuItem;
+        this.order = order;
+    }
+
 
 }
 

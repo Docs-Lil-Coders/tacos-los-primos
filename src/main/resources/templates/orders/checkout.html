@@ -50,7 +50,7 @@
                                 <p class="bag-title d-flex align-items-center justify-content-end"></p>
                                 <div th:each="item : ${cart.items}">
                                     <div class="bag-item d-flex align-items-center justify-content-end">
-                                        <img class="bag-item-image" src="/img/placeholder.png">
+                                        <img class="bag-item-image" th:src="${item.getMenuItem().getPhoto()}">
                                     </div>
                                 </div>
                             </div>
@@ -80,7 +80,7 @@
                                 <p class="bag-title d-flex align-items-center justify-content-center">Price</p>
                                 <div th:each="item : ${cart.items}">
                                     <div class="bag-item d-flex align-items-center justify-content-center">$<span
-                                            th:text="${item.getItemTotal()}"></span></div>
+                                            th:text="${item.getItemTotalString()}"></span></div>
                                 </div>
 
                             </div>
@@ -90,7 +90,7 @@
 
                     <div class="bag-total-div">
                         <p class="total-title">Sub-total</p>
-                        <p class="total-price">$<span  th:text="${cart.getCartTotal()}"></span></p>
+                        <p class="total-price">$<span th:text="${cart.getCartTotalString()}"></span></p>
                     </div>
                 </div>
                 <!-- END ITEMS IN CART  -->
@@ -193,7 +193,7 @@
                         <p class="bag-title">ORDER TOTAL</p>
                         <ul class="order-price">
                             <li><p>Order Total</p></li>
-                            <li><p class="dollar-amount">$<span id="cartTotal" th:text="${cart.getCartTotal()}"></span></p></li>
+                            <li><p class="dollar-amount">$<span id="cartTotal" th:text="${cart.getCartTotalString()}"></span></p></li>
                             <li><p>Delivery Charge</p></li>
                             <li><p class="dollar-amount" id="deliveryCharge">$0.00</p></li>
                             <li><p>Taxes</p></li>
@@ -226,7 +226,7 @@
                         </div>
                         <div class="place-order-buttons">
                             <a class="button btn-prev" href="#">Previous</a>
-                            <button class="button" id="payNow" href="/order-status">Pay now</button>
+                            <button class="button" id="payNow" type="submit">Pay now</button>
                         </div>
                         <div id="error-message">
                         </div>

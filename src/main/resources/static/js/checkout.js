@@ -46,7 +46,7 @@
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const disAllowedRegex = /^[^"'()*+\-/:;<=>?[\]^`{|}~]*$/;
     const phoneRegex = /^[0-9]{10}$/;
-    const addressRegex = /^[a-zA-Z0-9, ]{1,50}$/; //TODO - we will need to check this against the API instead once we have it
+    // const addressRegex = /^[a-zA-Z0-9, ]{1,50}$/; //TODO - we will need to check this against the API instead once we have it
 
     addContactSheetEventListeners();
 
@@ -54,11 +54,11 @@
     let formStepsNum = 0;
 
     nextBtns.forEach((btn) => {
-        btn.addEventListener("click", () => {
+        btn.addEventListener("click", async () => {
             resetFeedbackFields();
             if (formStepsNum === 0 && (checkOrderType() === false)) {
                 orderTypeFeedback.classList.remove("d-none");
-            } else if (formStepsNum === 1 && (checkContactInformation() === false)) {
+            } else if (formStepsNum === 1 && (await checkContactInformation() === false)) {
                 console.log("contact info not okay")
             } else {
                 orderTypeFeedback.classList.add("d-none");
@@ -115,7 +115,7 @@
         emailFeedback.innerText = "";
     }
 
-    function checkAddress() {
+    async function checkAddress() {
         let validInput = false;
         if (selectedOrderType == "pickUp") {
             addressInput.classList.remove("is-valid")
@@ -124,21 +124,116 @@
             addressFeedback.classList.remove("invalid-feedback")
             addressFeedback.innerText = "";
             validInput = true;
-        } else if (!addressRegex.test(addressInput.value) || !disAllowedRegex.test(addressInput.value)) {
+        } else if (addressInput.value.trim() == "") {
             addressInput.classList.remove("is-valid")
             addressFeedback.classList.remove("valid-feedback")
             addressInput.classList.add("is-invalid")
             addressFeedback.classList.add("invalid-feedback")
             addressFeedback.innerText = "Valid address is required for all delivery orders.";
         } else {
-            addressInput.classList.remove("is-invalid")
-            addressFeedback.classList.remove("invalid-feedback")
-            addressInput.classList.add("is-valid")
-            addressFeedback.classList.add("valid-feedback")
-            addressFeedback.innerText = "";
-            validInput = true;
+            const addressExistsResult = await addressExists(addressInput.value);
+            const addressIsCloseResult = await addressIsCloseEnough(addressInput.value);
+            if (!addressExistsResult) {
+                addressInput.classList.remove("is-valid")
+                addressFeedback.classList.remove("valid-feedback")
+                addressInput.classList.add("is-invalid")
+                addressFeedback.classList.add("invalid-feedback")
+                addressFeedback.innerText = "Valid address is required for all delivery orders.";
+            } else if (!addressIsCloseResult) {
+                addressInput.classList.remove("is-valid")
+                addressFeedback.classList.remove("valid-feedback")
+                addressInput.classList.add("is-invalid")
+                addressFeedback.classList.add("invalid-feedback")
+                addressFeedback.innerText = "Sorry, this address is not close enough to be delivered!";
+            } else {
+                addressInput.classList.remove("is-invalid")
+                addressFeedback.classList.remove("invalid-feedback")
+                addressInput.classList.add("is-valid")
+                addressFeedback.classList.add("valid-feedback")
+                addressFeedback.innerText = "";
+                validInput = true;
+            }
         }
         return validInput;
+    }
+
+    function geocode(address, token) {
+        var baseUrl = 'https://api.mapbox.com';
+        var endPoint = '/geocoding/v5/mapbox.places/';
+
+        return fetch(baseUrl + endPoint + encodeURIComponent(address) + '.json' + "?" + 'access_token=' + token)
+            .then(function (res) {
+                return res.json();
+                // to get all the data from the request, comment out the following three lines...
+            })
+            .then(function (data) {
+                return new Promise((resolve, reject) => {
+                    resolve(data.features[0].center);
+                    if (data.features.length > 0) {
+                        resolve(data.features[0].center);
+                    } else {
+                        reject(new Error('Location not found'));
+                    }
+                });
+            });
+    }
+
+    async function addressExists(input) {
+        try {
+            let data = await geocode(input, mapBoxKey);
+
+            if (data) {
+                return true;
+                // Your existing code to calculate distance and show the results.
+            } else {
+                return false;
+            }
+        } catch (error) {
+            return false;
+        }
+    }
+
+    async function addressIsCloseEnough(input) {
+        try {
+            let data = await geocode(input, mapBoxKey);
+
+            //getting the lat and lon from the user input
+            let lat1 = data[1];
+            let lon1 = data[0];
+
+            //this is the lat and long of the restaurant
+            let lat2 = 33.480222919384744;
+            let lon2 = -112.18853950371074;
+
+            let distance = getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2);
+
+            if (distance > 16) {
+                return false;
+            } else {
+                 return true;
+            }
+        } catch (error) {
+             return false;
+        }
+
+    }
+
+    function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+        var R = 6371; // Radius of the earth in km
+        var dLat = deg2rad(lat2 - lat1);  // deg2rad below
+        var dLon = deg2rad(lon2 - lon1);
+        var a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2)
+        ;
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        var d = R * c; // Distance in km
+        return d;
+    }
+
+    function deg2rad(deg) {
+        return deg * (Math.PI / 180)
     }
 
     function checkPhone() {
@@ -295,13 +390,39 @@
         })
             .then(response => {
                 if (response.ok) {
-                    // Empty response received, handle success if needed
+                    placeOrderRequest();
                 } else {
                     // Handle other response statuses if needed
                 }
             })
             .catch(error => {
                 // Handle errors if any
+            });
+    }
+
+    let finalAddress = document.getElementById("userAddress");
+
+    function placeOrderRequest() {
+        fetch('/placeOrder?address=' + finalAddress.value, {
+            method: 'GET',
+        })
+            .then(response => {
+                if (response.ok) {
+                    // Handle success message from the server
+                    return response.text(); // This will read the response as text
+                } else {
+                    // Handle other response statuses if needed
+                    throw new Error('Order placement failed');
+                }
+            })
+            .then(message => {
+                // Handle the success message returned from the server
+                // console.log(message); // Output the message to the console
+                window.location = "/thankYou" + message;
+            })
+            .catch(error => {
+                // Handle errors if any
+                console.error(error);
             });
     }
 
@@ -330,7 +451,7 @@
     let applyPointsBtn = document.getElementById("applyRewards");
     let pointsFeedback = document.getElementById("rewardsFeedback");
     let pointsInput = document.getElementById("userRewards");
-    const pointsRegex = /^[0-9]{1,3}$/;
+    const pointsRegex = /^[0-9]{1,5}$/;
 
     let pointsRedeemed = 0;
     let promoCodeApplied = "N/A";
@@ -405,6 +526,7 @@
     function calculatePointsForMoney(points) {
         return Math.round((points * .10) * 100) / 100
     }
+
     function getPromoCodeValue(enteredCode) {
         let value = 0.0;
         if (promoCodeApplied == "N/A") {
@@ -424,15 +546,17 @@
                     value = 20.0;
                     break;
                 default:
-                    value = 5.0;
+                    value = 0.0;
             }
         }
         return value;
     }
+
     function calculateTaxes() {
         let result = (parseFloat(initialCartTotal.innerText) + calculateDeliveryCharge()) * .0625;
         return Math.round(result * 100) / 100
     }
+
     function calculateDeliveryCharge() {
         if (selectedOrderType == "delivery") {
             return 10.00;
@@ -464,7 +588,8 @@
     }
 
     let payNowBtn = document.getElementById("payNow");
-    payNowBtn.addEventListener("click", function () {
+    payNowBtn.addEventListener("click", function (event) {
+        event.preventDefault();
         cartGetRequest();
     })
 

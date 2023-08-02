@@ -25,6 +25,11 @@
         window.location = "/view-bag";
     })
 
+    let goToMenuBtn = document.getElementById("goToMenu");
+    goToMenuBtn.addEventListener("click", function () {
+        window.location = "/menu";
+    })
+
 
     function handleMinusClick(event) {
         const buttonId = event.target.id;
@@ -126,31 +131,8 @@
 
     function showConfirmationModal() {
         const $modal = $('#confirmation');
-        // $modal.modal({
-        //     backdrop: 'static', // Prevents closing the modal by clicking outside
-        //     keyboard: false     // Prevents closing the modal by pressing the Escape key
-        // });
-
         $modal.modal('show');
     }
 
-//sticky menu-nav
-    window.onscroll = function () {
-        stickyMenu();
-    };
-
-    let menuNav = document.getElementById("menu-nav");
-    let margin = 120;
-
-    function stickyMenu() {
-        console.log("window.pageYOffset:", window.pageYOffset);
-
-        console.log()
-        if (window.pageYOffset > margin) {
-            menuNav.classList.add("sticky");
-        } else if (window.pageYOffset <= margin){
-            menuNav.classList.remove("sticky");
-        }
-    }
 
 }());

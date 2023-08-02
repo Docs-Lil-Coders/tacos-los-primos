@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.text.DecimalFormat;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -18,6 +20,11 @@ public class CartItem {
 
     public double getItemTotal() {
         return menuItem.getPrice() * quantity;
+    }
+
+    public String getItemTotalString(){
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        return decimalFormat.format(getItemTotal());
     }
 
 }

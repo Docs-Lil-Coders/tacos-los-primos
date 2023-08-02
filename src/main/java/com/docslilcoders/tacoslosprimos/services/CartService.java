@@ -18,4 +18,8 @@ public class CartService {
         return cart;
     }
 
+    public void resetCart(HttpSession session) {
+        session.setAttribute(CART_SESSION_ATTRIBUTE, new ShoppingCart());
+    }
+
 }

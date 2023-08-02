@@ -1,7 +1,9 @@
 package com.docslilcoders.tacoslosprimos.controllers;
 
 import com.docslilcoders.tacoslosprimos.models.MenuItem;
+import com.docslilcoders.tacoslosprimos.models.NutritionInformation;
 import com.docslilcoders.tacoslosprimos.repositories.MenuItemRepository;
+import com.docslilcoders.tacoslosprimos.repositories.NutritionInformationRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +15,11 @@ import java.util.Optional;
 public class MenuController {
 
     private final MenuItemRepository menuItemDao;
+    private final NutritionInformationRepository nutritionInformationDao;
 
-    public MenuController(MenuItemRepository menuItemDao) {
+    public MenuController(MenuItemRepository menuItemDao, NutritionInformationRepository nutritionInformationDao) {
         this.menuItemDao = menuItemDao;
+        this.nutritionInformationDao = nutritionInformationDao;
     }
 
 
@@ -34,6 +38,9 @@ public class MenuController {
             return "/error";
         }
 
+        NutritionInformation nutritionInformation = nutritionInformationDao.findByMenuItemId(id);
+
+        model.addAttribute("nutritionInformation", nutritionInformation);
         model.addAttribute("item", optionalMenuItem.get());
         return "/menu/view_more";
     }

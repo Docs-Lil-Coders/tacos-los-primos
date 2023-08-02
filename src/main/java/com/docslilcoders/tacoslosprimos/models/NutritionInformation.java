@@ -30,39 +30,6 @@ public class NutritionInformation {
     @Column(nullable = true)
     private Double protein;
 
-    @Column(nullable = true)
-    private Double saturatedFat;
-
-    @Column(nullable = true)
-    private Double dietaryFiber;
-
-    @Column(nullable = true)
-    private Double calcium;
-
-    @Column(nullable = true)
-    private Double transFat;
-
-    @Column(nullable = true)
-    private Double totalSugars;
-
-    @Column(nullable = true)
-    private Double addedSugars;
-
-    @Column(nullable = true)
-    private Double iron;
-
-    @Column(nullable = true)
-    private Double cholesterol;
-
-    @Column(nullable = true)
-    private Double vitaminD;
-
-    @Column(nullable = true)
-    private Double potassium;
-
-    @Column(nullable = true)
-    private Double sodium;
-
 
     @OneToOne
     @JoinColumn(name = "menu_item_id")

@@ -1,11 +1,13 @@
 package com.docslilcoders.tacoslosprimos.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 @NoArgsConstructor
@@ -32,6 +34,9 @@ public class MenuItem {
     @Column(nullable = true)
     private String longDescription;
 
+    @Column(nullable = true)
+    private String ingredients;
+
     @Column(nullable = false)
     private double price;
 
@@ -51,14 +56,15 @@ public class MenuItem {
     @Enumerated(EnumType.STRING)
     private toppingsReq toppingsReq;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "menuItem")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "menuItem",fetch = FetchType.LAZY)
     private List<MenuItemOption> menuItemOptions;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "menuItem")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "menuItem",fetch = FetchType.LAZY)
     private List<OrderedItem> orderedItems;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "menuItem")
-    private NutritionInformation nutritionInformation;
+//    @OneToOne(cascade = CascadeType.ALL, mappedBy = "menuItem",fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    private NutritionInformation nutritionInformation;
 
 
     public enum mainCat {
@@ -75,6 +81,11 @@ public class MenuItem {
 
     public enum toppingsReq {
         YES, NO
+    }
+
+    public String getPriceString(){
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        return decimalFormat.format(price);
     }
 
 }
