@@ -305,21 +305,22 @@
                             <div class="bag-item d-flex align-items-center justify-content-center">
                                 <!--  !!!   IMPORTANT !!! -->
                                 <!--  DO NOT REMOVE, CHANGE, OR ADD THE CLASSES 'minusQuantity', 'currentQuantity', 'addQuantity', 'deleteItem' AMONGST ANY ELEMENTS -->
-                                <button class="plus-minus p-0 m-0 minusQuantity" th:id="${'minusQuantity' + item.id}">-</button>
+                                <button class="plus-minus p-0 m-0 minusQuantity" th:id="${'minusQuantity' + item.id}">
+                                    -
+                                </button>
                                 <p class="quantity p-0 my-0 mx-3" th:id="${'currentQuantity' + item.id}">1</p>
-                                <button class="plus-minus p-0 m-0 addQuantity" th:id="${'addQuantity' + item.id}">+</button>
+                                <button class="plus-minus p-0 m-0 addQuantity" th:id="${'addQuantity' + item.id}">+
+                                </button>
                             </div>
 
 
                             <div th:id="${'feedback' + item.id}"></div>
                         </div>
-                        <div class="modal-footer">
-                            <div class="d-flex justify-content-between">
-                                <button type="button" class="modal-button" data-bs-dismiss="modal">Cancel</button>
-                                <button type="button" th:id="${'addToBag' + item.id}" class="modal-button addToBag">Add
-                                    to bag
-                                </button>
-                            </div>
+                        <div class="modal-buttons">
+                            <button type="button" class="modal-button" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" th:id="${'addToBag' + item.id}" class="modal-button addToBag">Add
+                                to bag
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -339,11 +340,10 @@
                     <div class="modal-body">
                         <h3>Your item was successfully added to the bag!</h3>
                     </div>
-                    <div class="modal-footer">
-                        <div class="d-flex justify-content-evenly">
-                            <button type="button" class="modal-button" id="stayMenu" data-bs-dismiss="modal">Stay on Menu</button>
-                            <button type="button" class="modal-button" id="goToBag">View your Bag</button>
-                        </div>
+                    <div class="modal-buttons">
+                        <button type="button" class="modal-button" id="stayMenu" data-bs-dismiss="modal">Stay on Menu
+                        </button>
+                        <button type="button" class="modal-button" id="goToBag">View your Bag</button>
                     </div>
                 </div>
             </div>
