@@ -203,6 +203,14 @@ a.button:hover {
     background-color: #FFFFFF;
 }
 
+.prev-orders {
+    border-style: solid;
+    border-width: thick;
+    border-radius: 30px;
+    border-color: #BF2D1A;
+    background-color: #FFFFFF;
+}
+
 .menu-item-info {
     display: grid;
     grid-template-rows: 20% 60% 20%;
@@ -253,4 +261,28 @@ a.menu-item-add-to-bag:hover {
 
 .hide {
     color: transparent;
+}
+
+.order-total {
+    text-align: revert;
+    color: #BF2D1A;
+    font-weight: bold;
+    font-size: large;
+}
+
+.date {
+    font-weight: lighter;
+}
+
+.order-summary {
+    color: #FFFFFF;
+    background-color: #BF2D1A;
+    border-radius: 30px;
+    padding: 5px 35px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.order-id {
+    font-size: larger;
 }
