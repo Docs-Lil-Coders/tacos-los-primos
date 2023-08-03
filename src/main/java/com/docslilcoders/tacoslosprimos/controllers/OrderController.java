@@ -3,6 +3,7 @@ package com.docslilcoders.tacoslosprimos.controllers;
 import com.docslilcoders.tacoslosprimos.models.*;
 import com.docslilcoders.tacoslosprimos.repositories.*;
 import com.docslilcoders.tacoslosprimos.services.CartService;
+import com.docslilcoders.tacoslosprimos.utility.DateUtils;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -193,9 +194,13 @@ public class OrderController {
                     newOrder = new Order(address, status, type, price, optionalUser.get());
                     //update points
                     int currentPoints = optionalUser.get().getAccumulated_points();
+                    int currentRedeemedPoints = optionalUser.get().getRedeemed_points();
                     int pointsUsed = cart.getRewardsPointsApplied();
                     int pointsToAdd = 5;
                     optionalUser.get().setAccumulated_points(currentPoints - pointsUsed + pointsToAdd);
+                    optionalUser.get().setRedeemed_points(currentRedeemedPoints + pointsUsed);
+                    user.setAccumulated_points(optionalUser.get().getAccumulated_points());
+                    user.setRedeemed_points(optionalUser.get().getRedeemed_points());
                     userDao.save(optionalUser.get());
                 }
             } else {
@@ -204,7 +209,10 @@ public class OrderController {
         } else {
             newOrder = new Order(address, status, type, price);
         }
-
+        //set the time of the order
+        long currentTimestampMillis = System.currentTimeMillis();
+        String formattedDateTime = DateUtils.formatDateTime(currentTimestampMillis);
+        newOrder.setPlacedAt(formattedDateTime);
 
         Order savedOrder = orderDao.save(newOrder);
         long orderId = savedOrder.getId();
@@ -212,6 +220,8 @@ public class OrderController {
             OrderedItem orderedItem = new OrderedItem(cart.getItems().get(i).getQuantity(), cart.getItems().get(i).getMeatOptionList(), cart.getItems().get(i).getMenuItem(), newOrder);
             orderedItemDao.save(orderedItem);
         }
+
+
         cartService.resetCart(session);
         return "?orderId=178913" + orderId + "&guest=" + guest;
     }

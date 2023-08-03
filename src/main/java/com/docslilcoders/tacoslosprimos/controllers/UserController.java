@@ -1,9 +1,11 @@
 package com.docslilcoders.tacoslosprimos.controllers;
 
 import com.docslilcoders.tacoslosprimos.models.Address;
+import com.docslilcoders.tacoslosprimos.models.Order;
 import com.docslilcoders.tacoslosprimos.models.ShoppingCart;
 import com.docslilcoders.tacoslosprimos.models.User;
 import com.docslilcoders.tacoslosprimos.repositories.AddressRepository;
+import com.docslilcoders.tacoslosprimos.repositories.OrderRepository;
 import com.docslilcoders.tacoslosprimos.repositories.UserRepository;
 import com.docslilcoders.tacoslosprimos.services.AuthBuddy;
 import jakarta.servlet.http.HttpSession;
@@ -15,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -22,14 +25,15 @@ public class UserController {
 
     private final UserRepository userDao;
     private final PasswordEncoder passwordEncoder;
-
     private final AddressRepository addressDao;
+    private final OrderRepository orderDao;
 
 
-    public UserController(UserRepository userDao, PasswordEncoder passwordEncoder, AddressRepository addressDao) {
+    public UserController(UserRepository userDao, PasswordEncoder passwordEncoder, AddressRepository addressDao, OrderRepository orderDao) {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
         this.addressDao = addressDao;
+        this.orderDao = orderDao;
     }
 
     @GetMapping("/register")
@@ -79,6 +83,9 @@ public class UserController {
             return "redirect:/login";
         }
         model.addAttribute("user", user);
+
+        List<Order> usersOrders = orderDao.findOrdersByUserId(user.getId());
+        model.addAttribute("orders", usersOrders);
         return "users/profile";
     }
 

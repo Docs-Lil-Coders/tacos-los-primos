@@ -52,19 +52,34 @@
                 <h1>Popular Dishes</h1>
                 <div class="popular-dishes-cards">
                     <div class="dishes-card">
+                        <a href="/menu/9" class="reset-link d-flex flex-column align-items-center">
                         <img src="https://cdn.filestackcontent.com/J1aHuN3TaCMNbmvDQRhl" class="dishes-img">
+                        <p class="reset-link mt-2">Quesabirra</p>
+                        </a>
                     </div>
                     <div class="dishes-card">
+                        <a href="/menu/6" class="reset-link d-flex flex-column align-items-center">
                         <img src="https://cdn.filestackcontent.com/lpNL9lnsSIeuFRpsRtxQ" class="dishes-img">
+                            <p class="reset-link mt-2">Mini Street Tacos</p>
+                        </a>
                     </div>
                     <div class="dishes-card">
+                        <a href="/menu/15" class="reset-link d-flex flex-column align-items-center">
                         <img src="https://cdn.filestackcontent.com/sE5IdY1DR5qNacAslSrN" class="dishes-img">
+                        <p class="reset-link mt-2">Tortas</p>
+                        </a>
                     </div>
                     <div class="dishes-card">
+                        <a href="/menu/17" class="reset-link d-flex flex-column align-items-center">
                         <img src="https://cdn.filestackcontent.com/tmmqR4ESM2D7HylWM9HA" class="dishes-img">
+                        <p class="reset-link mt-2">Loaded Fries</p>
+                        </a>
                     </div>
                     <div class="dishes-card">
+                        <a href="/menu/13" class="reset-link d-flex flex-column align-items-center">
                         <img src="https://cdn.filestackcontent.com/CKQFGPZoSNW7Dz9O82mo" class="dishes-img">
+                        <p class="reset-link mt-2">Cheese Enchiladas</p>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -75,18 +90,18 @@
 
                 <div class="contact-us">
                     <p class="sub-title-text">CONTACT US</p>
-                    <form>
+                    <form th:action="@{/contactUs}" method="POST">
                         <div class="mb-3">
-                            <input type="text" class="form-control" id="contactUsName" placeholder="Name">
+                            <input type="text" class="form-control" id="contactUsName" name="contactUsName" placeholder="Name">
                         </div>
                         <div class="mb-3">
-                            <input type="text" class="form-control" id="contactUsSubject" placeholder="Subject Line">
+                            <input type="text" class="form-control" id="contactUsSubject" name="contactUsSubject" placeholder="Subject Line">
                         </div>
                         <div class="mb-3">
-                            <input type="email" class="form-control" id="contactUsEmail" placeholder="Email*">
+                            <input type="email" class="form-control" id="contactUsEmail" name="contactUsEmail" placeholder="Email*">
                         </div>
                         <div class="mb-3">
-                <textarea class="form-control" id="contactUsText" rows="3"
+                <textarea class="form-control" id="contactUsText" name="contactUsText" rows="3"
                           placeholder="How can we serve you?"></textarea>
                         </div>
                         <button type="submit" class="contact-us-button">Submit</button>
