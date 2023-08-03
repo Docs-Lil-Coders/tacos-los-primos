@@ -1,16 +1,3 @@
-.carousel-custom {
-    margin: 30px;
-}
-
-.carousel-img {
-    height: 400px;
-    width: 75vw;
-}
-
-.buttons-div {
-    display: flex;
-    justify-content: center;
-}
 
 .button {
     display: flex;
@@ -50,32 +37,11 @@ a.button:hover {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.popular-dishes-cards {
-    list-style-type: none;
-    display: flex;
-    justify-content: space-evenly;
-    padding: 0;
-}
-
-.dishes-card {
+.dishes-img {
     border-radius: 25px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-
-.visit-us {
-    display: flex;
-    margin: 30px 30px 10px;
-    justify-content: center;
-}
-
-.contact-us {
-    width: 50%;
-    padding: 0 30px 30px;
-}
-
-.special-requests {
-    width: 50%;
-    padding: 0 30px 30px;
+    width: 200px;
+    margin: 0 auto;
 }
 
 .google-link {
@@ -91,3 +57,205 @@ a.button:hover {
 .info-text {
     font-weight: normal;
 }
+
+.img-sm {
+    width: 90%;
+    border-radius: 30px;
+}
+
+@media screen and (min-width: 1200px){
+
+    .index-div-sm {
+        display: none;
+    }
+
+    .carousel-custom {
+        margin: 30px;
+    }
+
+    .carousel-img {
+        height: 400px;
+        width: 75vw;
+    }
+
+    .popular-dishes-cards {
+        display: flex;
+        justify-content: space-evenly;
+        padding: 0;
+    }
+
+    .contact-us {
+        width: 50%;
+        padding: 0 30px 30px;
+    }
+
+    .special-requests {
+        width: 50%;
+        padding: 0 30px 30px;
+    }
+
+    .visit-us {
+        display: flex;
+        margin: 30px 30px 10px;
+        justify-content: center;
+    }
+
+    .buttons-div {
+        display: flex;
+        justify-content: center;
+    }
+
+}
+
+@media screen and (min-width: 769px) and (max-width: 1199px){
+
+    .index-div-sm {
+        display: none;
+    }
+
+    .carousel-custom {
+        margin: 30px;
+    }
+
+    .carousel-img {
+        height: 400px;
+        width: 75vw;
+    }
+
+    .popular-dishes-cards {
+        display: flex;
+        justify-content: space-evenly;
+        padding: 0;
+    }
+
+    .dishes-card:last-child {
+        display: none;
+    }
+
+    .contact-us {
+        width: 50%;
+        padding: 0 30px 30px;
+    }
+
+    .special-requests {
+        width: 50%;
+        padding: 0 30px 30px;
+    }
+
+    .visit-us {
+        display: flex;
+        margin: 30px 30px 10px;
+        justify-content: center;
+    }
+
+    .buttons-div {
+        display: flex;
+        justify-content: center;
+    }
+
+}
+
+@media screen and (min-width: 576px) and (max-width: 768px){
+
+    .carousel-custom {
+        display: none;
+    }
+
+    .index-div-sm {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+    }
+
+    .popular-dishes-cards {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 10px;
+        justify-items: center;
+    }
+
+    .dishes-card:last-child {
+        display: none;
+    }
+
+    .contact-us {
+        width: 50%;
+        padding: 0 30px 30px;
+    }
+
+    .special-requests {
+        width: 50%;
+        padding: 0 30px 30px;
+    }
+
+    .visit-us {
+        display: flex;
+        margin: 30px 30px 10px;
+        justify-content: center;
+    }
+
+    .buttons-div {
+        display: flex;
+        justify-content: center;
+    }
+
+}
+
+@media screen and (max-width: 575px) {
+
+    .carousel-custom {
+        display: none;
+    }
+
+    .index-div-sm {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+    }
+
+    .popular-dishes-cards {
+        list-style-type: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        margin: 0 auto;
+    }
+
+    .contact-us {
+        width: 90%;
+        padding: 0 30px 30px;
+    }
+
+    .special-requests {
+        width: 90%;
+        padding: 0 30px 30px;
+    }
+
+    .visit-us {
+        display: flex;
+        flex-direction: column-reverse;
+        margin: 30px auto 10px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .buttons-div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .dishes-card {
+        margin: 20px auto;
+    }
+
+    .dishes-card:nth-child(even) {
+        display: none;
+    }
+}
+
