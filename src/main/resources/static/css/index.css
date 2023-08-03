@@ -20,6 +20,12 @@ a.button:hover {
     color: #FFFFFF;
 }
 
+a.reset-link {
+    display: inline; /* Set to inline or inline-block as per your requirement */
+    text-decoration: none !important; /* Remove the underline */
+    color: black;
+}
+
 .contact-us-button {
     display: flex;
     justify-content: center;
