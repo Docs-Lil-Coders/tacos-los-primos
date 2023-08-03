@@ -16,6 +16,7 @@
                 <div class="item-info col-sm-8">
                     <p class="info-title" th:text="${item.item_name}"></p>
                     <p class="info-par" th:text="${item.longDescription}"></p>
+                    <p><span>$</span><span th:text="${item.getPriceString()}"></span></p>
                     <div th:if="${item.meatReq.name() =='YES'}">
                         <p class="info-sub-title">Meat Options:</p>
                         <ul class="meat-options">
