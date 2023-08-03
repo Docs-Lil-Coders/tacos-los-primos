@@ -31,7 +31,7 @@ public class MenuItem {
     @Column(nullable = true)
     private String photo;
 
-    @Column(nullable = true)
+    @Column(nullable = true, columnDefinition = "TEXT")
     private String longDescription;
 
     @Column(nullable = true)
