@@ -15,13 +15,11 @@
 
             <div class="our-cards">
                 <div class="box-relative">
-                    <img class="our-img" src="/img/jakira.png">
+                    <img class="our-img" th:src="${jakira.getPhoto_url()}">
                     <div class="box">
                         <i></i>
-                        <p class="our-name">Jakira Dunson</p>
-                        <p class="our-info">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus eius eos
-                            minima necessit atibus odit quasi quo rem quasi quo rem minima necessit atibus odit quasi
-                            quo rem quasi quo rem minima necessit atibus odit quasi quo rem quasi</p>
+                        <p class="our-name" th:text="${jakira.getName()}"></p>
+                        <p class="our-info" th:text="${jakira.getDescription()}"></p>
                     </div>
                 </div>
                 <div class="social-links">
@@ -44,13 +42,11 @@
 
             <div class="our-cards">
                 <div class="box-relative">
-                    <img class="our-img" src="/img/placeholder.png">
+                    <img class="our-img"  th:src="${maddie.getPhoto_url()}">
                     <div class="box">
                         <i></i>
-                        <p class="our-name">John Doe</p>
-                        <p class="our-info">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus eius eos
-                            minima necessit atibus odit quasi quo rem quasi quo rem minima necessit atibus odit quasi
-                            quo rem quasi quo rem minima necessit atibus odit quasi quo rem quasi</p>
+                        <p class="our-name" th:text="${maddie.getName()}">John Doe</p>
+                        <p class="our-info" th:text="${maddie.getDescription()}"></p>
                     </div>
                 </div>
                 <div class="social-links">
@@ -76,13 +72,11 @@
 
             <div class="our-cards">
                 <div class="box-relative">
-                    <img class="our-img" src="/img/placeholder.png">
+                    <img class="our-img" th:src="${naime.getPhoto_url()}">
                     <div class="box">
                         <i></i>
-                        <p class="our-name">John Doe</p>
-                        <p class="our-info">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus eius eos
-                            minima necessit atibus odit quasi quo rem quasi quo rem minima necessit atibus odit quasi
-                            quo rem quasi quo rem minima necessit atibus odit quasi quo rem quasi</p>
+                        <p class="our-name" th:text="${naime.getName()}"></p>
+                        <p class="our-info" th:text="${naime.getDescription()}"></p>
                     </div>
                 </div>
                 <div class="social-links">
@@ -105,13 +99,11 @@
 
             <div class="our-cards">
                 <div class="box-relative">
-                    <img class="our-img" src="/img/placeholder.png">
+                    <img class="our-img" th:src="${melissa.getPhoto_url()}">
                     <div class="box">
                         <i></i>
-                        <p class="our-name">John Doe</p>
-                        <p class="our-info">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus eius eos
-                            minima necessit atibus odit quasi quo rem quasi quo rem minima necessit atibus odit quasi
-                            quo rem quasi quo rem minima necessit atibus odit quasi quo rem quasi</p>
+                        <p class="our-name" th:text="${melissa.getName()}"></p>
+                        <p class="our-info" th:text="${melissa.getDescription()}"></p>
                     </div>
                 </div>
                 <div class="social-links">
