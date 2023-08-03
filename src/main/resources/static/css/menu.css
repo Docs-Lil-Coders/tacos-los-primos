@@ -44,7 +44,7 @@ a.menu-category-title:hover {
 }
 
 .menu-item {
-    width: 300px;
+    max-width: 300px;
     display: grid;
     grid-template-rows: 50% 50%;
     justify-self: center;
@@ -54,7 +54,7 @@ a.menu-category-title:hover {
 }
 
 .menu-item-sm {
-    width: 175px;
+    max-width: 175px;
     display: grid;
     grid-template-rows: 1fr 1fr;
     justify-self: center;
@@ -282,7 +282,7 @@ a.menu-item-add-to-bag:hover {
 
     .menu-sm {
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         grid-gap: 10px;
         margin: auto;
     }
@@ -301,8 +301,9 @@ a.menu-item-add-to-bag:hover {
         position: fixed;
         top: 80px;
         left: 50%;
-        margin-left: -600px;
-        width: 1200px;
+        margin-left: -50vw;
+        padding-top: 30px;
+        width: 100vw;
         z-index: 5;
         background-color: #FFFFFF;
         display: block;
@@ -318,33 +319,34 @@ a.menu-item-add-to-bag:hover {
 
     .menu {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
         grid-gap: 10px;
     }
 
     .menu-sm {
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         grid-gap: 10px;
         margin: auto;
     }
 
     .menu-categories {
         display: flex;
+        flex-wrap: wrap;
         justify-content: space-evenly;
         color: #BF2D1A;
         font-weight: bold;
-        height: 40px;
-        align-items: center;
-        margin-top: 20px;
+        padding-top: 35px;
+        padding-bottom: 10px;
     }
 
     .sticky {
         position: fixed;
         top: 80px;
         left: 50%;
-        margin-left: -600px;
-        width: 1200px;
+        margin-left: -50vw;
+        padding-top: 30px;
+        width: 100vw;
         z-index: 5;
         background-color: #FFFFFF;
         display: block;
@@ -356,7 +358,7 @@ a.menu-item-add-to-bag:hover {
 
 }
 
-@media screen and (max-width: 575px) {
+@media screen and (min-width: 391px) and (max-width: 575px) {
 
     .menu {
         display: flex;
@@ -376,19 +378,66 @@ a.menu-item-add-to-bag:hover {
         justify-content: space-evenly;
         color: #BF2D1A;
         font-weight: bold;
+        padding-top: 35px;
+        padding-bottom: 10px;
     }
 
     .sticky {
         position: fixed;
-        bottom: 0;
+        top: 80px;
         left: 50%;
         margin-left: -50vw;
         width: 100vw;
         z-index: 5;
         background-color: #FFFFFF;
         display: block;
-        border-top-left-radius: 30px;
-        border-top-right-radius: 30px;
+        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 30px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        transition: position 10s;
+    }
+
+}
+
+@media screen and (max-width: 390px) {
+
+    .menu {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .menu-sm {
+        display: flex;
+        flex-direction: column;
+        grid-gap: 10px;
+        margin: auto;
+    }
+
+    .menu-categories {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        color: #BF2D1A;
+        font-weight: bold;
+        padding-top: 35px;
+        padding-bottom: 10px;
+    }
+
+    .mainCategory {
+        padding-left: 100px;
+    }
+
+    .sticky {
+        position: fixed;
+        top: 80px;
+        left: 50%;
+        margin-left: -50vw;
+        width: 100vw;
+        z-index: 5;
+        background-color: #FFFFFF;
+        display: block;
+        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 30px;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         transition: position 10s;
     }
