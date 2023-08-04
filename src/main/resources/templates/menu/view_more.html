@@ -85,7 +85,7 @@
     <div class="modal fade" th:attr="id=${'optionsModal' + item.id}" tabindex="-1"
          aria-labelledby="optionsModal"
          aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog  modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="optionsModal" th:text="${item.item_name}"></h5>
@@ -142,7 +142,7 @@
     <div class="modal fade" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="confModal"
          data-backdrop="static"
          data-keyboard="false" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog  modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title text-center" id="confModal">Hooray!</h5>

@@ -18,3 +18,7 @@ a {
     font-weight: bold;
     font-size: 20px;
 }
+
+ul.list {
+    list-style: disc;
+}

@@ -3,8 +3,10 @@ package com.docslilcoders.tacoslosprimos.controllers;
 import com.docslilcoders.tacoslosprimos.models.*;
 import com.docslilcoders.tacoslosprimos.repositories.*;
 import com.docslilcoders.tacoslosprimos.services.CartService;
+import com.docslilcoders.tacoslosprimos.services.EmailService;
 import com.docslilcoders.tacoslosprimos.utility.DateUtils;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -27,6 +30,9 @@ public class OrderController {
     private final PromoCodeRepository promoCodeDao;
     private final OrderRepository orderDao;
     private final OrderedItemRepository orderedItemDao;
+
+    @Value("${spring.sendgrid.api-key}")
+    private String mailKey;
 
     public OrderController(MenuItemRepository menuItemDao, CartService cartService, UserRepository userDao, PromoCodeRepository promoCodeDao, OrderRepository orderDao, OrderedItemRepository orderedItemDao) {
         this.menuItemDao = menuItemDao;
@@ -101,6 +107,21 @@ public class OrderController {
         return "orders/view_bag";
     }
 
+    @GetMapping("/orderSummary")
+    public String getOrderSummaryPage(@RequestParam("orderId") long orderId,  Model model) {
+        // Fetch the order details using the `id`
+        Optional<Order> order = orderDao.findById(orderId);
+        if (order.isEmpty()) {
+            System.out.println("Order not found");
+            // TODO: Handle the case when the order is not found, e.g., redirect to an error page
+            throw new NoSuchElementException("order item not found");
+        }
+
+        // Add the order to the model
+        model.addAttribute("order", order.get());
+        return "orders/orderSummary";
+    }
+
     @GetMapping("/addToBag")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void addToCart(@RequestParam("menuItem") String menuItemId,
@@ -142,8 +163,6 @@ public class OrderController {
 
     @GetMapping("/thankYou")
     public String showConfirmation(@RequestParam("orderId") String orderId, @RequestParam("guest") boolean guest, Model model) {
-        System.out.println("\n\n\n" + orderId);
-        System.out.println("\n\n\n" + guest);
         model.addAttribute("orderId", orderId);
         model.addAttribute("guest", guest);
         return "orders/orderConfirmation";
@@ -167,7 +186,7 @@ public class OrderController {
 
     @GetMapping("/placeOrder")
     @ResponseBody
-    public String placeOrder( @RequestParam("address") String address, HttpSession session) {
+    public String placeOrder( @RequestParam("address") String address,@RequestParam("email") boolean email, @RequestParam("sendTo") String sendTo, HttpSession session) throws IOException {
         ShoppingCart cart = cartService.getCart(session);
         boolean guest = true;
         Order.orderStatus status = Order.orderStatus.PLACED;
@@ -180,13 +199,13 @@ public class OrderController {
 
         double price = cart.getCompleteTotal();
         Order newOrder;
-
+        Optional<User> optionalUser = null;
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated()) {
             if (authentication.getPrincipal() instanceof User) {
                 User user = (User) authentication.getPrincipal();
-                Optional<User> optionalUser = userDao.findById(user.getId());
+                optionalUser = userDao.findById(user.getId());
                 if (optionalUser.isEmpty()) {
                    newOrder = new Order(address, status, type, price);
                 } else {
@@ -220,10 +239,19 @@ public class OrderController {
             OrderedItem orderedItem = new OrderedItem(cart.getItems().get(i).getQuantity(), cart.getItems().get(i).getMeatOptionList(), cart.getItems().get(i).getMenuItem(), newOrder);
             orderedItemDao.save(orderedItem);
         }
-
+        if(email){
+            if(!guest){
+                EmailService.sendConfirmationEmail(orderId, optionalUser.get(), sendTo, mailKey);
+            } else {
+                EmailService.sendConfirmationEmail(orderId, null, sendTo, mailKey);
+            }
+        } else {
+        }
 
         cartService.resetCart(session);
         return "?orderId=178913" + orderId + "&guest=" + guest;
     }
+
+
 
 }

@@ -29,6 +29,7 @@
 
     //all these are for checking that the user entered the correct and required info
     let selectedOrderType = "";
+    let providedEmail;
     let orderTypes = document.getElementsByName("orderType");
     let orderTypeFeedback = document.getElementById("orderTypeFeedback");
     let emailInput = document.getElementById("userEmail");
@@ -38,7 +39,7 @@
     let phoneFeedback = document.getElementById("phoneFeedback");
     let addressFeedback = document.getElementById("addressFeedback");
     let emailConfirmation = document.getElementById("emailConfirmation");
-    let phoneConfirmation = document.getElementById("phoneConfirmation");
+    // let phoneConfirmation = document.getElementById("phoneConfirmation");
     let firstNameInput = document.getElementById("userFirstName");
     let lastNameInput = document.getElementById("userLastName");
     let firstNameFeedback = document.getElementById("firstNameFeedback");
@@ -238,7 +239,7 @@
 
     function checkPhone() {
         let validInput = false;
-        if (!phoneConfirmation.checked) {
+        if (phoneInput.value.trim() === "") {
             phoneInput.classList.remove("is-invalid")
             phoneFeedback.classList.remove("invalid-feedback")
             phoneInput.classList.remove("is-valid")
@@ -250,7 +251,7 @@
             phoneFeedback.classList.remove("valid-feedback")
             phoneInput.classList.add("is-invalid")
             phoneFeedback.classList.add("invalid-feedback")
-            phoneFeedback.innerText = "A valid 10 digit phone number is required for text confirmations";
+            phoneFeedback.innerText = "Please ensure phone is a valid ten digit number";
         } else {
             phoneInput.classList.remove("is-invalid")
             phoneFeedback.classList.remove("invalid-feedback")
@@ -285,6 +286,7 @@
             emailFeedback.innerText = "";
             validInput = true;
         }
+        providedEmail = emailInput.value;
         return validInput;
     }
 
@@ -358,9 +360,9 @@
             checkEmail();
         });
 
-        phoneConfirmation.addEventListener("change", function () {
-            checkPhone();
-        });
+        // phoneConfirmation.addEventListener("change", function () {
+        //     checkPhone();
+        // });
 
         firstNameInput.addEventListener("input", function () {
             checkFirstName();
@@ -403,7 +405,7 @@
     let finalAddress = document.getElementById("userAddress");
 
     function placeOrderRequest() {
-        fetch('/placeOrder?address=' + finalAddress.value, {
+        fetch('/placeOrder?address=' + finalAddress.value + "&email=" + emailConfirmation.checked + "&sendTo=" + providedEmail, {
             method: 'GET',
         })
             .then(response => {
