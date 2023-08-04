@@ -8,47 +8,71 @@
     <div th:replace="partials/navbar :: navbar"/>
     <div class="content-wrap">
 
-        <h4>ORDER STATUS</h4>
+        <div class="status-content">
+            <h4>ORDER STATUS</h4>
 
-        <div class="container-sm">
-            <form th:action="@{/order-status}" method="POST"  id="statusForm">
-                <div class="status-form">
-                    <label for="orderNumber" class="form-label">Order Number: </label>
-                    <div class="">
-                        <input type="number" class="form-control" id="orderNumber">
-                        <div id="orderFeedback"></div>
+            <div class="container-sm">
+                <form th:action="@{/order-status}" method="POST" id="statusForm">
+                    <div class="status-form">
+                        <label for="orderNumber" class="form-label">Order Number: </label>
+                        <div class="">
+                            <input type="number" class="form-control" id="orderNumber">
+                            <div id="orderFeedback"></div>
+                        </div>
                     </div>
-                </div>
 
-                <div class="status-button">
-                    <button type=submit class="button" id="checkStatus">Check Status</button>
-                </div>
-            </form>
-        </div>
-
-        <div th:if="${orderNotFound}">
-            <p>order not found</p>
-        </div>
-
-        <div th:if="${order != null}">
-
-<!--            for delivery-->
-            <div th:if="${order.orderType.name() == 'DELIVERY'}">
-            <p>order has been placed - yes</p> <!-- this one is always true -->
-            <p>order is being prepared - <span th:text="${(order.orderStatus.name() == 'BEING_PREPARED') ? 'yes' : 'no'}"> </span></p>
-            <p>order is out for delivery - <span th:text="${order.orderStatus.name() == 'OUT_FOR_DELIVERY' ? 'yes' : 'no'}"> </span></p>
-            <p>order is delivered - <span th:text="${order.orderStatus.name() == 'DELIVERED' ? 'yes' : 'no'}"> </span></p>
-            <p>order is complete - <span th:text="${order.orderStatus.name() == 'COMPLETE' ? 'yes' : 'no'}"> </span></p>
+                    <div class="status-button">
+                        <button type=submit class="button" id="checkStatus">Check Status</button>
+                    </div>
+                </form>
             </div>
 
-
-<!--            for pick up-->
-            <div th:if="${order.orderType.name() == 'PICKUP'}">
-                <p>order has been placed - yes</p> <!-- this one is always true -->
-                <p>order is being prepared - <span th:text="${(order.orderStatus.name() == 'BEING_PREPARED') ? 'yes' : 'no'}"> </span></p>
-                <p>order is ready for pick up - <span th:text="${order.orderStatus.name() == 'PICKUP_READY' ? 'yes' : 'no'}"> </span></p>
-                <p>order is complete - <span th:text="${order.orderStatus.name() == 'COMPLETE' ? 'yes' : 'no'}"> </span></p>
+            <div th:if="${orderNotFound}">
+                <p class="not-found">Apologies, but we couldn't locate your order.</p>
+                <p class="not-found">Please verify your order number and try resubmitting</p>
             </div>
+
+            <div th:if="${order != null}">
+
+                <!--            for delivery-->
+                <div th:if="${order.orderType.name() == 'DELIVERY'}">
+                    <div class="progressbar">
+                        <div class="progress-step progress-step-active" data-title="Order Received"></div>
+                        <div class="progress-step" data-title="Being Prepared"></div>
+                        <div class="progress-step" data-title="Out for Delivery"></div>
+                        <div class="progress-step" data-title="Delivered"></div>
+                        <div class="progress-step" data-title="Order Completed"></div>
+                        <div class="progress" id="progress-delivery"></div>
+                    </div>
+                    <p>order is being prepared - <span
+                            th:text="${(order.orderStatus.name() == 'BEING_PREPARED') ? 'yes' : 'no'}"> </span></p>
+                    <p>order is out for delivery - <span
+                            th:text="${order.orderStatus.name() == 'OUT_FOR_DELIVERY' ? 'yes' : 'no'}"> </span></p>
+                    <p>order is delivered - <span
+                            th:text="${order.orderStatus.name() == 'DELIVERED' ? 'yes' : 'no'}"> </span></p>
+                    <p>order is complete - <span
+                            th:text="${order.orderStatus.name() == 'COMPLETE' ? 'yes' : 'no'}"> </span></p>
+                </div>
+
+
+                <!--            for pick up-->
+                <div th:if="${order.orderType.name() == 'PICKUP'}">
+                    <div class="progressbar">
+                        <div class="progress-step progress-step-active" data-title="Order Received"></div>
+                        <div class="progress-step" data-title="Being Prepared"></div>
+                        <div class="progress-step" data-title="Ready for Pick-Up"></div>
+                        <div class="progress-step" data-title="Order Completed"></div>
+                        <div class="progress" id="progress-pickup"></div>
+                    </div>
+                    <p>order is being prepared - <span
+                            th:text="${(order.orderStatus.name() == 'BEING_PREPARED') ? 'yes' : 'no'}"> </span></p>
+                    <p>order is ready for pick up - <span
+                            th:text="${order.orderStatus.name() == 'PICKUP_READY' ? 'yes' : 'no'}"> </span></p>
+                    <p>order is complete - <span
+                            th:text="${order.orderStatus.name() == 'COMPLETE' ? 'yes' : 'no'}"> </span></p>
+                </div>
+            </div>
+
         </div>
 
     </div>
@@ -64,7 +88,7 @@
     let orderFeedback = document.getElementById("orderFeedback");
     const orderNumberRegex = /^[0-9]{1,20}$/;
 
-    submitBtn.addEventListener("click", function(event){
+    submitBtn.addEventListener("click", function (event) {
         event.preventDefault();
         let validOrder = checkOrderNumber();
         console.log(validOrder)
