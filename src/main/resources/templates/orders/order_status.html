@@ -28,48 +28,56 @@
             </div>
 
             <div th:if="${orderNotFound}">
-                <p class="not-found">Apologies, but we couldn't locate your order.</p>
+                <p class="not-found">Unfortunately we couldn't locate your order.</p>
                 <p class="not-found">Please verify your order number and try resubmitting</p>
             </div>
 
             <div th:if="${order != null}">
+                <div class="status-div">
+                    <p class="status-title-p">Order: 178913<span th:text="${order.id}"></span></p>
+                    <p class="status-title-p"><span id="order-type" th:text="${order.orderType.name()}"></span> status
+                    </p>
 
-                <!--            for delivery-->
-                <div th:if="${order.orderType.name() == 'DELIVERY'}">
-                    <div class="progressbar">
-                        <div class="progress-step progress-step-active" data-title="Order Received"></div>
-                        <div class="progress-step" data-title="Being Prepared"></div>
-                        <div class="progress-step" data-title="Out for Delivery"></div>
-                        <div class="progress-step" data-title="Delivered"></div>
-                        <div class="progress-step" data-title="Order Completed"></div>
-                        <div class="progress" id="progress-delivery"></div>
+                    <!--            for delivery-->
+                    <div th:if="${order.orderType.name() == 'DELIVERY'}">
+                        <div class="progressbar">
+                            <div class="progress-step progress-step-active" data-title="Order Received"></div>
+                            <div class="progress-step" data-title="Being Prepared"></div>
+                            <div class="progress-step" data-title="Out for Delivery"></div>
+                            <div class="progress-step" data-title="Delivered"></div>
+                            <div class="progress-step" data-title="Order Completed"></div>
+                            <div class="progress" id="progress-delivery"></div>
+                        </div>
+                        <p class="delivery-step" id="delivery1"
+                           th:text="${(order.orderStatus.name() == 'BEING_PREPARED') ? 'yes' : 'no'}"></p>
+                        <p class="delivery-step" id="delivery2"
+                           th:text="${order.orderStatus.name() == 'OUT_FOR_DELIVERY' ? 'yes' : 'no'}"></p>
+                        <p class="delivery-step" id="delivery3"
+                           th:text="${order.orderStatus.name() == 'DELIVERED' ? 'yes' : 'no'}"></p>
+                        <p class="delivery-step" id="delivery4"
+                           th:text="${order.orderStatus.name() == 'COMPLETE' ? 'yes' : 'no'}"></p>
                     </div>
-                    <p>order is being prepared - <span
-                            th:text="${(order.orderStatus.name() == 'BEING_PREPARED') ? 'yes' : 'no'}"> </span></p>
-                    <p>order is out for delivery - <span
-                            th:text="${order.orderStatus.name() == 'OUT_FOR_DELIVERY' ? 'yes' : 'no'}"> </span></p>
-                    <p>order is delivered - <span
-                            th:text="${order.orderStatus.name() == 'DELIVERED' ? 'yes' : 'no'}"> </span></p>
-                    <p>order is complete - <span
-                            th:text="${order.orderStatus.name() == 'COMPLETE' ? 'yes' : 'no'}"> </span></p>
-                </div>
 
 
-                <!--            for pick up-->
-                <div th:if="${order.orderType.name() == 'PICKUP'}">
-                    <div class="progressbar">
-                        <div class="progress-step progress-step-active" data-title="Order Received"></div>
-                        <div class="progress-step" data-title="Being Prepared"></div>
-                        <div class="progress-step" data-title="Ready for Pick-Up"></div>
-                        <div class="progress-step" data-title="Order Completed"></div>
-                        <div class="progress" id="progress-pickup"></div>
+                    <!--            for pick up-->
+                    <div th:if="${order.orderType.name() == 'PICKUP'}">
+
+                        <div class="progressbar">
+                            <div class="progress-step progress-step-active" data-title="Order Received"></div>
+                            <div class="progress-step" data-title="Being Prepared"></div>
+                            <div class="progress-step" data-title="Ready for Pick-Up"></div>
+                            <div class="progress-step" data-title="Order Completed"></div>
+                            <div class="progress" id="progress-pickup"></div>
+                        </div>
+
+                        <p class="pickup-step" id="pickup1"
+                           th:text="${(order.orderStatus.name() == 'BEING_PREPARED') ? 'yes' : 'no'}"></p>
+                        <p class="pickup-step" id="pickup2"
+                           th:text="${order.orderStatus.name() == 'PICKUP_READY' ? 'yes' : 'no'}"></p>
+                        <p class="pickup-step" id="pickup3"
+                           th:text="${order.orderStatus.name() == 'COMPLETE' ? 'yes' : 'no'}"></p>
+
                     </div>
-                    <p>order is being prepared - <span
-                            th:text="${(order.orderStatus.name() == 'BEING_PREPARED') ? 'yes' : 'no'}"> </span></p>
-                    <p>order is ready for pick up - <span
-                            th:text="${order.orderStatus.name() == 'PICKUP_READY' ? 'yes' : 'no'}"> </span></p>
-                    <p>order is complete - <span
-                            th:text="${order.orderStatus.name() == 'COMPLETE' ? 'yes' : 'no'}"> </span></p>
                 </div>
             </div>
 
@@ -80,50 +88,6 @@
         <div th:insert="partials/footer :: footer"/>
     </div>
 </div>
-<script>
-
-    let statusForm = document.getElementById("statusForm");
-    let submitBtn = document.getElementById("checkStatus");
-    let orderNumberInput = document.getElementById("orderNumber");
-    let orderFeedback = document.getElementById("orderFeedback");
-    const orderNumberRegex = /^[0-9]{1,20}$/;
-
-    submitBtn.addEventListener("click", function (event) {
-        event.preventDefault();
-        let validOrder = checkOrderNumber();
-        console.log(validOrder)
-
-        if (validOrder === true) {
-            statusForm.action = "/order-status?orderId=" + orderNumberInput.value;
-            statusForm.submit();
-        }
-    });
-
-    function checkOrderNumber() {
-        let validInput = false;
-        if (orderNumberInput.value.trim() === "") {
-            orderNumberInput.classList.remove("is-valid")
-            orderFeedback.classList.remove("valid-feedback")
-            orderNumberInput.classList.add("is-invalid")
-            orderFeedback.classList.add("invalid-feedback")
-            orderFeedback.innerText = "No order number entered.";
-        } else if (!orderNumberRegex.test(orderNumberInput.value)) {
-            orderNumberInput.classList.remove("is-valid")
-            orderFeedback.classList.remove("valid-feedback")
-            orderNumberInput.classList.add("is-invalid")
-            orderFeedback.classList.add("invalid-feedback")
-            orderFeedback.innerText = "Please enter a valid order number";
-        } else {
-            orderNumberInput.classList.remove("is-invalid")
-            orderFeedback.classList.remove("invalid-feedback")
-            orderNumberInput.classList.add("is-valid")
-            orderFeedback.classList.add("valid-feedback")
-            orderFeedback.innerText = "";
-            validInput = true;
-        }
-        return validInput;
-    }
-
-</script>
+<script src="/js/order_status.js"></script>
 </body>
 </html>
