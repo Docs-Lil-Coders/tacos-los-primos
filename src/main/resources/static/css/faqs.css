@@ -1,17 +1,9 @@
-h1 {
-    color: #BF2D1A;
-    text-align: center;
-}
-body {
-    background-image: url('../img/ricepaper.png');
-}
+
 .white-container {
     background-color: #FFFFFF;
     max-width: 900px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: white;
-    height: 800px;
+    margin: -100px auto 0;
+    padding: 70px 100px 60px;
     font-size: 14px;
 }
 
