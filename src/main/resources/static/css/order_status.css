@@ -1,3 +1,7 @@
+.status-content {
+   max-width: 1200px;
+    margin: 0 auto;
+}
 
 .status-form {
     width: 300px;
@@ -31,6 +35,94 @@ a.button:hover {
     color: #FFFFFF;
 }
 
-.order-status-info {
+.not-found {
     text-align: center;
+}
+
+.status-title-p {
+    text-align: center;
+    font-size: 25px;
+}
+
+.delivery-step, .pickup-step {
+    display: none;
+}
+
+.status-div {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 50px;
+    background-color: #FFFFFF;
+    border-radius: 30px;
+}
+
+/* Progressbar */
+.progressbar {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    counter-reset: step;
+    margin: 2rem 10rem 4rem;
+}
+
+.progressbar::before,
+.progress {
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 10px;
+    width: 100%;
+    background-color: #dcdcdc;
+    z-index: 1;
+}
+
+.progress {
+    background-color: #BF2D1A;
+    width: 0;
+    transition: 0.3s;
+}
+
+.progress-step {
+    width: 2.1875rem;
+    height: 2.1875rem;
+    background-color: #dcdcdc;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5px;
+    position: relative;
+    z-index: 2;
+}
+
+.progress-step::before {
+    counter-increment: step;
+    content: "✓️";
+}
+
+.progress-step::after {
+    content: attr(data-title);
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    font-size: 0.85rem;
+    color: #666;
+    width: 200px;
+    text-align: center;
+}
+
+.progress-step-active {
+    background-color: #BF2D1A;
+    color: #FFFFFF;
+}
+
+@keyframes animate {
+    from {
+        transform: scale(1, 0);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1, 1);
+        opacity: 1;
+    }
 }
