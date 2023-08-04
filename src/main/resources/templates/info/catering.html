@@ -2,14 +2,58 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
       lang="eng">
 <head th:insert="partials/header :: head"/>
+<link rel="stylesheet" th:href="@{/css/catering.css}">
 <body>
 <div class="page-container">
     <div th:replace="partials/navbar :: navbar"/>
     <div class="content-wrap">
 
+        <div class="catering-content">
+            <h1> CATERING SERVICE </h1>
 
-        <h1> Catering page </h1>
+            <p>We would be delighted to assist you with our catering service. To better understand your needs and
+                preferences, could you please take a moment to fill out the form below? Your valuable inputs will help
+                us
+                craft the perfect culinary experience for your special occasion.</p>
 
+            <p>Kindly complete this form, ensuring to provide the following information.</p>
+
+            <ul class="form-info-list">
+                <li>Name</li>
+                <li>Contact Number</li>
+                <li>Email</li>
+                <li>Event Type (e.g., Wedding, Corporate, Social, etc.)</li>
+                <li>Event Date</li>
+                <li>Number of Guests</li>
+                <li>Venue Location</li>
+                <li>Dietary Preferences or Restrictions</li>
+                <li>Menu Preferences (e.g., cuisine type, specific dishes, etc.)</li>
+                <li>Additional Comments or Special Requests</li>
+            </ul>
+
+            <p>Thank you for choosing our catering service. We look forward to creating an unforgettable experience for
+                your
+                event!</p>
+
+            <form th:action="@{/contactUs}" method="POST">
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="contactUsName" name="contactUsName" placeholder="Name">
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="contactUsSubject" name="contactUsSubject"
+                           placeholder="Subject Line">
+                </div>
+                <div class="mb-3">
+                    <input type="email" class="form-control" id="contactUsEmail" name="contactUsEmail"
+                           placeholder="Email*">
+                </div>
+                <div class="mb-3">
+                <textarea class="form-control" id="contactUsText" name="contactUsText" rows="8"
+                          placeholder="How can we serve you?"></textarea>
+                </div>
+                <button type="submit" class="contact-us-button">Submit</button>
+            </form>
+        </div>
 
     </div>
     <div class="foot-div">

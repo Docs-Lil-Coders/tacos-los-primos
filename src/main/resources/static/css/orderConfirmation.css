@@ -1,0 +1,20 @@
+.confirmation-container {
+    max-width: 800px;
+    margin: -100px auto 0;
+    padding: 80px 80px 60px;
+    background-color: #FFFFFF;
+}
+
+p {
+    margin: 20px auto;
+}
+
+a {
+    color: #BF2D1A;
+}
+
+.order-number {
+    color: #BF2D1A;
+    font-weight: bold;
+    font-size: 20px;
+}
