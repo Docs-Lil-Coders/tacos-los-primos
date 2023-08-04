@@ -1,0 +1,28 @@
+
+.catering-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px 80px;
+    background-color: #FFFFFF;
+}
+
+p {
+    margin: 20px auto;
+}
+
+.contact-us-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5px;
+    color: #FFFFFF;
+    background-color: #BF2D1A;
+    border: #BF2D1A;
+    border-radius: 50px;
+    height: 36px;
+    width: 180px;
+    margin: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
