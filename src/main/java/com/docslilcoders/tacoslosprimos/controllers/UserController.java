@@ -39,6 +39,7 @@ public class UserController {
     @GetMapping("/register")
     public String getRegisterPage(Model model) {
         model.addAttribute("user", new User());
+        model.addAttribute("pageTitle", "Register");
         return "users/register";
     }
     @PostMapping("/register")
@@ -59,6 +60,7 @@ public class UserController {
         if(usernameTaken || emailTaken) {
             model.addAttribute("usernameTaken", usernameTaken);
             model.addAttribute("emailTaken", emailTaken);
+            model.addAttribute("pageTitle", "Register");
             return "users/register";
         } else {
             String hash = passwordEncoder.encode(user.getPassword());
@@ -72,7 +74,8 @@ public class UserController {
         }
     }
     @GetMapping("/forgot-password")
-    public String getForgotPasswordPage() {
+    public String getForgotPasswordPage(Model model) {
+        model.addAttribute("pageTitle", "Forgot Password");
         return "users/forgot_password";
     }
 
@@ -86,6 +89,7 @@ public class UserController {
 
         List<Order> usersOrders = orderDao.findOrdersByUserId(user.getId());
         model.addAttribute("orders", usersOrders);
+        model.addAttribute("pageTitle", "Profile");
         return "users/profile";
     }
 
@@ -114,6 +118,7 @@ public class UserController {
         model.addAttribute("passwordUpdated", passwordUpdated);
         model.addAttribute("currentUser", optionalUser.get());
         model.addAttribute("user", user);
+        model.addAttribute("pageTitle", "Edit Profile");
         return "/users/edit_profile";
     }
     @PostMapping("/edit-profile")

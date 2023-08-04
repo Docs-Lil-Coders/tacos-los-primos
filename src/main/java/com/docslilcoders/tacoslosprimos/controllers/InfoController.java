@@ -32,18 +32,21 @@ public class InfoController {
     }
 
     @GetMapping("/about-us")
-    public String getAboutPage() {
+    public String getAboutPage(Model model ) {
+        model.addAttribute("pageTitle", "About Us");
         return "info/about_us";
     }
 
     @GetMapping("/careers")
-    public String getCareersPage() {
+    public String getCareersPage(Model model) {
+        model.addAttribute("pageTitle", "Careers");
         return "info/careers";
     }
 
     @GetMapping("/catering")
     public String getCateringPage(Model model) {
         model.addAttribute("cateringEmail", new CateringEmail());
+        model.addAttribute("pageTitle", "Catering");
         return "info/catering";
     }
 
@@ -53,10 +56,6 @@ public class InfoController {
         return "redirect:/catering";
     }
 
-    @GetMapping("/contact-info")
-    public String getContactInfoPage() {
-        return "info/contact_info";
-    }
 
     @GetMapping("/developers")
     public String getDevelopersPage(Model model) {
@@ -81,17 +80,20 @@ public class InfoController {
         model.addAttribute("maddie", maddie.get());
         model.addAttribute("melissa", melissa.get());
         model.addAttribute("jakira", jakira.get());
+        model.addAttribute("pageTitle", "Developers");
         return "info/developers";
     }
 
     @GetMapping("/faqs")
-    public String getFaqsPage() {
+    public String getFaqsPage(Model model) {
+        model.addAttribute("pageTitle", "FAQS");
         return "info/faqs";
     }
 
     @GetMapping("/reviews")
     public String getReviewsPage(Model model) {
         model.addAttribute("reviews", reviewDao.findAll());
+        model.addAttribute("pageTitle", "Reviews");
         return "info/reviews";
     }
 

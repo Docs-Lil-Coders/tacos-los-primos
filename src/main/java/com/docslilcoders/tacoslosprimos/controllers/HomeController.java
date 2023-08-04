@@ -4,6 +4,7 @@ import com.docslilcoders.tacoslosprimos.services.EmailService;
 import com.sendgrid.helpers.mail.objects.Email;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,7 +19,8 @@ public class HomeController {
 
 
     @GetMapping()
-    public String welcome() {
+    public String welcome(Model model) {
+        model.addAttribute("pageTitle", "Home");
         return "index";
     }
 
@@ -30,7 +32,7 @@ public class HomeController {
 
     EmailService.sendContactUsEmail(contactUsName, contactUsSubject, contactUsEmail, contactUsText, mailKey);
 
-        return "index";
+        return "redirect:/";
     }
 
 
