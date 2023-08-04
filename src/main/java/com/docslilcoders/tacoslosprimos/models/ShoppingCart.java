@@ -37,6 +37,9 @@ public class ShoppingCart {
         total += tax;
         total -= getPromoCodeValue();
         total -= getPointsRedeemedValue();
+        if(total < 0.0) {
+            total = 0.0;
+        }
         return Math.round(total * 100.0) / 100.0;
     }
 

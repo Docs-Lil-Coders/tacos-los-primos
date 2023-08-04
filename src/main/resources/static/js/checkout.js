@@ -59,8 +59,18 @@
             resetFeedbackFields();
             if (formStepsNum === 0 && (checkOrderType() === false)) {
                 orderTypeFeedback.classList.remove("d-none");
-            } else if (formStepsNum === 1 && (await checkContactInformation() === false)) {
-                console.log("contact info not okay")
+            } else if (formStepsNum === 1) {
+                const contactInfoValid = await checkContactInformation();
+                if (contactInfoValid === false) {
+                    console.log("contact info not okay");
+                    return; // Stop execution here if the contact information is not valid
+                } else {
+                    orderTypeFeedback.classList.add("d-none");
+                    fillChargesDivs();
+                    formStepsNum++;
+                    updateFormSteps();
+                    updateProgressbar();
+                }
             } else {
                 orderTypeFeedback.classList.add("d-none");
                 fillChargesDivs();
@@ -345,8 +355,8 @@
         }
     }
 
-    function checkContactInformation() {
-        let addressOK = checkAddress();
+    async function checkContactInformation() {
+        let addressOK = await checkAddress();
         let emailOK = checkEmail();
         let phoneOK = checkPhone();
         let firstNameOK = checkFirstName();
