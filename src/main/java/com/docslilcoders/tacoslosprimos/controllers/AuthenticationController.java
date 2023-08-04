@@ -12,7 +12,7 @@ public class AuthenticationController {
     public String showLoginForm(Model model) {
         User loggedInUser = AuthBuddy.getLoggedInUser();
         model.addAttribute("loggedInUser", loggedInUser);
-
+        model.addAttribute("pageTitle", "Login");
         return "users/login";
     }
 }

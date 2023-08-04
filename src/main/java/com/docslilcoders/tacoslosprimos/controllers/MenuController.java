@@ -26,6 +26,8 @@ public class MenuController {
     @GetMapping("/menu")
     public String getMenuPage(Model model) {
         model.addAttribute("menuItems", menuItemDao.findAll());
+        model.addAttribute("pageTitle", "Menu");
+
         return "menu/menu";
     }
 
@@ -42,6 +44,7 @@ public class MenuController {
 
         model.addAttribute("nutritionInformation", nutritionInformation);
         model.addAttribute("item", optionalMenuItem.get());
+        model.addAttribute("pageTitle", optionalMenuItem.get().getItem_name());
         return "/menu/view_more";
     }
 }

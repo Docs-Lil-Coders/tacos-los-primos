@@ -15,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -72,6 +71,7 @@ public class OrderController {
 
         List<String> promoCodes = promoCodeDao.findPromoCodeNamesByRedeemedEqualsZero();
         model.addAttribute("promoCodes", promoCodes);
+        model.addAttribute("pageTitle", "Checkout");
 
         return "orders/checkout";
     }
@@ -79,6 +79,8 @@ public class OrderController {
     @GetMapping("/order-status")
     public String getOrderStatusPage(@RequestParam(required = false) boolean orderNotFound, Model model) {
         model.addAttribute("orderNotFound", orderNotFound);
+        model.addAttribute("pageTitle", "Order Status");
+
         return "orders/order_status";
     }
 
@@ -96,6 +98,8 @@ public class OrderController {
            return "redirect:/order-status?orderNotFound=true";
         }
         model.addAttribute("order", order.get());
+        model.addAttribute("pageTitle", "Order Status");
+
         return "orders/order_status";
     }
 
@@ -103,7 +107,7 @@ public class OrderController {
     public String getViewBagPage(HttpSession session, Model model) {
         ShoppingCart cart = cartService.getCart(session);
         model.addAttribute("cart", cart);
-
+        model.addAttribute("pageTitle", "View Bag");
         return "orders/view_bag";
     }
 
@@ -119,6 +123,7 @@ public class OrderController {
 
         // Add the order to the model
         model.addAttribute("order", order.get());
+        model.addAttribute("pageTitle", "Order Summary");
         return "orders/orderSummary";
     }
 
@@ -144,6 +149,7 @@ public class OrderController {
     @GetMapping("/editBag")
     public String editCart(@RequestParam("quantity") String quantity,
                            @RequestParam("index") String index,
+                           Model model,
                            HttpSession session) {
         ShoppingCart cart = cartService.getCart(session);
         int itemIndex = Integer.parseInt(index);
@@ -165,6 +171,7 @@ public class OrderController {
     public String showConfirmation(@RequestParam("orderId") String orderId, @RequestParam("guest") boolean guest, Model model) {
         model.addAttribute("orderId", orderId);
         model.addAttribute("guest", guest);
+        model.addAttribute("pageTitle", "Order Confirmation");
         return "orders/orderConfirmation";
     }
 
@@ -245,7 +252,6 @@ public class OrderController {
             } else {
                 EmailService.sendConfirmationEmail(orderId, null, sendTo, mailKey);
             }
-        } else {
         }
 
         cartService.resetCart(session);
