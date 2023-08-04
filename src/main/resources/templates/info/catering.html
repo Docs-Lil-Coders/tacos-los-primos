@@ -35,21 +35,38 @@
                 your
                 event!</p>
 
-            <form th:action="@{/contactUs}" method="POST">
+            <form th:action="@{/catering}" method="POST" th:object="${cateringEmail}" id="registerForm">
                 <div class="mb-3">
-                    <input type="text" class="form-control" id="contactUsName" name="contactUsName" placeholder="Name">
+                    <input type="text" class="form-control" placeholder="Name" th:field="*{name}">
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" id="contactUsSubject" name="contactUsSubject"
-                           placeholder="Subject Line">
+                    <input type="number" class="form-control" placeholder="Contact Number" th:field="*{contactNumber}">
                 </div>
                 <div class="mb-3">
-                    <input type="email" class="form-control" id="contactUsEmail" name="contactUsEmail"
-                           placeholder="Email*">
+                    <input type="email" class="form-control" placeholder="Email*" th:field="*{email}">
+                </div>
+
+                <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Event Type" th:field="*{eventType}">
                 </div>
                 <div class="mb-3">
-                <textarea class="form-control" id="contactUsText" name="contactUsText" rows="8"
-                          placeholder="How can we serve you?"></textarea>
+                    <input type="text" class="form-control" placeholder="Event Date" th:field="*{eventDate}">
+                </div>
+                <div class="mb-3">
+                    <input type="number" class="form-control" placeholder="Number of Guests" th:field="*{numberOfGuests}">
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Event Location" th:field="*{location}">
+                </div>
+
+                <div class="mb-3">
+                <textarea class="form-control" rows="3" placeholder="Dietary Preferences or Restrictions" th:field="*{preferencesRestrictions}"></textarea>
+                </div>
+                <div class="mb-3">
+                    <textarea class="form-control" rows="3" placeholder="Menu Preferences" th:field="*{menu}"></textarea>
+                </div>
+                <div class="mb-3">
+                    <textarea class="form-control" rows="3" placeholder="Additional Comments or Special Requests" th:field="*{additional}"></textarea>
                 </div>
                 <button type="submit" class="contact-us-button">Submit</button>
             </form>

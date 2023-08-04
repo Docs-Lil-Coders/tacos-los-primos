@@ -28,23 +28,7 @@ public class HomeController {
                               @RequestParam("contactUsEmail") String contactUsEmail,
                               @RequestParam("contactUsText") String contactUsText) throws IOException {
 
-        if(contactUsEmail.isEmpty()) {
-            contactUsEmail = "Not Entered";
-        }
-        if(contactUsName.isEmpty()) {
-            contactUsName = "Not Entered";
-        }
-        if(contactUsSubject.isEmpty()) {
-            contactUsSubject = "Not Entered";
-        }
-        if(contactUsText.isEmpty()) {
-            contactUsText = "Not Entered";
-        }
-
-        contactUsSubject = "From Contact Us Page: " +  contactUsSubject;
-
-        String body = "Senders Name: " + contactUsName + "\n\nSenders Reply-To Email: " + contactUsEmail + "\n\nSenders Message: " + contactUsText;
-        EmailService.sendEmail(contactUsSubject, "tacoslosprimosrestaurante@gmail.com", body, mailKey);
+    EmailService.sendContactUsEmail(contactUsName, contactUsSubject, contactUsEmail, contactUsText, mailKey);
 
         return "index";
     }

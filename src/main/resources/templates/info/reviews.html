@@ -10,97 +10,116 @@
     <div th:replace="partials/navbar :: navbar"/>
     <div class="content-wrap">
 
-        <div class="container mt-5">
-            <div class="row">
-                <div class="col-md-8 mx-auto">
-                    <div class="rounded-border p-3">
-                        <div class="stars-and-text">
-                            <span class="star-icon"><i class="fas fa-star"></i></span>
-                            <span class="star-icon"><i class="fas fa-star"></i></span>
-                            <span class="star-icon"><i class="fas fa-star"></i></span>
-                            <span class="star-icon"><i class="fas fa-star"></i></span>
+
+        <div th:each="review : ${reviews}">
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-md-8 mx-auto">
+                        <div class="rounded-border p-3 review-container">
+                            <div class="stars-and-text">
+                        <span th:each="star : ${#numbers.sequence(1, 5)}"
+                              th:classappend="${review.stars >= star} ? 'star-icon' : 'star-icon-empty'">
+                            <i class="fas fa-star"></i>
+                        </span>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="me-3">
+                            <div class="profile-picture">
+                                <i class="fa-regular fa-user"></i>
+                            </div>
+                                </div>
+                            <p class="" th:text="${review.getReview()}">
+                            </p>
+                            </div>
                         </div>
-                        <div class="profile-picture float-start">
-                            <i class="fa-regular fa-user"></i>
-                        </div>
-                        <p class="review-text">
-                            The service was impeccable, and the staff was attentive without being intrusive. Our server,
-                            Sarah,
-                            was knowledgeable about the menu and provided excellent recommendations.
-                        </p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="container mt-5">
-            <div class="row">
-                <div class="col-md-8 mx-auto">
-                    <div class="rounded-border p-3">
-                        <div class="stars-and-text">
-                            <span class="star-icon"><i class="fas fa-star"></i></span>
-                            <span class="star-icon"><i class="fas fa-star"></i></span>
-                            <span class="star-icon"><i class="fas fa-star"></i></span>
-                            <span class="star-icon"><i class="fas fa-star"></i></span>
-                        </div>
-                        <div class="profile-picture float-start">
-                            <i class="fa-regular fa-user"></i>
-                        </div>
-                        <p class="review-text">
-                            The menu offers an excellent selection of Mexican dishes, and each one is packed with
-                            authentic
-                            flavors.
-                        </p>
+
+        <div class="d-flex justify-content-center mb-5">
+            <!-- Button trigger modal -->
+            <button type="button" class="button add-review" data-bs-toggle="modal" data-bs-target="#reviewModal">
+                Add a Review!
+            </button>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="reviewModalLabel">Add Your Review!</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    <form th:action="@{/reviews}" method="POST" id="reviewForm">
+                        <div class="modal-body">
+                            <div class="text-center m-3">
+                                <div class="stars">
+                                    <span class="star-icon-empty" data-value="1"><i class="fas fa-star"></i></span>
+                                    <span class="star-icon-empty" data-value="2"><i class="fas fa-star"></i></span>
+                                    <span class="star-icon-empty" data-value="3"><i class="fas fa-star"></i></span>
+                                    <span class="star-icon-empty" data-value="4"><i class="fas fa-star"></i></span>
+                                    <span class="star-icon-empty" data-value="5"><i class="fas fa-star"></i></span>
+                                </div>
+                            </div>
+                            <input type="hidden" id="ratingInput" name="ratingInput" value="0">
+                            <textarea class="form-control" rows="3" type="text" id="reviewText" name="reviewText"
+                                      placeholder="Enter your review here :)"></textarea>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center">
+                            <button type="button" class="button modal-button me-2" data-bs-dismiss="modal">Close
+                            </button>
+                            <button type="submit" class="button modal-button ms-2" id="submitReview">Save</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-        <div class="container mt-5">
-            <div class="row">
-                <div class="col-md-8 mx-auto">
-                    <div class="rounded-border p-3">
-                        <div class="stars-and-text">
-                            <span class="star-icon"><i class="fas fa-star"></i></span>
-                            <span class="star-icon"><i class="fas fa-star"></i></span>
-                            <span class="star-icon"><i class="fas fa-star"></i></span>
-                            <span class="star-icon"><i class="fas fa-star"></i></span>
-                        </div>
-                        <div class="profile-picture float-start">
-                            <i class="fa-regular fa-user"></i>
-                        </div>
-                        <p class="review-text">
-                            The attentive service added to the overall experience. Our server, Marco, went above and
-                            beyond to
-                            ensure we had a fantastic time.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container mt-5">
-            <div class="row">
-                <div class="col-md-8 mx-auto">
-                    <div class="rounded-border p-3">
-                        <div class="stars-and-text">
-                            <span class="star-icon"><i class="fas fa-star"></i></span>
-                            <span class="star-icon"><i class="fas fa-star"></i></span>
-                            <span class="star-icon"><i class="fas fa-star"></i></span>
-                            <span class="star-icon"><i class="fas fa-star"></i></span>
-                        </div>
-                        <div class="profile-picture float-start">
-                            <i class="fa-regular fa-user"></i>
-                        </div>
-                        <p class="review-text">
-                            The service was outstanding. The staff was friendly and attentive, and they made excellent
-                            recommendations for our group.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+
     </div>
     <div class="foot-div">
         <div th:insert="partials/footer :: footer"/>
     </div>
 </div>
+
 </body>
+
+<script>
+    const stars = document.querySelectorAll('.star-icon-empty');
+    const ratingInput = document.getElementById('ratingInput');
+
+
+    stars.forEach(star => {
+        star.addEventListener('mouseover', () => {
+            const value = star.getAttribute('data-value');
+            fillStars(value);
+        });
+
+        star.addEventListener('mouseout', () => {
+            const currentValue = ratingInput.value;
+            fillStars(currentValue);
+        });
+
+        star.addEventListener('click', () => {
+            const value = star.getAttribute('data-value');
+            ratingInput.value = value;
+        });
+    });
+
+    function fillStars(value) {
+        stars.forEach(star => {
+            const starValue = star.getAttribute('data-value');
+            if (starValue <= value) {
+                star.classList.add('star-icon');
+                star.classList.remove('star-icon-empty');
+            } else {
+                star.classList.add('star-icon-empty');
+                star.classList.remove('star-icon');
+            }
+        });
+    }
+
+</script>
 </html>

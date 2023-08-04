@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 @NoArgsConstructor
@@ -69,6 +70,11 @@ public class Order {
         this.orderStatus = orderStatusValue;
         this.orderType = orderType;
         this.totalPrice = totalPrice;
+    }
+
+    public String getOrderTotalString() {
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        return decimalFormat.format(totalPrice);
     }
 
 
