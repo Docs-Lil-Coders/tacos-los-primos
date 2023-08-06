@@ -339,7 +339,7 @@
             passwordFeedback.classList.remove("invalid-feedback")
             newPasswordInput.classList.add("is-valid")
             passwordFeedback.classList.add("valid-feedback")
-            passwordFeedback.innerText = "Password meets complexity requirements.";
+            passwordFeedback.innerText = "Looks Good!";
             validInput = true;
         }
         return validInput;

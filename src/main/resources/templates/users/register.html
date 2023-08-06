@@ -131,10 +131,10 @@
                                 <div class="col-12 col-md-6">
                                 <label for="stateAddress" class="form-label">State</label>
                                 <div class="mb-2">
-                                    <select class="form-control" id="stateAddress">
+                                    <select class="form-control" id="stateAddress" th:field="*{addressUpdated.state}">
                                         <option value="">Select a state</option>
                                         <option th:each="state : ${allStates}" th:value="${state}"
-                                                th:text="${state}"  th:field="*{addressUpdated.state}"></option>
+                                                th:text="${state}" ></option>
                                     </select>
                                     <div id="stateFeedback"></div>
                                 </div>

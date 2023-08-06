@@ -51,9 +51,13 @@ public class MenuController {
                 if (optionalUser.isEmpty()) {
                     model.addAttribute("previousOrders", false);
                 } else {
-                    model.addAttribute("previousOrders", true);
                     List<MenuItem> previousItems = orderDao.findUniqueMenuItemsByUserId(optionalUser.get().getId());
-                    model.addAttribute("previousItems", previousItems);
+                    if (previousItems.size() > 0) {
+                        model.addAttribute("previousItems", previousItems);
+                        model.addAttribute("previousOrders", true);
+                    } else {
+                        model.addAttribute("previousOrders", false);
+                    }
                 }
             } else {
                 model.addAttribute("previousOrders", false);
