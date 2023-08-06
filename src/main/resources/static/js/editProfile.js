@@ -1,18 +1,18 @@
 (function () {
     "use strict";
 
-
-//code for adding a new address
-    let addBtn = document.getElementById("addAddressBtn");
-    let cancelBtn = document.getElementById("cancelButton");
-    let newAddressDiv = document.getElementById("newAddressDiv")
-    addBtn.addEventListener('click', function () {
-        newAddressDiv.classList.remove("d-none");
-    })
-    cancelBtn.addEventListener('click', function (event) {
-        event.preventDefault();
-        newAddressDiv.classList.add("d-none");
-    })
+//
+// //code for adding a new address
+//     let addBtn = document.getElementById("addAddressBtn");
+//     let cancelBtn = document.getElementById("cancelButton");
+//     let newAddressDiv = document.getElementById("newAddressDiv")
+//     addBtn.addEventListener('click', function () {
+//         newAddressDiv.classList.remove("d-none");
+//     })
+//     cancelBtn.addEventListener('click', function (event) {
+//         event.preventDefault();
+//         newAddressDiv.classList.add("d-none");
+//     })
 
 //code for top section and password input validation
 //grabbing inputs
@@ -21,7 +21,7 @@
     let usernameInput = document.getElementById("username");
     let emailInput = document.getElementById("userEmail");
     let phoneNumInput = document.getElementById("phone");
-    let addressInput = document.getElementById("userAddress");
+    // let addressInput = document.getElementById("userAddress");
     let currentPasswordInput = document.getElementById("password");
     let newPasswordInput = document.getElementById("newPassword");
     let confirmPasswordInput = document.getElementById("confirmPassword");
@@ -32,7 +32,7 @@
     const disAllowedRegex = /^[^"'()*+\-/:;<=>?[\]^`{|}~]*$/;
     const phoneRegex = /^[0-9]{10}$/;
     const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%&])[a-zA-Z0-9!@#$%&]{8,20}$/;
-    const addressRegex = /^[a-zA-Z0-9, ]{1,50}$/; //TODO - we will need to check this against the API instead once we have it
+    // const addressRegex = /^[a-zA-Z0-9, ]{1,50}$/; //TODO - we will need to check this against the API instead once we have it
 
 //grabbing the feedback divs
     let firstNameFeedback = document.getElementById("firstNameFeedback");
@@ -40,7 +40,7 @@
     let usernameFeedback = document.getElementById("usernameFeedback");
     let emailFeedback = document.getElementById("emailFeedback");
     let phoneFeedback = document.getElementById("phoneFeedback");
-    let addressFeedback = document.getElementById("addressFeedback");
+    // let addressFeedback = document.getElementById("addressFeedback");
     let passwordFeedback = document.getElementById("passwordFeedback");
     let confirmPasswordFeedback = document.getElementById("confirmPasswordFeedback");
     let currentPasswordFeedback = document.getElementById("currentPasswordFeedback");
@@ -52,6 +52,20 @@
     let editForm = document.getElementById("editForm");
     let savePasswordBtn = document.getElementById("savePassword");
     let passwordForm = document.getElementById("passwordForm");
+
+
+    //address fields
+    let streetAddressInput = document.getElementById("streetAddress");
+    let streetAddressFeedback = document.getElementById("streetFeedback");
+    let buildingAddressInput = document.getElementById("buildingAddress");
+    let buildingAddressFeedback = document.getElementById("buildingFeedback");
+    let cityInput = document.getElementById("cityAddress");
+    let cityFeedback = document.getElementById("cityFeedback");
+    let stateInput = document.getElementById("stateAddress");
+    let stateFeedback = document.getElementById("stateFeedback");
+    let zipCodeInput = document.getElementById("zipCodeAddress");
+    let zipCodeFeedback = document.getElementById("zipCodeFeedback");
+    const zipCodeRegex = /^[0-9]{5}$/;
 
     // filestack
     let picker;
@@ -97,6 +111,7 @@
     addTopSectionEventListeners();
     addPasswordEventListeners();
 
+
     submitTopBtn.addEventListener('click', function (e) {
         e.preventDefault();
         let validInput = checkTopInputs();
@@ -130,9 +145,29 @@
             checkPhone();
         });
 
-        addressInput.addEventListener("input", function () {
-            checkAddress();
+        // addressInput.addEventListener("input", function () {
+        //     checkAddress();
+        // });
+
+        zipCodeInput.addEventListener('input', function(){
+            checkZipCode();
+        })
+
+        streetAddressInput.addEventListener('input', function(){
+            checkStreet();
         });
+
+        buildingAddressInput.addEventListener('input', function(){
+            checkBuilding()
+        })
+
+        cityInput.addEventListener('input', function(){
+            checkCity();
+        });
+
+        stateInput.addEventListener('change', function(){
+            checkState()
+        })
 
     }
 
@@ -152,9 +187,9 @@
         let usernameInput = checkUsername();
         let emailInput = checkEmail();
         let phoneNumberInput = checkPhone();
-        let addressInput = checkAddress();
+        let addressOK = checkAddressFields()
 
-        return firstNameInput && lastNameInput && phoneNumberInput && addressInput && usernameInput && emailInput;
+        return firstNameInput && lastNameInput && phoneNumberInput &&  usernameInput && emailInput && addressOK;
     }
 
     function checkPasswordInputs() {
@@ -271,24 +306,24 @@
         return validInput;
     }
 
-    function checkAddress() {
-        let validInput = false;
-        if (!addressRegex.test(addressInput.value) || !disAllowedRegex.test(addressInput.value)) {
-            addressInput.classList.remove("is-valid")
-            addressFeedback.classList.remove("valid-feedback")
-            addressInput.classList.add("is-invalid")
-            addressFeedback.classList.add("invalid-feedback")
-            addressFeedback.innerText = "Please enter a valid address";
-        } else {
-            addressInput.classList.remove("is-invalid")
-            addressFeedback.classList.remove("invalid-feedback")
-            addressInput.classList.add("is-valid")
-            addressFeedback.classList.add("valid-feedback")
-            addressFeedback.innerText = "Looks good!";
-            validInput = true;
-        }
-        return validInput;
-    }
+    // function checkAddress() {
+    //     let validInput = false;
+    //     if (!addressRegex.test(addressInput.value) || !disAllowedRegex.test(addressInput.value)) {
+    //         addressInput.classList.remove("is-valid")
+    //         addressFeedback.classList.remove("valid-feedback")
+    //         addressInput.classList.add("is-invalid")
+    //         addressFeedback.classList.add("invalid-feedback")
+    //         addressFeedback.innerText = "Please enter a valid address";
+    //     } else {
+    //         addressInput.classList.remove("is-invalid")
+    //         addressFeedback.classList.remove("invalid-feedback")
+    //         addressInput.classList.add("is-valid")
+    //         addressFeedback.classList.add("valid-feedback")
+    //         addressFeedback.innerText = "Looks good!";
+    //         validInput = true;
+    //     }
+    //     return validInput;
+    // }
 
 
     function checkPassword() {
@@ -347,6 +382,116 @@
         return validInput;
     }
 
+    function checkStreet() {
+        let validInput = false;
+        if (streetAddressInput.value.trim() === "") {
+            streetAddressInput.classList.remove("is-valid")
+            streetAddressFeedback.classList.remove("valid-feedback")
+            streetAddressInput.classList.add("is-invalid")
+            streetAddressFeedback.classList.add("invalid-feedback")
+            streetAddressFeedback.innerText = "Street cannot be left blank.";
+        }  else {
+            streetAddressInput.classList.remove("is-invalid")
+            streetAddressFeedback.classList.remove("invalid-feedback")
+            streetAddressInput.classList.add("is-valid")
+            streetAddressFeedback.classList.add("valid-feedback")
+            streetAddressFeedback.innerText = "";
+            validInput = true;
+        }
+        return validInput;
+    }
+    function checkBuilding() {
+        let validInput = false;
+        if (buildingAddressInput.value.trim() === "") {
+            buildingAddressInput.classList.remove("is-invalid")
+            buildingAddressFeedback.classList.remove("invalid-feedback")
+            buildingAddressInput.classList.add("is-valid")
+            buildingAddressFeedback.classList.add("valid-feedback")
+            buildingAddressFeedback.innerText = "";
+            validInput = true;
+        }  else {
+            buildingAddressInput.classList.remove("is-invalid")
+            buildingAddressFeedback.classList.remove("invalid-feedback")
+            buildingAddressInput.classList.add("is-valid")
+            buildingAddressFeedback.classList.add("valid-feedback")
+            buildingAddressFeedback.innerText = "";
+            validInput = true;
+        }
+        return validInput;
+    }
+    function checkCity() {
+        let validInput = false;
+        if (cityInput.value.trim() === "") {
+            cityInput.classList.remove("is-valid")
+            cityFeedback.classList.remove("valid-feedback")
+            cityInput.classList.add("is-invalid")
+            cityFeedback.classList.add("invalid-feedback")
+            cityFeedback.innerText = "City cannot be left blank.";
+        }  else {
+            cityInput.classList.remove("is-invalid")
+            cityFeedback.classList.remove("invalid-feedback")
+            cityInput.classList.add("is-valid")
+            cityFeedback.classList.add("valid-feedback")
+            cityFeedback.innerText = "";
+            validInput = true;
+        }
+        return validInput;
+    }
+    function checkState() {
+        let validInput = false;
+        const selectedState = stateInput.value.trim();
+
+        if (selectedState === "") {
+            stateInput.classList.remove("is-valid");
+            stateFeedback.classList.remove("valid-feedback");
+            stateInput.classList.add("is-invalid");
+            stateFeedback.classList.add("invalid-feedback");
+            stateFeedback.innerText = "Please select a state.";
+        } else {
+            stateInput.classList.remove("is-invalid");
+            stateFeedback.classList.remove("invalid-feedback");
+            stateInput.classList.add("is-valid");
+            stateFeedback.classList.add("valid-feedback");
+            stateFeedback.innerText = "";
+            validInput = true;
+        }
+
+        return validInput;
+    }
+    function checkZipCode() {
+        let validInput = false;
+        if (zipCodeInput.value.trim() === "") {
+            zipCodeInput.classList.remove("is-valid")
+            zipCodeFeedback.classList.remove("valid-feedback")
+            zipCodeInput.classList.add("is-invalid")
+            zipCodeFeedback.classList.add("invalid-feedback")
+            zipCodeFeedback.innerText = "Zip Code cannot be left blank";
+        } else if (!zipCodeRegex.test(zipCodeInput.value) || !disAllowedRegex.test(zipCodeInput.value)) {
+            zipCodeInput.classList.remove("is-valid")
+            zipCodeFeedback.classList.remove("valid-feedback")
+            zipCodeInput.classList.add("is-invalid")
+            zipCodeFeedback.classList.add("invalid-feedback")
+            zipCodeFeedback.innerText = "Please enter a valid 5 digit zip code.";
+        } else {
+            zipCodeInput.classList.remove("is-invalid")
+            zipCodeFeedback.classList.remove("invalid-feedback")
+            zipCodeInput.classList.add("is-valid")
+            zipCodeFeedback.classList.add("valid-feedback")
+            zipCodeFeedback.innerText = "";
+            validInput = true;
+        }
+        return validInput;
+    }
+    function checkAddressFields(){
+        let streetOK = checkStreet();
+        let cityOK = checkCity();
+        let buildingOK = checkBuilding();
+        let stateOK = checkState();
+        let zipCodeOK = checkZipCode();
+
+        return stateOK && streetOK && cityOK && buildingOK && zipCodeOK;
+    }
+
     //filestack
     window.addEventListener('DOMContentLoaded', function () {
         const client = filestack.init(fileStackKey);
@@ -370,5 +515,162 @@
 
 
     });
+
+
+    //NEW ADDRESS
+    let streetAddressInputModal = document.getElementById("streetAddressModal");
+    let streetAddressFeedbackModal = document.getElementById("streetFeedbackModal");
+    let buildingAddressInputModal = document.getElementById("buildingAddressModal");
+    let buildingAddressFeedbackModal = document.getElementById("buildingFeedbackModal");
+    let cityInputModal = document.getElementById("cityAddressModal");
+    let cityFeedbackModal = document.getElementById("cityFeedbackModal");
+    let stateInputModal = document.getElementById("stateAddressModal");
+    let stateFeedbackModal = document.getElementById("stateFeedbackModal");
+    let zipCodeInputModal = document.getElementById("zipCodeAddressModal");
+    let zipCodeFeedbackModal = document.getElementById("zipCodeFeedbackModal");
+    let newAddressForm = document.getElementById("newAddressForm");
+    let newAddressSaveBtn = document.getElementById("saveNewAddressForm");
+
+    addModalEventListeners()
+
+    newAddressSaveBtn.addEventListener("click", function(e){
+        e.preventDefault();
+        let validAttempt = checkAddressFieldsModal();
+        if (validAttempt){
+            newAddressForm.submit()
+        }
+    });
+
+    function checkStreetModal() {
+        let validInput = false;
+        if (streetAddressInputModal.value.trim() === "") {
+            streetAddressInputModal.classList.remove("is-valid")
+            streetAddressFeedbackModal.classList.remove("valid-feedback")
+            streetAddressInputModal.classList.add("is-invalid")
+            streetAddressFeedbackModal.classList.add("invalid-feedback")
+            streetAddressFeedbackModal.innerText = "Street cannot be left blank.";
+        }  else {
+            streetAddressInputModal.classList.remove("is-invalid")
+            streetAddressFeedbackModal.classList.remove("invalid-feedback")
+            streetAddressInputModal.classList.add("is-valid")
+            streetAddressFeedbackModal.classList.add("valid-feedback")
+            streetAddressFeedbackModal.innerText = "";
+            validInput = true;
+        }
+        return validInput;
+    }
+    function checkBuildingModal() {
+        let validInput = false;
+        if (buildingAddressInputModal.value.trim() === "") {
+            buildingAddressInputModal.classList.remove("is-invalid")
+            buildingAddressFeedbackModal.classList.remove("invalid-feedback")
+            buildingAddressInputModal.classList.add("is-valid")
+            buildingAddressFeedbackModal.classList.add("valid-feedback")
+            buildingAddressFeedbackModal.innerText = "";
+            validInput = true;
+        }  else {
+            buildingAddressInputModal.classList.remove("is-invalid")
+            buildingAddressFeedbackModal.classList.remove("invalid-feedback")
+            buildingAddressInputModal.classList.add("is-valid")
+            buildingAddressFeedbackModal.classList.add("valid-feedback")
+            buildingAddressFeedbackModal.innerText = "";
+            validInput = true;
+        }
+        return validInput;
+    }
+    function checkCityModal() {
+        let validInput = false;
+        if (cityInputModal.value.trim() === "") {
+            cityInputModal.classList.remove("is-valid")
+            cityFeedbackModal.classList.remove("valid-feedback")
+            cityInputModal.classList.add("is-invalid")
+            cityFeedbackModal.classList.add("invalid-feedback")
+            cityFeedbackModal.innerText = "City cannot be left blank.";
+        }  else {
+            cityInputModal.classList.remove("is-invalid")
+            cityFeedbackModal.classList.remove("invalid-feedback")
+            cityInputModal.classList.add("is-valid")
+            cityFeedbackModal.classList.add("valid-feedback")
+            cityFeedbackModal.innerText = "";
+            validInput = true;
+        }
+        return validInput;
+    }
+    function checkStateModal() {
+        let validInput = false;
+        const selectedState = stateInputModal.value.trim();
+
+        if (selectedState === "") {
+            stateInputModal.classList.remove("is-valid");
+            stateFeedbackModal.classList.remove("valid-feedback");
+            stateInputModal.classList.add("is-invalid");
+            stateFeedbackModal.classList.add("invalid-feedback");
+            stateFeedbackModal.innerText = "Please select a state.";
+        } else {
+            stateInputModal.classList.remove("is-invalid");
+            stateFeedbackModal.classList.remove("invalid-feedback");
+            stateInputModal.classList.add("is-valid");
+            stateFeedbackModal.classList.add("valid-feedback");
+            stateFeedbackModal.innerText = "";
+            validInput = true;
+        }
+
+        return validInput;
+    }
+    function checkZipCodeModal() {
+        let validInput = false;
+        if (zipCodeInputModal.value.trim() === "") {
+            zipCodeInputModal.classList.remove("is-valid")
+            zipCodeFeedbackModal.classList.remove("valid-feedback")
+            zipCodeInputModal.classList.add("is-invalid")
+            zipCodeFeedbackModal.classList.add("invalid-feedback")
+            zipCodeFeedbackModal.innerText = "Zip Code cannot be left blank";
+        } else if (!zipCodeRegex.test(zipCodeInputModal.value) || !disAllowedRegex.test(zipCodeInputModal.value)) {
+            zipCodeInputModal.classList.remove("is-valid")
+            zipCodeFeedbackModal.classList.remove("valid-feedback")
+            zipCodeInputModal.classList.add("is-invalid")
+            zipCodeFeedbackModal.classList.add("invalid-feedback")
+            zipCodeFeedbackModal.innerText = "Please enter a valid 5 digit zip code.";
+        } else {
+            zipCodeInputModal.classList.remove("is-invalid")
+            zipCodeFeedbackModal.classList.remove("invalid-feedback")
+            zipCodeInputModal.classList.add("is-valid")
+            zipCodeFeedbackModal.classList.add("valid-feedback")
+            zipCodeFeedbackModal.innerText = "";
+            validInput = true;
+        }
+        return validInput;
+    }
+    function checkAddressFieldsModal(){
+        let streetOK = checkStreetModal();
+        let cityOK = checkCityModal();
+        let buildingOK = checkBuildingModal();
+        let stateOK = checkStateModal();
+        let zipCodeOK = checkZipCodeModal();
+
+        return stateOK && streetOK && cityOK && buildingOK && zipCodeOK;
+    }
+
+    function addModalEventListeners(){
+        zipCodeInputModal.addEventListener('input', function(){
+            checkZipCodeModal();
+        })
+
+        streetAddressInputModal.addEventListener('input', function(){
+            checkStreetModal();
+        });
+
+        buildingAddressInputModal.addEventListener('input', function(){
+            checkBuildingModal()
+        })
+
+        cityInputModal.addEventListener('input', function(){
+            checkCityModal();
+        });
+
+        stateInputModal.addEventListener('change', function(){
+            checkStateModal()
+        })
+    }
 
 })();

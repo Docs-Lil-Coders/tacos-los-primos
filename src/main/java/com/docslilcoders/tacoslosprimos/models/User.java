@@ -57,6 +57,9 @@ public class User {
     private List<Address> usersAddresses;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<AddressUpdated> usersAddressesUpdated;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Order> userOrders;
 
     public User(User copy) {
@@ -77,14 +80,17 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "first_name='" + first_name + '\'' +
+                "id=" + id +
+                ", first_name='" + first_name + '\'' +
                 ", last_name='" + last_name + '\'' +
-                ", phone=" + phone +
+                ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", photo_url='" + photo_url + '\'' +
+                ", accumulated_points=" + accumulated_points +
+                ", redeemed_points=" + redeemed_points +
+                ", primary_address='" + primary_address + '\'' +
                 '}';
     }
-
-
 }
