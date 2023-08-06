@@ -5,6 +5,7 @@ import com.docslilcoders.tacoslosprimos.repositories.*;
 import com.docslilcoders.tacoslosprimos.services.CartService;
 import com.docslilcoders.tacoslosprimos.services.EmailService;
 import com.docslilcoders.tacoslosprimos.utility.DateUtils;
+import com.google.gson.Gson;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -29,17 +31,35 @@ public class OrderController {
     private final PromoCodeRepository promoCodeDao;
     private final OrderRepository orderDao;
     private final OrderedItemRepository orderedItemDao;
+    private final AddressUpdatedRepository addressUpdatedDao;
+
+    List<String> allStates = Arrays.asList(
+            "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware",
+            "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky",
+            "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri",
+            "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York",
+            "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island",
+            "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington",
+            "West Virginia", "Wisconsin", "Wyoming"
+    );
 
     @Value("${spring.sendgrid.api-key}")
     private String mailKey;
 
-    public OrderController(MenuItemRepository menuItemDao, CartService cartService, UserRepository userDao, PromoCodeRepository promoCodeDao, OrderRepository orderDao, OrderedItemRepository orderedItemDao) {
+    public OrderController(MenuItemRepository menuItemDao,
+                           CartService cartService,
+                           AddressUpdatedRepository addressUpdatedDao,
+                           UserRepository userDao,
+                           PromoCodeRepository promoCodeDao,
+                           OrderRepository orderDao,
+                           OrderedItemRepository orderedItemDao) {
         this.menuItemDao = menuItemDao;
         this.cartService = cartService;
         this.userDao = userDao;
         this.promoCodeDao = promoCodeDao;
         this.orderDao = orderDao;
         this.orderedItemDao = orderedItemDao;
+        this.addressUpdatedDao = addressUpdatedDao;
     }
 
 
@@ -47,6 +67,7 @@ public class OrderController {
     public String getAboutPage(HttpSession session, Model model) {
         ShoppingCart cart = cartService.getCart(session);
         model.addAttribute("cart", cart);
+        model.addAttribute("allStates", allStates);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated()) {
@@ -55,17 +76,26 @@ public class OrderController {
                 Optional<User> optionalUser = userDao.findById(user.getId());
                 if (optionalUser.isEmpty()) {
                     model.addAttribute("pointsAvailable", 0);
+                    model.addAttribute("address", new AddressUpdated());
                     model.addAttribute("user", new User());
                 } else {
                     model.addAttribute("pointsAvailable", optionalUser.get().getAccumulated_points());
                     model.addAttribute("user", optionalUser.get());
+                    model.addAttribute("address", addressUpdatedDao.findByUserIdAndIsPrimaryTrue(optionalUser.get().getId()));
+                    model.addAttribute("loggedIn", true);
+                    model.addAttribute("allAddresses", addressUpdatedDao.findByUserId(optionalUser.get().getId()));
+                    Gson gson = new Gson();
+                    model.addAttribute("addressesJSON", gson.toJson(addressUpdatedDao.findAddressesByUserId(optionalUser.get().getId())));
+
                 }
             } else {
                 model.addAttribute("pointsAvailable", 0);
+                model.addAttribute("address", new AddressUpdated());
                 model.addAttribute("user", new User());
             }
         } else {
             model.addAttribute("pointsAvailable", 0);
+            model.addAttribute("address", new AddressUpdated());
             model.addAttribute("user", new User());
         }
 
@@ -93,8 +123,6 @@ public class OrderController {
         long result = Long.parseLong(trimmedNumber);
         Optional<Order> order = orderDao.findById(result);
         if (order.isEmpty()) {
-            System.out.println("item not found");
-            //TODO error page
            return "redirect:/order-status?orderNotFound=true";
         }
         model.addAttribute("order", order.get());

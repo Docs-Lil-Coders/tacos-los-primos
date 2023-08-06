@@ -12,6 +12,7 @@
             <h1>OUR MENU</h1>
         </div>
 
+
         <div class="menu-container" id="menu-container">
             <div id="menu-nav">
                 <div class="menu-categories">
@@ -20,6 +21,36 @@
                     <p><a class="menu-category-title" href="#sides">SIDES</a></p>
                     <p><a class="menu-category-title" href="#salsas">SALSAS</a></p>
                     <p><a class="menu-category-title" href="#beverages">BEVERAGES</a></p>
+                </div>
+            </div>
+
+
+            <div th:if="${previousOrders == true}">
+                <div class="main-category">
+                    <p class="mainCategory">Order Again</p>
+                </div>
+                <div id="orderAgain"></div>
+                <div class="menu">
+                    <div th:each="item : ${previousItems}">
+                        <div class="menu-item">
+                            <div class="img-div">
+                                <img class="menu-item-image" th:src="${item.getPhoto()}">
+                            </div>
+                            <div class="menu-item-info">
+                                <div class="menu-item-title">
+                                    <p th:text="${item.item_name}"></p>
+                                    <p><span>$</span><span th:text="${item.getPriceString()}"></span></p>
+                                </div>
+                                <p class="menu-item-description" th:text="${item.description}"></p>
+                                <a class="view-more-link" th:href="|/menu/${item.id}|">View More</a>
+                                <div class="add-div">
+                                    <button type="button" class="menu-item-add-to-bag" data-bs-toggle="modal"
+                                            th:attr="data-bs-target=${'#optionsModal' + item.id}">Add to bag
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

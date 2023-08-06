@@ -8,85 +8,152 @@
     <div th:replace="partials/navbar :: navbar"/>
     <div class="content-wrap">
 
-        <div class=" container-fluid register-form">
+        <div class=" container register-form">
             <h4>REGISTER</h4>
-            <form th:action="@{/register}" method="POST" th:object="${user}" id="registerForm">
-                <input type="hidden" name="userPhoto" id="userPhoto" th:field="*{photo_url}">
+            <form th:action="@{/register}" method="POST" th:object="${userAddressWrapper}" id="registerForm">
+                <input type="hidden" name="userPhoto" id="userPhoto" th:field="*{user.photo_url}">
                 <div class="row">
-                    <div class="col-4 upload-pic-col">
-                        <div class="upload-picture">
+                    <div class="col-12 col-md-4">
+                        <div class="upload-picture mb-4">
                             <div>
-                                <img class="user-image" src="https://cdn.filestackcontent.com/kSmq62MpTRCUZgm0CRni" id="img">
+                                <img class="user-image" src="https://cdn.filestackcontent.com/kSmq62MpTRCUZgm0CRni"
+                                     id="img">
                             </div>
                             <div class="">
                                 <button class="button" type="button" id="uploadPicture">Upload Picture</button>
                             </div>
                         </div>
                     </div>
-                    <div class="col-4">
-                        <div class="mb-3 form-custom">
-                            <label for="userFirstName" class="form-label">First Name*</label>
-                            <div class="">
-                                <input type="text" class="form-control" id="userFirstName" th:field="*{first_name}">
-                                <div id="firstNameFeedback"></div>
+
+                    <div class="col-12 col-md-8">
+                        <h5 class="text-center">Contact Information</h5>
+                        <div class="mb-4">
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <label for="userFirstName" class="form-label">First Name*</label>
+                                    <div class="mb-2">
+                                        <input type="text" class="form-control" id="userFirstName"
+                                               th:field="*{user.first_name}">
+                                        <div id="firstNameFeedback"></div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <label for="userLastName" class="form-label">Last Name*</label>
+                                    <div class="mb-2">
+                                        <input type="text" class="form-control" id="userLastName"
+                                               th:field="*{user.last_name}">
+                                        <div id="lastNameFeedback"></div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="mb-3 form-custom">
-                            <label for="username" class="form-label">Username*</label>
-                            <div class="">
-                                <input type="text" class="form-control" id="username" th:field="*{username}">
-                                <div id="usernameFeedback"></div>
+
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <label for="username" class="form-label">Username*</label>
+                                    <div class="mb-2">
+                                        <input type="text" class="form-control" id="username"
+                                               th:field="*{user.username}">
+                                        <div id="usernameFeedback"></div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <label for="phone" class="form-label">Phone</label>
+                                    <div class="mb-2">
+                                        <input type="text" class="form-control" id="phone" th:field="*{user.phone}">
+                                        <div id="phoneFeedback"></div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="mb-3 form-custom">
-                            <label for="userPassword" class="form-label">Password*</label>
-                            <div>
-                                <input type="password" class="form-control" id="userPassword" th:field="*{password}">
-                                <div id="passwordFeedback"></div>
+
+                            <div class="row">
+                                <div class="col">
+
+                                    <label for="userEmail" class="form-label">Email*</label>
+                                    <div class="mb-2">
+                                        <input type="text" class="form-control" id="userEmail" th:field="*{user.email}">
+                                        <div id="emailFeedback"></div>
+                                    </div>
+
+
+                                </div>
                             </div>
+
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <label for="userPassword" class="form-label">Password*</label>
+                                    <div class="mb-2">
+                                        <input type="password" class="form-control" id="userPassword"
+                                               th:field="*{user.password}">
+                                        <div id="passwordFeedback"></div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <label for="confirmUserPassword" class="form-label">Confirm Password*</label>
+                                    <div class="mb-2">
+                                        <input type="password" class="form-control" id="confirmUserPassword">
+                                        <div id="confirmPasswordFeedback"></div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
 
-                        <div class="mb-3 form-custom">
-                            <label for="phone" class="form-label">Phone</label>
-                            <div class="">
-                                <input type="text" class="form-control" id="phone" th:field="*{phone}">
-                                <div id="phoneFeedback"></div>
-                            </div>
-                        </div>
 
+                        <h5 class="text-center">Address</h5>
+                        <div>
 
-                    </div>
-                    <div class="col-4">
-                        <div class="mb-3 form-custom">
-                            <label for="userLastName" class="form-label">Last Name*</label>
-                            <div class="">
-                                <input type="text" class="form-control" id="userLastName" th:field="*{last_name}">
-                                <div id="lastNameFeedback"></div>
+                            <div class="row">
+                                <label for="streetAddress" class="form-label">Street</label>
+                                <div class="mb-2">
+                                    <input type="text" class="form-control" id="streetAddress" th:field="*{addressUpdated.street}">
+                                    <div id="streetFeedback"></div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="mb-3 form-custom">
-                            <label for="userEmail" class="form-label">Email*</label>
-                            <div class="">
-                                <input type="text" class="form-control" id="userEmail" th:field="*{email}">
-                                <div id="emailFeedback"></div>
-                            </div>
-                        </div>
-                        <div class="mb-3 form-custom">
-                            <label for="confirmUserPassword" class="form-label">Confirm Password*</label>
-                            <div>
-                                <input type="password" class="form-control" id="confirmUserPassword">
-                                <div id="confirmPasswordFeedback"></div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="userAddress" class="form-label">Primary Address</label>
-                            <textarea class="form-control" id="userAddress" rows="3"
-                                      th:field="*{primary_address}"></textarea>
-                            <div id="addressFeedback"></div>
-                        </div>
 
+                            <div class="row">
+                                <label for="buildingAddress" class="form-label">Apt, Suite, Unit, Building
+                                    (Optional)</label>
+                                <div class="mb-2">
+                                    <input type="text" class="form-control" id="buildingAddress" th:field="*{addressUpdated.building}">
+                                    <div id="buildingFeedback"></div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <label for="cityAddress" class="form-label">City</label>
+                                <div class="mb-2">
+                                    <input type="text" class="form-control" id="cityAddress"  th:field="*{addressUpdated.city}">
+                                    <div id="cityFeedback"></div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                <label for="stateAddress" class="form-label">State</label>
+                                <div class="mb-2">
+                                    <select class="form-control" id="stateAddress" th:field="*{addressUpdated.state}">
+                                        <option value="">Select a state</option>
+                                        <option th:each="state : ${allStates}" th:value="${state}"
+                                                th:text="${state}" ></option>
+                                    </select>
+                                    <div id="stateFeedback"></div>
+                                </div>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                <label for="zipCodeAddress" class="form-label">Zip Code</label>
+                                <div class="mb-2">
+                                    <input type="text" class="form-control" id="zipCodeAddress"  th:field="*{addressUpdated.zipCode}">
+                                    <div id="zipCodeFeedback"></div>
+                                </div>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
+
+
                 <div class="buttons-div">
                     <button type="submit" id="createAccount" class="button">Create Account</button>
                 </div>

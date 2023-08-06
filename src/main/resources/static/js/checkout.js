@@ -34,12 +34,9 @@
     let orderTypeFeedback = document.getElementById("orderTypeFeedback");
     let emailInput = document.getElementById("userEmail");
     let phoneInput = document.getElementById("userPhone");
-    let addressInput = document.getElementById("userAddress");
     let emailFeedback = document.getElementById("emailFeedback");
     let phoneFeedback = document.getElementById("phoneFeedback");
-    let addressFeedback = document.getElementById("addressFeedback");
     let emailConfirmation = document.getElementById("emailConfirmation");
-    // let phoneConfirmation = document.getElementById("phoneConfirmation");
     let firstNameInput = document.getElementById("userFirstName");
     let lastNameInput = document.getElementById("userLastName");
     let firstNameFeedback = document.getElementById("firstNameFeedback");
@@ -47,9 +44,58 @@
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const disAllowedRegex = /^[^"'()*+\-/:;<=>?[\]^`{|}~]*$/;
     const phoneRegex = /^[0-9]{10}$/;
-    // const addressRegex = /^[a-zA-Z0-9, ]{1,50}$/; //TODO - we will need to check this against the API instead once we have it
+
+    //address fields
+    let streetAddressInput = document.getElementById("streetAddress");
+    let streetAddressFeedback = document.getElementById("streetFeedback");
+    let buildingAddressInput = document.getElementById("buildingAddress");
+    let buildingAddressFeedback = document.getElementById("buildingFeedback");
+    let cityInput = document.getElementById("cityAddress");
+    let cityFeedback = document.getElementById("cityFeedback");
+    let stateInput = document.getElementById("stateAddress");
+    let stateFeedback = document.getElementById("stateFeedback");
+    let zipCodeInput = document.getElementById("zipCodeAddress");
+    let zipCodeFeedback = document.getElementById("zipCodeFeedback");
+    const zipCodeRegex = /^[0-9]{5}$/;
+    let userAddressMessage = document.getElementById("userAddressMessage");
 
     addContactSheetEventListeners();
+
+    let changeAddressDivs = document.querySelectorAll(".changeAddressDiv");
+
+    for(let i = 0; i < changeAddressDivs.length; i ++){
+        changeAddressDivs[i].addEventListener("click", function(event){
+            const clickedDivId = event.currentTarget.id;
+            let id = clickedDivId.toString().substring(13);
+            fillAddressValues(id);
+        //     document.getElementById('addressModal').style.display = 'none';
+        //     document.querySelector('.modal-backdrop').style.display = 'none';
+         })
+    }
+
+    // let changeAddressButton = document.getElementById("changeAddressButton");
+    // changeAddressButton.addEventListener("click", function(){
+    //     document.getElementById('addressModal').style.display = 'block';
+    //     document.querySelector('.modal-backdrop').style.display = 'block';
+    // })
+
+    function fillAddressValues(id){
+        const jsonResponse = JSON.parse(addressesJSON);
+        for (let i = 0; i < jsonResponse.length; i++) {
+            let currentAddress = jsonResponse[i]
+
+            if(currentAddress[0] == id) {
+                streetAddressInput.value = currentAddress[5];
+                buildingAddressInput.value = currentAddress[1];
+                cityInput.value = currentAddress[2];
+                stateInput.value = currentAddress[4];
+                zipCodeInput.value = currentAddress[6];
+            }
+        }
+
+    }
+
+
 
 
     let formStepsNum = 0;
@@ -115,9 +161,7 @@
     }
 
     function resetFeedbackFields() {
-        addressInput.classList.remove("is-invalid")
-        addressFeedback.classList.remove("invalid-feedback")
-        addressFeedback.innerText = "";
+      resetAddressFields();
         phoneInput.classList.remove("is-invalid")
         phoneFeedback.classList.remove("invalid-feedback")
         phoneFeedback.innerText = "";
@@ -126,47 +170,24 @@
         emailFeedback.innerText = "";
     }
 
-    async function checkAddress() {
-        let validInput = false;
-        if (selectedOrderType == "pickUp") {
-            addressInput.classList.remove("is-valid")
-            addressFeedback.classList.remove("valid-feedback")
-            addressInput.classList.remove("is-invalid")
-            addressFeedback.classList.remove("invalid-feedback")
-            addressFeedback.innerText = "";
-            validInput = true;
-        } else if (addressInput.value.trim() == "") {
-            addressInput.classList.remove("is-valid")
-            addressFeedback.classList.remove("valid-feedback")
-            addressInput.classList.add("is-invalid")
-            addressFeedback.classList.add("invalid-feedback")
-            addressFeedback.innerText = "Valid address is required for all delivery orders.";
-        } else {
-            const addressExistsResult = await addressExists(addressInput.value);
-            const addressIsCloseResult = await addressIsCloseEnough(addressInput.value);
-            if (!addressExistsResult) {
-                addressInput.classList.remove("is-valid")
-                addressFeedback.classList.remove("valid-feedback")
-                addressInput.classList.add("is-invalid")
-                addressFeedback.classList.add("invalid-feedback")
-                addressFeedback.innerText = "Valid address is required for all delivery orders.";
-            } else if (!addressIsCloseResult) {
-                addressInput.classList.remove("is-valid")
-                addressFeedback.classList.remove("valid-feedback")
-                addressInput.classList.add("is-invalid")
-                addressFeedback.classList.add("invalid-feedback")
-                addressFeedback.innerText = "Sorry, this address is not close enough to be delivered!";
-            } else {
-                addressInput.classList.remove("is-invalid")
-                addressFeedback.classList.remove("invalid-feedback")
-                addressInput.classList.add("is-valid")
-                addressFeedback.classList.add("valid-feedback")
-                addressFeedback.innerText = "";
-                validInput = true;
-            }
-        }
-        return validInput;
+    function resetAddressFields(){
+        streetAddressInput.classList.remove("is-invalid")
+        streetAddressFeedback.classList.remove("invalid-feedback")
+        streetAddressFeedback.innerText = "";
+        buildingAddressInput.classList.remove("is-invalid")
+        buildingAddressFeedback.classList.remove("invalid-feedback")
+        buildingAddressFeedback.innerText = "";
+        cityInput.classList.remove("is-invalid")
+        cityFeedback.classList.remove("invalid-feedback")
+        cityFeedback.innerText = "";
+        stateInput.classList.remove("is-invalid")
+        stateFeedback.classList.remove("invalid-feedback")
+        stateFeedback.innerText = "";
+        zipCodeInput.classList.remove("is-invalid")
+        zipCodeFeedback.classList.remove("invalid-feedback")
+        zipCodeFeedback.innerText = "";
     }
+
 
     function geocode(address, token) {
         var baseUrl = 'https://api.mapbox.com';
@@ -356,13 +377,13 @@
     }
 
     async function checkContactInformation() {
-        let addressOK = await checkAddress();
+    let addressOK = await checkAddress();
         let emailOK = checkEmail();
         let phoneOK = checkPhone();
         let firstNameOK = checkFirstName();
         let lastNameOK = checkLastName();
 
-        return addressOK && emailOK && phoneOK && firstNameOK && lastNameOK;
+        return emailOK && phoneOK && firstNameOK && lastNameOK && addressOK;
     }
 
     function addContactSheetEventListeners() {
@@ -370,9 +391,7 @@
             checkEmail();
         });
 
-        // phoneConfirmation.addEventListener("change", function () {
-        //     checkPhone();
-        // });
+
 
         firstNameInput.addEventListener("input", function () {
             checkFirstName();
@@ -390,9 +409,26 @@
             checkPhone();
         });
 
-        addressInput.addEventListener("input", function () {
-            checkAddress();
+        zipCodeInput.addEventListener('input', function(){
+            checkZipCode();
+        })
+
+        streetAddressInput.addEventListener('input', function(){
+            checkStreet();
         });
+
+        buildingAddressInput.addEventListener('input', function(){
+            checkBuilding()
+        })
+
+        cityInput.addEventListener('input', function(){
+            checkCity();
+        });
+
+        stateInput.addEventListener('change', function(){
+            checkState()
+        })
+
     }
 
 
@@ -412,10 +448,10 @@
             });
     }
 
-    let finalAddress = document.getElementById("userAddress");
 
     function placeOrderRequest() {
-        fetch('/placeOrder?address=' + finalAddress.value + "&email=" + emailConfirmation.checked + "&sendTo=" + providedEmail, {
+        let combinedAddress = streetAddressInput.value + ", " + cityInput.value + ", " + stateInput.value + " " + zipCodeInput.value;
+        fetch('/placeOrder?address=' + combinedAddress + "&email=" + emailConfirmation.checked + "&sendTo=" + providedEmail, {
             method: 'GET',
         })
             .then(response => {
@@ -603,7 +639,145 @@
     payNowBtn.addEventListener("click", function (event) {
         event.preventDefault();
         cartGetRequest();
-    })
+    });
+
+    function checkStreet() {
+        let validInput = false;
+        if (streetAddressInput.value.trim() === "") {
+            streetAddressInput.classList.remove("is-valid")
+            streetAddressFeedback.classList.remove("valid-feedback")
+            streetAddressInput.classList.add("is-invalid")
+            streetAddressFeedback.classList.add("invalid-feedback")
+            streetAddressFeedback.innerText = "Street cannot be left blank.";
+        }  else {
+            streetAddressInput.classList.remove("is-invalid")
+            streetAddressFeedback.classList.remove("invalid-feedback")
+            streetAddressInput.classList.add("is-valid")
+            streetAddressFeedback.classList.add("valid-feedback")
+            streetAddressFeedback.innerText = "";
+            validInput = true;
+        }
+        return validInput;
+    }
+    function checkBuilding() {
+        let validInput = false;
+        if (buildingAddressInput.value.trim() === "") {
+            buildingAddressInput.classList.remove("is-invalid")
+            buildingAddressFeedback.classList.remove("invalid-feedback")
+            buildingAddressInput.classList.add("is-valid")
+            buildingAddressFeedback.classList.add("valid-feedback")
+            buildingAddressFeedback.innerText = "";
+            validInput = true;
+        }  else {
+            buildingAddressInput.classList.remove("is-invalid")
+            buildingAddressFeedback.classList.remove("invalid-feedback")
+            buildingAddressInput.classList.add("is-valid")
+            buildingAddressFeedback.classList.add("valid-feedback")
+            buildingAddressFeedback.innerText = "";
+            validInput = true;
+        }
+        return validInput;
+    }
+    function checkCity() {
+        let validInput = false;
+        if (cityInput.value.trim() === "") {
+            cityInput.classList.remove("is-valid")
+            cityFeedback.classList.remove("valid-feedback")
+            cityInput.classList.add("is-invalid")
+            cityFeedback.classList.add("invalid-feedback")
+            cityFeedback.innerText = "City cannot be left blank.";
+        }  else {
+            cityInput.classList.remove("is-invalid")
+            cityFeedback.classList.remove("invalid-feedback")
+            cityInput.classList.add("is-valid")
+            cityFeedback.classList.add("valid-feedback")
+            cityFeedback.innerText = "";
+            validInput = true;
+        }
+        return validInput;
+    }
+    function checkState() {
+        let validInput = false;
+        const selectedState = stateInput.value.trim();
+
+        if (selectedState === "") {
+            stateInput.classList.remove("is-valid");
+            stateFeedback.classList.remove("valid-feedback");
+            stateInput.classList.add("is-invalid");
+            stateFeedback.classList.add("invalid-feedback");
+            stateFeedback.innerText = "Please select a state.";
+        } else {
+            stateInput.classList.remove("is-invalid");
+            stateFeedback.classList.remove("invalid-feedback");
+            stateInput.classList.add("is-valid");
+            stateFeedback.classList.add("valid-feedback");
+            stateFeedback.innerText = "";
+            validInput = true;
+        }
+
+        return validInput;
+    }
+    function checkZipCode() {
+        let validInput = false;
+        if (zipCodeInput.value.trim() === "") {
+            zipCodeInput.classList.remove("is-valid")
+            zipCodeFeedback.classList.remove("valid-feedback")
+            zipCodeInput.classList.add("is-invalid")
+            zipCodeFeedback.classList.add("invalid-feedback")
+            zipCodeFeedback.innerText = "Zip Code cannot be left blank";
+        } else if (!zipCodeRegex.test(zipCodeInput.value) || !disAllowedRegex.test(zipCodeInput.value)) {
+            zipCodeInput.classList.remove("is-valid")
+            zipCodeFeedback.classList.remove("valid-feedback")
+            zipCodeInput.classList.add("is-invalid")
+            zipCodeFeedback.classList.add("invalid-feedback")
+            zipCodeFeedback.innerText = "Please enter a valid 5 digit zip code.";
+        } else {
+            zipCodeInput.classList.remove("is-invalid")
+            zipCodeFeedback.classList.remove("invalid-feedback")
+            zipCodeInput.classList.add("is-valid")
+            zipCodeFeedback.classList.add("valid-feedback")
+            zipCodeFeedback.innerText = "";
+            validInput = true;
+        }
+        return validInput;
+    }
+    function checkAddressFields(){
+        let streetOK = checkStreet();
+        let cityOK = checkCity();
+        let buildingOK = checkBuilding();
+        let stateOK = checkState();
+        let zipCodeOK = checkZipCode();
+
+        return stateOK && streetOK && cityOK && buildingOK && zipCodeOK;
+    }
+    async function checkAddress() {
+        let validInput = false;
+        if (selectedOrderType === "pickUp") {
+            resetAddressFields();
+            validInput = true;
+        } else if (!checkAddressFields()) {
+            console.log("tell the user they need an address for delivery")
+            userAddressMessage.textContent = "Valid address is required for all delivery orders."
+        } else {
+            let combinedAddress = streetAddressInput.value + ", " + cityInput.value + ", " + stateInput.value + " " + zipCodeInput.value;
+            const addressExistsResult = await addressExists(combinedAddress);
+            const addressIsCloseResult = await addressIsCloseEnough(combinedAddress);
+            if (!addressExistsResult) {
+                console.log("the address does not exist")
+                userAddressMessage.textContent = "This address does not exists"
+            } else if (!addressIsCloseResult) {
+                console.log("address is not close enough")
+                userAddressMessage.textContent = "Sorry, this address is not close enough for delivery"
+
+            } else {
+                resetAddressFields();
+                validInput = true;
+            }
+        }
+        return validInput;
+    }
+
+
 
 })();
 

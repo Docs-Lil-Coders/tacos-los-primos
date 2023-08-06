@@ -1,10 +1,8 @@
 package com.docslilcoders.tacoslosprimos.controllers;
 
-import com.docslilcoders.tacoslosprimos.models.Address;
-import com.docslilcoders.tacoslosprimos.models.Order;
-import com.docslilcoders.tacoslosprimos.models.ShoppingCart;
-import com.docslilcoders.tacoslosprimos.models.User;
+import com.docslilcoders.tacoslosprimos.models.*;
 import com.docslilcoders.tacoslosprimos.repositories.AddressRepository;
+import com.docslilcoders.tacoslosprimos.repositories.AddressUpdatedRepository;
 import com.docslilcoders.tacoslosprimos.repositories.OrderRepository;
 import com.docslilcoders.tacoslosprimos.repositories.UserRepository;
 import com.docslilcoders.tacoslosprimos.services.AuthBuddy;
@@ -17,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,23 +26,50 @@ public class UserController {
     private final PasswordEncoder passwordEncoder;
     private final AddressRepository addressDao;
     private final OrderRepository orderDao;
+    private final AddressUpdatedRepository addressUpdatedDao;
+
+    List<String> allStates = Arrays.asList(
+            "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware",
+            "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky",
+            "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri",
+            "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York",
+            "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island",
+            "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington",
+            "West Virginia", "Wisconsin", "Wyoming"
+    );
 
 
-    public UserController(UserRepository userDao, PasswordEncoder passwordEncoder, AddressRepository addressDao, OrderRepository orderDao) {
+    public UserController(UserRepository userDao,
+                          PasswordEncoder passwordEncoder,
+                          AddressRepository addressDao,
+                          AddressUpdatedRepository addressUpdatedDao,
+                          OrderRepository orderDao) {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
         this.addressDao = addressDao;
         this.orderDao = orderDao;
+        this.addressUpdatedDao = addressUpdatedDao;
     }
 
     @GetMapping("/register")
     public String getRegisterPage(Model model) {
-        model.addAttribute("user", new User());
+//        model.addAttribute("user", new User());
+//        model.addAttribute("addressUpdated", new AddressUpdated());
+        UserAddressWrapper wrapper = new UserAddressWrapper(new User(), new AddressUpdated());
+        model.addAttribute("userAddressWrapper",  wrapper);
         model.addAttribute("pageTitle", "Register");
+
+        model.addAttribute("allStates", allStates);
         return "users/register";
     }
     @PostMapping("/register")
-    public String saveUser(@ModelAttribute User user, Model model){
+    public String saveUser(@ModelAttribute UserAddressWrapper userAddressWrapper,
+                           Model model){
+
+        System.out.println(userAddressWrapper.getUser());
+        System.out.println(userAddressWrapper.getAddressUpdated());
+        User user = userAddressWrapper.getUser();
+        AddressUpdated addressUpdated = userAddressWrapper.getAddressUpdated();
         boolean usernameTaken = false;
         boolean emailTaken = false;
 
@@ -61,15 +87,18 @@ public class UserController {
             model.addAttribute("usernameTaken", usernameTaken);
             model.addAttribute("emailTaken", emailTaken);
             model.addAttribute("pageTitle", "Register");
+            model.addAttribute("allStates", allStates);
             return "users/register";
         } else {
+            user.setPrimary_address("");
             String hash = passwordEncoder.encode(user.getPassword());
             user.setPassword(hash);
             //give the user some points for signing up
             user.setAccumulated_points(50);
             userDao.save(user);
-            Address usersAddress = new Address(user.getPrimary_address(), user);
-            addressDao.save(usersAddress);
+            addressUpdated.setUser(user);
+            addressUpdated.setIsPrimary(true);
+            addressUpdatedDao.save(addressUpdated);
             return "redirect:/login";
         }
     }
@@ -90,6 +119,7 @@ public class UserController {
         List<Order> usersOrders = orderDao.findOrdersByUserId(user.getId());
         model.addAttribute("orders", usersOrders);
         model.addAttribute("pageTitle", "Profile");
+        model.addAttribute("primaryAddress", addressUpdatedDao.findByUserIdAndIsPrimaryTrue(user.getId()));
         return "users/profile";
     }
 
@@ -108,25 +138,40 @@ public class UserController {
 
         Optional<User> optionalUser = userDao.findById(user.getId());
         if(optionalUser.isEmpty()) {
-            //TODO error page
-            return "redirect:/login";
+            return "redirect:/error";
         }
+
+        AddressUpdated addressUpdated = addressUpdatedDao.findByUserIdAndIsPrimaryTrue(user.getId());
+        System.out.println(addressUpdated);
+
         model.addAttribute("usernameTaken", usernameTaken);
         model.addAttribute("emailTaken", emailTaken);
         model.addAttribute("incorrectPassword", incorrectPassword);
         model.addAttribute("profileUpdated", profileUpdated);
         model.addAttribute("passwordUpdated", passwordUpdated);
         model.addAttribute("currentUser", optionalUser.get());
-        model.addAttribute("user", user);
+        model.addAttribute("allStates", allStates);
         model.addAttribute("pageTitle", "Edit Profile");
+        model.addAttribute("savedAddresses", addressUpdatedDao.findByUserIdAndIsPrimaryFalse(user.getId()));
+        UserAddressWrapper wrapper = new UserAddressWrapper(user, addressUpdated);
+        model.addAttribute("userAddressWrapper", wrapper);
+        model.addAttribute("addressUpdated", new AddressUpdated());
+
         return "/users/edit_profile";
     }
     @PostMapping("/edit-profile")
-    public String doEdit(@ModelAttribute User user, RedirectAttributes redirectAttributes) {
+    public String doEdit(@ModelAttribute UserAddressWrapper userAddressWrapper, RedirectAttributes redirectAttributes) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (currentUser.getId() == 0) {
             return "redirect:/login";
         }
+
+        User user = userAddressWrapper.getUser();
+        AddressUpdated address = userAddressWrapper.getAddressUpdated();
+        System.out.println("\n\n\n\n" + address);
+        System.out.println("\n\n\n\n" + user);
+
+
 
         boolean usernameTaken = false;
         boolean emailTaken = false;
@@ -147,30 +192,27 @@ public class UserController {
             return "redirect:/edit-profile";
         } else {
 
-            //update the new address in the address table too
-            if(!currentUser.getPrimary_address().trim().equals(user.getPrimary_address().trim())) {
-                Address findAddress = addressDao.findByAddress(currentUser.getPrimary_address().trim());
-                if (findAddress != null) {
-                    findAddress.setAddress(user.getPrimary_address().trim());
-                    addressDao.save(findAddress);
-                }
-            }
 
         //this sets it for the current session
+            user.setPrimary_address("");
         currentUser.setFirst_name(user.getFirst_name());
         currentUser.setLast_name(user.getLast_name());
         currentUser.setUsername(user.getUsername());
         currentUser.setPhone(user.getPhone());
         currentUser.setEmail(user.getEmail());
-        currentUser.setPrimary_address(user.getPrimary_address());
+        currentUser.setPrimary_address("");
         currentUser.setPhoto_url(user.getPhoto_url());
 
         //this fills in the missing fields from the user object from form
         user.setId(currentUser.getId());
-//        user.setPhoto_url(currentUser.getPhoto_url());
         user.setAccumulated_points(currentUser.getAccumulated_points());
         user.setRedeemed_points(currentUser.getRedeemed_points());
         user.setPassword(currentUser.getPassword());
+
+        //updates address
+            address.setUser(user);
+            address.setIsPrimary(true);
+            addressUpdatedDao.save(address);
 
         userDao.save(user);
             redirectAttributes.addAttribute("profileUpdated", true);
@@ -183,8 +225,7 @@ public class UserController {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Optional<User> optionalUser = userDao.findById(loggedInUser.getId());
         if(optionalUser.isEmpty()) {
-            //TODO error page
-            return "redirect:/login";
+            return "redirect:/error";
         }
 
         String currentPassword = optionalUser.get().getPassword();
@@ -202,21 +243,21 @@ public class UserController {
         return "redirect:/edit-profile";
     }
 
-    @PostMapping("/addAddress")
-    public String addAddress(@RequestParam String newAddress) {
-        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Optional<User> optionalUser = userDao.findById(loggedInUser.getId());
-        if(optionalUser.isEmpty()) {
-            //TODO error page
+    @PostMapping("/saveNewAddress")
+    public String saveNewAddress(@ModelAttribute AddressUpdated addressUpdated) {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (currentUser.getId() == 0) {
             return "redirect:/login";
         }
-        Address address = new Address(newAddress, optionalUser.get());
-        addressDao.save(address);
-
-
+                Optional<User> optionalUser = userDao.findById(currentUser.getId());
+        if(optionalUser.isEmpty()) {
+            return "redirect:/error";
+        }
+        addressUpdated.setUser(optionalUser.get());
+        addressUpdated.setIsPrimary(false);
+        addressUpdatedDao.save(addressUpdated);
         return "redirect:/edit-profile";
     }
-
 
     @GetMapping("/updatePrimaryAddress")
     public String updateAddress(@RequestParam("newAddress") String newAddress) {
@@ -225,33 +266,30 @@ public class UserController {
         if (currentUser.getId() == 0) {
             return "redirect:/login";
         }
-        Optional<User> optionalUser = userDao.findById(currentUser.getId());
-        if(optionalUser.isEmpty()) {
-            //TODO error page
-            return "redirect:/login";
+        AddressUpdated currentAddress = addressUpdatedDao.findByUserIdAndIsPrimaryTrue(currentUser.getId());
+        Optional<AddressUpdated> newPrimary = addressUpdatedDao.findById(Long.valueOf(newAddress));
+        if (newPrimary.isEmpty()) {
+            return "redirect:/error";
         }
-
-        optionalUser.get().setPrimary_address(newAddress);
-        currentUser.setPrimary_address(newAddress);
-        userDao.save(optionalUser.get());
-
+        currentAddress.setIsPrimary(false);
+        newPrimary.get().setIsPrimary(true);
+        addressUpdatedDao.save(currentAddress);
+        addressUpdatedDao.save(newPrimary.get());
         return "redirect:/edit-profile";
     }
 
     @GetMapping("/deleteAddress")
     public String deleteAddress(@RequestParam("addressId") String addressId) {
         System.out.println("\n\n\n\n" + addressId + "\n\n\n\n");
-        Optional<Address> optionalAddress = addressDao.findById(Long.valueOf(addressId));
+        Optional<AddressUpdated> optionalAddress = addressUpdatedDao.findById(Long.valueOf(addressId));
         if(optionalAddress.isEmpty()) {
-            //TODO error page
-            return "redirect:/";
+            return "redirect:/error";
         }
 
-        addressDao.delete(optionalAddress.get());
+        addressUpdatedDao.delete(optionalAddress.get());
 
         return "redirect:/edit-profile";
     }
-
 
 
 

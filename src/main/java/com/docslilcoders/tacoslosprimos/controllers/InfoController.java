@@ -61,19 +61,19 @@ public class InfoController {
     public String getDevelopersPage(Model model) {
         Optional<Developer> naime = developerDao.findById(1L);
         if (naime.isEmpty()){
-            return "redirect:/login";
+            return "redirect:/error";
         }
         Optional<Developer> maddie = developerDao.findById(2L);
         if (maddie.isEmpty()){
-            return "redirect:/login";
+            return "redirect:/error";
         }
         Optional<Developer> melissa = developerDao.findById(3L);
         if (melissa.isEmpty()){
-            return "redirect:/login";
+            return "redirect:/error";
         }
         Optional<Developer> jakira = developerDao.findById(4L);
         if (jakira.isEmpty()){
-            return "redirect:/login";
+            return "redirect:/error";
         }
 
         model.addAttribute("naime", naime.get());

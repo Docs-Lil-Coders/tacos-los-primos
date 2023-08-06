@@ -39,8 +39,10 @@
                                     <label for="pickUp" class="orderTypeLabel"><span class="ms-1"></span>Pick Up</label>
                                 </div>
                                 <div>
-                                    <input type="radio" id="delivery" name="orderType" value="delivery" class="checkboxes">
-                                    <label for="delivery" class="orderTypeLabel"><span class="ms-1"></span>Delivery</label>
+                                    <input type="radio" id="delivery" name="orderType" value="delivery"
+                                           class="checkboxes">
+                                    <label for="delivery" class="orderTypeLabel"><span
+                                            class="ms-1"></span>Delivery</label>
                                 </div>
                             </div>
                         </div>
@@ -108,21 +110,28 @@
             <div class="form-step">
 
                 <div class="row">
+                    <h5 class="text-center">Contact Information</h5>
                     <div class="col-6">
                         <div class="mb-3 form-custom">
                             <label for="userFirstName" class="form-label">First Name*</label>
                             <div class="">
-                                <input type="text" class="form-control" id="userFirstName" th:value="${user.first_name}">
+                                <input type="text" class="form-control" id="userFirstName"
+                                       th:value="${user.first_name}">
                                 <div id="firstNameFeedback"></div>
                             </div>
                         </div>
                         <div class="mb-3 form-custom">
-                            <label for="userEmail" class="form-label">Email</label>
-                            <div class="">
-                                <input type="text" class="form-control" id="userEmail" th:value="${user.email}">
-                                <div id="emailFeedback"></div>
+                            <div>
+                                <label for="userEmail" class="form-label">Email</label>
+                                <div class="">
+                                    <input type="text" class="form-control" id="userEmail" th:value="${user.email}">
+                                    <div id="emailFeedback"></div>
+                                </div>
                             </div>
-
+                            <div class="mt-2">
+                                <input type="checkbox" id="emailConfirmation" name="confirmation" value="email">
+                                <label for="emailConfirmation">Receive Email Confirmation</label><br>
+                            </div>
                         </div>
                     </div>
                     <div class="col-6">
@@ -142,20 +151,67 @@
                         </div>
                     </div>
                 </div>
-                <div class="mb-3">
-                    <label for="userAddress" class="form-label">Address</label>
-<!--                    <label for="userAddress" class="form-label">Address <span th:if="${user.primary_address}"> - -->
-<!--            <a href="#"> Change?</a></span></label>-->
-                    <textarea class="form-control" id="userAddress" rows="3" th:text="${user.primary_address}"></textarea>
-                    <div id="addressFeedback"></div>
+
+                <h5 class="text-center">Address
+                    <span th:if="${loggedIn == true}">
+                        <button type="button" class="address-modal-button" data-bs-toggle="modal" data-bs-target="#addressModal" id="changeAddressButton">Change</button>
+                    </span>
+                </h5>
+                <div>
+
+                    <div class="row">
+                        <label for="streetAddress" class="form-label">Street</label>
+                        <div class="mb-2">
+                            <input type="text" class="form-control" id="streetAddress" th:value="${address.street}">
+                            <div id="streetFeedback"></div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <label for="buildingAddress" class="form-label">Apt, Suite, Unit, Building
+                            (Optional)</label>
+                        <div class="mb-2">
+                            <input type="text" class="form-control" id="buildingAddress" th:value="${address.building}">
+                            <div id="buildingFeedback"></div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <label for="cityAddress" class="form-label">City</label>
+                        <div class="mb-2">
+                            <input type="text" class="form-control" id="cityAddress" th:value="${address.city}">
+                            <div id="cityFeedback"></div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <label for="stateAddress" class="form-label">State</label>
+                            <div class="mb-2">
+                                <select class="form-control" id="stateAddress">
+                                    <option value="">Select a state</option>
+                                    <option th:each="state : ${allStates}" th:value="${state}"
+                                            th:text="${state}" th:selected="${state == address.state}"></option>
+                                </select>
+                                <div id="stateFeedback"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label for="zipCodeAddress" class="form-label">Zip Code</label>
+                            <div class="mb-2">
+                                <input type="text" class="form-control" id="zipCodeAddress"
+                                       th:value="${address.zipCode}">
+                                <div id="zipCodeFeedback"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
+                <p id="userAddressMessage"></p>
 
-                        <input type="checkbox" id="emailConfirmation" name="confirmation" value="email">
-                        <label for="emailConfirmation">Receive Email Confirmation</label><br>
-
-<!--                        <input type="checkbox" id="phoneConfirmation" name="confirmation" value="phone">-->
-<!--                        <label for="phoneConfirmation">Receive Phone Confirmation</label>-->
+                <!--                        <input type="checkbox" id="phoneConfirmation" name="confirmation" value="phone">-->
+                <!--                        <label for="phoneConfirmation">Receive Phone Confirmation</label>-->
                 <div class="place-order-buttons">
                     <a class="button btn-prev" href="#">Previous</a>
                     <a class="button btn-next" href="#">Next</a>
@@ -171,14 +227,14 @@
                         <p class="bag-title">REDEEM REWARDS</p>
                         <div class="mb-3 form-custom">
                             <div class="d-flex justify-content-between">
-                            <label for="userRewards" class="form-label">Redeem Rewards Points</label>
+                                <label for="userRewards" class="form-label">Redeem Rewards Points</label>
                                 <label for="userRewards" class="form-label" id="availBalance"></label>
                             </div>
                             <div class="">
                                 <input type="number" class="form-control" id="userRewards">
                                 <div id="rewardsFeedback"></div>
                             </div>
-                            <button id="applyRewards"  class="button">Apply Rewards</button>
+                            <button id="applyRewards" class="button">Apply Rewards</button>
                         </div>
                         <div class="mb-3 form-custom">
                             <label for="userPromo" class="form-label">Promo Code</label>
@@ -193,7 +249,8 @@
                         <p class="bag-title">ORDER TOTAL</p>
                         <ul class="order-price">
                             <li><p>Order Total</p></li>
-                            <li><p class="dollar-amount">$<span id="cartTotal" th:text="${cart.getCartTotalString()}"></span></p></li>
+                            <li><p class="dollar-amount">$<span id="cartTotal"
+                                                                th:text="${cart.getCartTotalString()}"></span></p></li>
                             <li><p>Delivery Charge</p></li>
                             <li><p class="dollar-amount" id="deliveryCharge">$0.00</p></li>
                             <li><p>Taxes</p></li>
@@ -237,6 +294,28 @@
 
         </form>
 
+        <!-- Modal -->
+        <div class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="addressModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addressModalLabel">Select an Address</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div  th:each="address : ${allAddresses}" th:id="${'changeAddress' + address.id}" class="changeAddressDiv" data-bs-dismiss="modal">
+                            <div class="saved-address-div">
+                                <p class="saved-address" th:text="${address.oneLiner()}" ></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="button" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
     <div class="foot-div">
         <div th:insert="partials/footer :: footer"/>
@@ -247,11 +326,11 @@
 <script src="/js/apiKeys.js"></script> <!--put in footer later -- should we? that would but this in all pages -->
 <script src="https://js.stripe.com/v3/"></script>
 <script th:inline="javascript">
-        "use strict";
+    "use strict";
 
-        let pointsAvailable = /*[[${pointsAvailable}]]*/ 'default';
+    let pointsAvailable = /*[[${pointsAvailable}]]*/ 'default';
     let promoCodes = /*[[${promoCodes}]]*/ "default";
-
+    let addressesJSON = /*[[${addressesJSON}]]*/ "default";
 </script>
 <script src="/js/checkout.js"></script>
 </body>

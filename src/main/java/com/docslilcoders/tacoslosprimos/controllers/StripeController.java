@@ -20,11 +20,6 @@ public class StripeController {
     @Value("${stripe.secret.key}")
     private String stripeKey;
 
-    @GetMapping("/stripe-test")
-    public String checkoutTest (Model model){
-        return "test/apiTest";
-    }
-
     @GetMapping(value = "/stripe-token" , produces = "application/json")
     @ResponseBody
     public String createPaymentIntent()//PASS IN ORDER ID AS PARAMETER... cart on the sessio

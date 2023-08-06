@@ -35,7 +35,8 @@
             <div th:if="${order != null}">
                 <div class="status-div">
                     <p class="status-title-p">Order: 178913<span th:text="${order.id}"></span></p>
-                    <p class="status-title-p"><span id="order-type" th:text="${order.orderType.name()}"></span> status
+                    <p class="status-title-p"><span id="order-type" hidden th:text="${order.orderType.name()}"></span><span th:text="${order.orderType.name() == 'DELIVERY' ? 'Delivery' : 'Pick Up'}"
+                    ></span> status
                     </p>
 
                     <!--            for delivery-->

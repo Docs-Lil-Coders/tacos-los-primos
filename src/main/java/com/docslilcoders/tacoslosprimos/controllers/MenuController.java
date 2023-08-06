@@ -1,14 +1,21 @@
 package com.docslilcoders.tacoslosprimos.controllers;
 
+import com.docslilcoders.tacoslosprimos.models.AddressUpdated;
 import com.docslilcoders.tacoslosprimos.models.MenuItem;
 import com.docslilcoders.tacoslosprimos.models.NutritionInformation;
+import com.docslilcoders.tacoslosprimos.models.User;
 import com.docslilcoders.tacoslosprimos.repositories.MenuItemRepository;
 import com.docslilcoders.tacoslosprimos.repositories.NutritionInformationRepository;
+import com.docslilcoders.tacoslosprimos.repositories.OrderRepository;
+import com.docslilcoders.tacoslosprimos.repositories.UserRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -16,10 +23,18 @@ public class MenuController {
 
     private final MenuItemRepository menuItemDao;
     private final NutritionInformationRepository nutritionInformationDao;
+    private final OrderRepository orderDao;
 
-    public MenuController(MenuItemRepository menuItemDao, NutritionInformationRepository nutritionInformationDao) {
+    private final UserRepository userDao;
+
+    public MenuController(MenuItemRepository menuItemDao,
+                          NutritionInformationRepository nutritionInformationDao,
+                          OrderRepository orderDao,
+                          UserRepository userDao) {
         this.menuItemDao = menuItemDao;
         this.nutritionInformationDao = nutritionInformationDao;
+        this.orderDao = orderDao;
+        this.userDao = userDao;
     }
 
 
@@ -27,6 +42,31 @@ public class MenuController {
     public String getMenuPage(Model model) {
         model.addAttribute("menuItems", menuItemDao.findAll());
         model.addAttribute("pageTitle", "Menu");
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            if (authentication.getPrincipal() instanceof User) {
+                User user = (User) authentication.getPrincipal();
+                Optional<User> optionalUser = userDao.findById(user.getId());
+                if (optionalUser.isEmpty()) {
+                    model.addAttribute("previousOrders", false);
+                } else {
+                    List<MenuItem> previousItems = orderDao.findUniqueMenuItemsByUserId(optionalUser.get().getId());
+                    if (previousItems.size() > 0) {
+                        model.addAttribute("previousItems", previousItems);
+                        model.addAttribute("previousOrders", true);
+                    } else {
+                        model.addAttribute("previousOrders", false);
+                    }
+                }
+            } else {
+                model.addAttribute("previousOrders", false);
+
+            }
+        } else {
+            model.addAttribute("previousOrders", false);
+
+        }
 
         return "menu/menu";
     }
