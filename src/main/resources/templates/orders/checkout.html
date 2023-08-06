@@ -152,7 +152,11 @@
                     </div>
                 </div>
 
-                <h5 class="text-center">Address</h5>
+                <h5 class="text-center">Address
+                    <span th:if="${loggedIn == true}">
+                        <button type="button" class="address-modal-button" data-bs-toggle="modal" data-bs-target="#addressModal" id="changeAddressButton">Change</button>
+                    </span>
+                </h5>
                 <div>
 
                     <div class="row">
@@ -187,7 +191,7 @@
                                 <select class="form-control" id="stateAddress">
                                     <option value="">Select a state</option>
                                     <option th:each="state : ${allStates}" th:value="${state}"
-                                            th:text="${state}"  th:selected="${state == address.state}"></option>
+                                            th:text="${state}" th:selected="${state == address.state}"></option>
                                 </select>
                                 <div id="stateFeedback"></div>
                             </div>
@@ -196,7 +200,8 @@
                         <div class="col-12 col-md-6">
                             <label for="zipCodeAddress" class="form-label">Zip Code</label>
                             <div class="mb-2">
-                                <input type="text" class="form-control" id="zipCodeAddress" th:value="${address.zipCode}">
+                                <input type="text" class="form-control" id="zipCodeAddress"
+                                       th:value="${address.zipCode}">
                                 <div id="zipCodeFeedback"></div>
                             </div>
                         </div>
@@ -289,6 +294,28 @@
 
         </form>
 
+        <!-- Modal -->
+        <div class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="addressModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addressModalLabel">Select an Address</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div  th:each="address : ${allAddresses}" th:id="${'changeAddress' + address.id}" class="changeAddressDiv" data-bs-dismiss="modal">
+                            <div class="saved-address-div">
+                                <p class="saved-address" th:text="${address.oneLiner()}" ></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="button" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
     <div class="foot-div">
         <div th:insert="partials/footer :: footer"/>
@@ -303,7 +330,7 @@
 
     let pointsAvailable = /*[[${pointsAvailable}]]*/ 'default';
     let promoCodes = /*[[${promoCodes}]]*/ "default";
-
+    let addressesJSON = /*[[${addressesJSON}]]*/ "default";
 </script>
 <script src="/js/checkout.js"></script>
 </body>

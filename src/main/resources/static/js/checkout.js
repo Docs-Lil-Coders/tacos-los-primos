@@ -61,6 +61,42 @@
 
     addContactSheetEventListeners();
 
+    let changeAddressDivs = document.querySelectorAll(".changeAddressDiv");
+
+    for(let i = 0; i < changeAddressDivs.length; i ++){
+        changeAddressDivs[i].addEventListener("click", function(event){
+            const clickedDivId = event.currentTarget.id;
+            let id = clickedDivId.toString().substring(13);
+            fillAddressValues(id);
+        //     document.getElementById('addressModal').style.display = 'none';
+        //     document.querySelector('.modal-backdrop').style.display = 'none';
+         })
+    }
+
+    // let changeAddressButton = document.getElementById("changeAddressButton");
+    // changeAddressButton.addEventListener("click", function(){
+    //     document.getElementById('addressModal').style.display = 'block';
+    //     document.querySelector('.modal-backdrop').style.display = 'block';
+    // })
+
+    function fillAddressValues(id){
+        const jsonResponse = JSON.parse(addressesJSON);
+        for (let i = 0; i < jsonResponse.length; i++) {
+            let currentAddress = jsonResponse[i]
+
+            if(currentAddress[0] == id) {
+                streetAddressInput.value = currentAddress[5];
+                buildingAddressInput.value = currentAddress[1];
+                cityInput.value = currentAddress[2];
+                stateInput.value = currentAddress[4];
+                zipCodeInput.value = currentAddress[6];
+            }
+        }
+
+    }
+
+
+
 
     let formStepsNum = 0;
 

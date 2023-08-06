@@ -253,6 +253,26 @@ a.button:hover {
     font-weight: lighter;
 }
 
+.saved-address-div {
+    border: #BF2D1A solid 3px;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 20px auto;
+    background-color: rgba(191, 45, 26, 8%);
+}
+
+.changeAddressDiv {
+    cursor: pointer;
+}
+
+.address-modal-button {
+    background-color: transparent;
+    color: #BF2D1A;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+}
+
 @keyframes animate {
     from {
         transform: scale(1, 0);
@@ -263,3 +283,7 @@ a.button:hover {
         opacity: 1;
     }
 }
+
+/*.modal {*/
+/*    background-image: url("../img/ricepaper.png") !important;*/
+/*}*/

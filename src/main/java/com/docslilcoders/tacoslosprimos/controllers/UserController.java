@@ -138,8 +138,7 @@ public class UserController {
 
         Optional<User> optionalUser = userDao.findById(user.getId());
         if(optionalUser.isEmpty()) {
-            //TODO error page
-            return "redirect:/login";
+            return "redirect:/error";
         }
 
         AddressUpdated addressUpdated = addressUpdatedDao.findByUserIdAndIsPrimaryTrue(user.getId());
@@ -226,8 +225,7 @@ public class UserController {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Optional<User> optionalUser = userDao.findById(loggedInUser.getId());
         if(optionalUser.isEmpty()) {
-            //TODO error page
-            return "redirect:/login";
+            return "redirect:/error";
         }
 
         String currentPassword = optionalUser.get().getPassword();
@@ -245,21 +243,6 @@ public class UserController {
         return "redirect:/edit-profile";
     }
 
-//    @PostMapping("/addAddress")
-//    public String addAddress(@RequestParam String newAddress) {
-//        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        Optional<User> optionalUser = userDao.findById(loggedInUser.getId());
-//        if(optionalUser.isEmpty()) {
-//            //TODO error page
-//            return "redirect:/login";
-//        }
-//        Address address = new Address(newAddress, optionalUser.get());
-//        addressDao.save(address);
-//
-//
-//        return "redirect:/edit-profile";
-//    }
-
     @PostMapping("/saveNewAddress")
     public String saveNewAddress(@ModelAttribute AddressUpdated addressUpdated) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -268,15 +251,13 @@ public class UserController {
         }
                 Optional<User> optionalUser = userDao.findById(currentUser.getId());
         if(optionalUser.isEmpty()) {
-            //TODO error page
-            return "redirect:/login";
+            return "redirect:/error";
         }
         addressUpdated.setUser(optionalUser.get());
         addressUpdated.setIsPrimary(false);
         addressUpdatedDao.save(addressUpdated);
         return "redirect:/edit-profile";
     }
-
 
     @GetMapping("/updatePrimaryAddress")
     public String updateAddress(@RequestParam("newAddress") String newAddress) {
@@ -288,7 +269,7 @@ public class UserController {
         AddressUpdated currentAddress = addressUpdatedDao.findByUserIdAndIsPrimaryTrue(currentUser.getId());
         Optional<AddressUpdated> newPrimary = addressUpdatedDao.findById(Long.valueOf(newAddress));
         if (newPrimary.isEmpty()) {
-            return "redirect:/";
+            return "redirect:/error";
         }
         currentAddress.setIsPrimary(false);
         newPrimary.get().setIsPrimary(true);
@@ -302,8 +283,7 @@ public class UserController {
         System.out.println("\n\n\n\n" + addressId + "\n\n\n\n");
         Optional<AddressUpdated> optionalAddress = addressUpdatedDao.findById(Long.valueOf(addressId));
         if(optionalAddress.isEmpty()) {
-            //TODO error page
-            return "redirect:/";
+            return "redirect:/error";
         }
 
         addressUpdatedDao.delete(optionalAddress.get());
@@ -311,13 +291,6 @@ public class UserController {
         return "redirect:/edit-profile";
     }
 
-
-    @GetMapping("/testOrders")
-    public String getMenuItems(){
-        List<MenuItem> testing = orderDao.findUniqueMenuItemsByUserId(12L);
-        System.out.println(testing);
-        return "menu/menu";
-    }
 
 
 }

@@ -5,6 +5,7 @@ import com.docslilcoders.tacoslosprimos.repositories.*;
 import com.docslilcoders.tacoslosprimos.services.CartService;
 import com.docslilcoders.tacoslosprimos.services.EmailService;
 import com.docslilcoders.tacoslosprimos.utility.DateUtils;
+import com.google.gson.Gson;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -81,6 +82,10 @@ public class OrderController {
                     model.addAttribute("pointsAvailable", optionalUser.get().getAccumulated_points());
                     model.addAttribute("user", optionalUser.get());
                     model.addAttribute("address", addressUpdatedDao.findByUserIdAndIsPrimaryTrue(optionalUser.get().getId()));
+                    model.addAttribute("loggedIn", true);
+                    model.addAttribute("allAddresses", addressUpdatedDao.findByUserId(optionalUser.get().getId()));
+                    Gson gson = new Gson();
+                    model.addAttribute("addressesJSON", gson.toJson(addressUpdatedDao.findAddressesByUserId(optionalUser.get().getId())));
 
                 }
             } else {
@@ -118,8 +123,6 @@ public class OrderController {
         long result = Long.parseLong(trimmedNumber);
         Optional<Order> order = orderDao.findById(result);
         if (order.isEmpty()) {
-            System.out.println("item not found");
-            //TODO error page
            return "redirect:/order-status?orderNotFound=true";
         }
         model.addAttribute("order", order.get());
